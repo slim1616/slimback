@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateZoneTable extends Migration
+class CreateCompaniesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,11 @@ class CreateZoneTable extends Migration
      */
     public function up()
     {
-        Schema::create('zones', function (Blueprint $table) {
+        Schema::create('companies', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->string('description')->nullable();
-            $table->bigInteger('batiment_id')->unsigned()->default(1);
-            $table->foreign('batiment_id')->references('id')->on('batiments')->onDelete('cascade');
+            $table->bigInteger('formule_id')->unsigned()->default(1);
+            $table->foreign('formule_id')->references('id')->on('formules');
             $table->timestamps();
         });
     }
@@ -30,6 +29,6 @@ class CreateZoneTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('=zones');
+        Schema::dropIfExists('companies');
     }
 }
