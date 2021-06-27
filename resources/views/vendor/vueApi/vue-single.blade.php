@@ -23,40 +23,62 @@
                 <form @submit.prevent="update{{$data['singular']}}" v-if="loaded">
                   <router-link to="/{{ $data['plural_lower'] }}" class="back-to"><i class="icon-arrow-left"></i> {{ $data['plural_lower'] }}</router-link>
                   <div class="row">
+
                         @foreach($data['fields'] as $field)
                         @if(!($field['name'] == 'id' || $field['name'] == 'updated_at' || $field['name'] == 'created_at' ))
+
                             <div class="col-sm-4">
                                 <div class="form-group">
                         @endif
 
                         @if($field['name'] == 'id' || $field['name'] == 'updated_at' || $field['name'] == 'created_at' )   
+
                                           <input class="form-control" type="hidden" v-model="form.{{$field['name']}}"/>
-                        @elseif($field['simplified_type'] == 'text')
-                                    @if($field['name'] == 'ip')
+                        @elseif($field['simplified_type'] == 'text' || $field['type'] == 'enum' || $field['type'] == 'bigint')
+
+                                    @if($field['type'] == 'enum')
                                             <label>{{ ucfirst($field['name']) }}</label>
-                                            <vue-ip-input :ip="form.{{$field['name']}}" v-model="form.{{$field['name']}}" :on-change="onIpChange" class="form-control"></vue-ip-input>
+                                            <select class="form-control" v-model="form.{{$field['name']}}">
+                                                @foreach($field['options'] as $option)
+                                                    <option value="{{$option}}">{{$option}}</option>
+                                                @endforeach
+                                            </select>
+                                    @elseif(count($field['relation'])>0)
+
+                                    <label>{{$field['relation']['relation_name']}}</label>
+                                    <select class="form-control" v-model="form.{{$field['name']}}">
+                                            
+                                            <option v-for="{{strtolower($field['relation']['relation_name'])}} in {{strtolower(Str::plural($field['relation']['relation_name']))}}" :value="{{strtolower($field['relation']['relation_name'])}}.id">
+                                                 {{ <?php echo strtolower($field['relation']['relation_name']) . '.title';?> }}
+                                            </option>
+
+                                        </select>
                                     @else
                                           <label>{{ ucfirst($field['name']) }}</label>
                                           <input class="form-control" type="text" v-model="form.{{$field['name']}}" @if($field['max']) maxlength="{{$field['max']}}" @endif/>
                                     @endif
                         @if($field['required'] && $field['name'] !== 'id')
+
                                           <has-error :form="form" field="{{$field['name']}}"></has-error>
                         @endif
                         @elseif($field['simplified_type'] == 'textarea')
                                           <label>{{ ucfirst($field['name']) }}</label>
                                           <textarea v-model="form.{{$field['name']}}" @if($field['max']) maxlength="{{$field['max']}}" @endif></textarea>
                         @if($field['required'] && $field['name'] !== 'id')
+
                                           <has-error :form="form" field="{{$field['name']}}"></has-error>
                         @endif
                         @else
                                           <label>{{ ucfirst($field['name']) }}</label>
                                           <input class="form-control" type="number" v-model="form.{{$field['name']}}"/>
                         @if($field['required'] && $field['name'] !== 'id')
+
                                           <has-error :form="form" field="{{$field['name']}}"></has-error>
                         @endif
                         @endif
 
                         @if(!($field['name'] == 'id' || $field['name'] == 'updated_at' || $field['name'] == 'created_at' ))
+
                                 </div>
                             </div>
                         @endif
@@ -76,18 +98,25 @@
 
 <script>
 import { Form, HasError, AlertError } from 'vform'
-import VueIpInput from 'vue-ip-input';
+
 
 export default {
   name: '{{ $data['singular'] }}',
-  components: {HasError, VueIpInput},
+  components: {HasError},
   data: function(){
     return {
       loaded: false,
+        @foreach($data['fields'] as $field)
+        
+        @if(count($field['relation'])>0)
+        
+        {{strtolower(Str::plural($field['relation']['relation_name']))}} : [],
+        @endif
+        @endforeach
       form: new Form({
-@foreach($data['fields'] as $field)
-          "{{$field['name']}}" : "",
-@endforeach        
+            @foreach($data['fields'] as $field)
+                    {{$field['name']}} : "",
+            @endforeach
       })
     }
   },
@@ -95,15 +124,19 @@ export default {
     this.get{{$data['singular']}}();
   },
   methods: {
-    onIpChange(ip) {
-            console.log('ip input change:', ip);
-            this.form.ip = ip
-    },
+   
     get{{$data['singular']}}: function({{$data['singular']}}){
       
       var that = this;
       this.form.get('{{config('vueApi.vue_url_prefix')}}/{{ $data['plural_lower'] }}/'+this.$route.params.id).then(function(response){
-        that.form.fill(response.data);
+        that.form.fill(response.data.{{strtolower($data['singular'])}});
+        @foreach($data['fields'] as $field)
+        
+        @if(count($field['relation'])>0)
+        
+        that.{{strtolower(Str::plural($field['relation']['relation_name']))}} =  response.data.{{strtolower(Str::plural($field['relation']['relation_name']))}};
+        @endif
+        @endforeach
         that.loaded = true;
       }).catch(function(e){
           if (e.response && e.response.status == 404) {

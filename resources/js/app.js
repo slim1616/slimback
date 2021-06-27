@@ -56,12 +56,12 @@ const app = new Vue({
                                             "theme" : "light"
                                             });
         this.$store.dispatch('getUser')
+       /*
         Echo.channel('rtl-channel')
         .listen('RtlEvent', function (e) {
             console.log('RtlEvent', e)
         })
         let el = 'porte-notifs-' + document.querySelector('#app').getAttribute('data-user')
-            //   console.log(this.user.id)
         window.Echo.private(el)
                 .listen('SendMessage', (e) => {
                     this.reciveMessage(e.message)
@@ -85,8 +85,8 @@ const app = new Vue({
                 this.$vToastify.success({body:e.success.msg + ' ' + e.success.porte.titre + ' ' + e.success.porte.model + ' Ip : ' + e.success.porte.ip, title:"",defaultTitle:false} );
                 // this.$toasted.error(e.error.msg + e.error.porte.titre + ' ' + e.error.porte.model + ' Ip : ' + e.error.porte.ip )
             })
-            
-        console.log('mounted App')
+            */
+           console.log('mounted App')
         
 
     }

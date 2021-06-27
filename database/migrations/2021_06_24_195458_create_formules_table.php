@@ -16,8 +16,7 @@ class CreateFormulesTable extends Migration
         Schema::create('formules', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->date('start_at')->nullable();
-            $table->date('end_at')->nullable();
+            $table->boolean('online')->default(true);
             $table->double('price', 8,3)->default(0);
             $table->timestamps();
         });

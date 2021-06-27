@@ -2,15 +2,39 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\{{ $data['singular'] }};
+use App\Http\Resources\{{ $data['singular'].'Resource' }};
 
 class {{ $data['singular'] }}Controller extends Controller
 {
     public function get(Request $request, $id){
-      return {{ $data['singular'] }}::findOrFail($id);
+        $response = [];
+        $response['{{strtolower($data['singular'])}}'] = new {{ $data['singular'].'Resource' }}({{ $data['singular'] }}::findOrFail($id));
+        @foreach($data['fields'] as $field)
+        
+        @if(count($field['relation'])>0)
+
+        $response['{{strtolower(Str::plural($field['relation']['relation_name']))}}'] = \{{$field['relation']['model']}}::all();
+        @endif
+        @endforeach
+
+        return response($response);
+    }
+
+     public function data(Request $request){
+        $response = [];
+        @foreach($data['fields'] as $field)
+        
+        @if(count($field['relation'])>0)
+
+        $response['{{strtolower(Str::plural($field['relation']['relation_name']))}}'] = \{{$field['relation']['model']}}::all();
+        @endif
+        @endforeach
+
+        return response($response);
     }
     
     public function list(Request $request){
-      return {{ $data['singular'] }}::get();
+      return response({{ $data['singular'].'Resource' }}::collection({{ $data['singular'] }}::get()));
     }
     
     public function create(Request $request){

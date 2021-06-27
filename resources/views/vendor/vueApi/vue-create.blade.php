@@ -30,13 +30,28 @@
                   <div class="col-sm-4">
                       <div class="form-group">
               @endif
-          @if($field['name'] == 'id' || $field['name'] == 'updated_at' || $field['name'] == 'created_at' )   
+          @if($field['name'] == 'id' || $field['name'] == 'updated_at' || $field['name'] == 'created_at' )  
+
                             <input class="form-control" type="hidden" v-model="form.{{$field['name']}}"/>
-          @elseif($field['simplified_type'] == 'text' || $field['type'] == 'enum')
-                                    @if($field['name'] == 'ip')
+          @elseif($field['simplified_type'] == 'text' || $field['type'] == 'enum' || $field['type'] == 'bigint')
+                                    @if($field['type'] == 'enum')
                                             <label>{{ ucfirst($field['name']) }}</label>
-                                            <vue-ip-input :ip="form.{{$field['name']}}" :on-change="onIpChange" v-model="form.{{$field['name']}}" class="form-control"></vue-ip-input>
-                                    @else
+                                            <select class="form-control" v-model="form.{{$field['name']}}">
+                                                @foreach($field['options'] as $option)
+                                                    <option value="{{$option}}">{{$option}}</option>
+                                                @endforeach
+                                            </select>
+                                            @elseif(count($field['relation'])>0)
+
+                                            <label>{{$field['relation']['relation_name']}}</label>
+                                            <select class="form-control" v-model="form.{{$field['name']}}">
+                                                    
+                                                    <option v-for="{{strtolower($field['relation']['relation_name'])}} in {{strtolower(Str::plural($field['relation']['relation_name']))}}" :value="{{strtolower($field['relation']['relation_name'])}}.id">
+                                                        {{ <?php echo strtolower($field['relation']['relation_name']) . '.title';?> }}
+                                                    </option>
+
+                                                </select>
+                                            @else
                                           <label>{{ ucfirst($field['name']) }}</label>
                                           <input class="form-control" type="text" v-model="form.{{$field['name']}}" @if($field['max']) maxlength="{{$field['max']}}" @endif/>
                                     @endif
@@ -75,37 +90,47 @@
 
 <script>
 import { Form, HasError, AlertError } from 'vform'
-import VueIpInput from 'vue-ip-input';
+
 export default {
   name: '{{ $data['singular'] }}',
-  components: {HasError, VueIpInput},
+  components: {HasError},
   data: function(){
     return {
       {{ $data['plural_lower'] }} : false,
+        @foreach($data['fields'] as $field)
+        
+        @if(count($field['relation'])>0)
+        
+        {{strtolower(Str::plural($field['relation']['relation_name']))}} : [],
+        @endif
+        @endforeach
+        
       form: new Form({
 @foreach($data['fields'] as $field)
-          "{{$field['name']}}" : "",
+          {{$field['name']}} : "",
 @endforeach
       })
     }
   },
   created: function(){
-    this.list{{$data['plural']}}();
+    this.listdata();
   },
   methods: {
-    onIpChange(ip) {
-            console.log('ip input change:', ip);
-            this.form.ip = ip
-    },
-    list{{ $data['plural'] }}: function(){
+    listdata: function(){
       
       var that = this;
       this.$store.dispatch('setLoader', true)
-      this.form.get('{{config('vueApi.vue_url_prefix')}}/{{ $data['plural_lower'] }}')
+      this.form.get('{{config('vueApi.vue_url_prefix')}}/data{{ $data['plural_lower'] }}')
       .then(function(response){
               that.$store.dispatch('setLoader', false)
                 if (response.status==200||response.status==201){
-                  that.{{ $data['plural_lower'] }} = response.data;
+                    @foreach($data['fields'] as $field)
+        
+                    @if(count($field['relation'])>0)
+                    
+                    that.{{strtolower(Str::plural($field['relation']['relation_name']))}} =  response.data.{{strtolower(Str::plural($field['relation']['relation_name']))}};
+                    @endif
+                    @endforeach
               }else{
                 that.$store.dispatch('setLoader', false)
                 swal("Erreur", "Erreru de requete", {
@@ -119,7 +144,8 @@ export default {
               }
           })
           .catch((response) => {
-              that.$store.dispatch('setLoader', false)
+                that.$store.dispatch('setLoader', false)
+                
             });
     },
     create{{ $data['singular'] }}: function(){
@@ -129,7 +155,6 @@ export default {
       .then(function(response){
               that.$store.dispatch('setLoader', false)
               if (response.status==200||response.status==201){
-                  that.{{ $data['plural_lower'] }}.push(response.data);
                   that.$notification.success("Ajouté avec succes", {position: 'bottomRight', timer : 5, showCloseIcn : true, infiniteTimer: false });
                   that.$router.push('/{{$data['plural_lower']}}');
               }else{

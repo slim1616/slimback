@@ -38,7 +38,7 @@
         <div class="wrapper" id="app" data-user="{{Auth::user()? Auth::user()->id : null}}">
                 @yield('content')
         </div>
-	<script src="//{{ Request::getHost() }}:6001/socket.io/socket.io.js"></script>
+	<!-- <script src="//{{ Request::getHost() }}:6001/socket.io/socket.io.js"></script> -->
         @yield('script')
     <!--   Core JS Files   -->
 	<!-- <script src="{{ asset('js/core/jquery.3.2.1.min.js')}}"></script> -->

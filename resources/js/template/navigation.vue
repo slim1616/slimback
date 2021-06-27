@@ -46,7 +46,7 @@
 							</span>
 							<h4 class="text-section">Menu</h4>
 						</li>
-						<template v-if="['admin', 'rh'].includes(user.role)">
+						<template v-if="['superadmin'].includes(user.role)">
 							<li class="nav-item" :class="{active: $route.meta.route=='zones'}">
 								<a data-toggle="collapse" href="#base">
 									<i class="fas fa-building"></i>
@@ -74,7 +74,7 @@
 								</div>
 							</li>
 						</template>
-						<template v-if="['admin', 'rh'].includes(user.role)">
+						<template v-if="['superadmin', 'rh'].includes(user.role)">
 							<li class="nav-item" :class="{active: $route.meta.route=='timezone'}">
 								<a data-toggle="collapse" href="#sidebarLayouts">
 									<i class="fas far fa-clock"></i>
@@ -103,7 +103,7 @@
 							</li>
 						</template>
 						
-						<template v-if="['admin', 'rh'].includes(user.role)">
+						<template v-if="['superadmin', 'rh'].includes(user.role)">
 							<li class="nav-item" :class="{active: $route.meta.route=='historique'}">
 								<a data-toggle="collapse" href="#maps">
 									<i class="fas fa-file-alt"></i>
@@ -126,31 +126,31 @@
 								</div>
 							</li>
 						</template>
-						<template v-if="['admin', 'rh'].includes(user.role)">
+						<template v-if="['superadmin', 'rh'].includes(user.role)">
 							<li class="nav-item" :class="{active: $route.meta.route=='employe'}">
 								<a data-toggle="collapse" href="#employes">
 									<i class="fas fa-user-lock"></i>
-									<p>Employés</p>
+									<p>Paramètres de l'app</p>
 									<span class="caret"></span>
 								</a>
 								<div class="collapse" id="employes">
 									<ul class="nav nav-collapse">
 										<li>
-											<router-link :to="{name:'employesList'}">
-												<i class="fas fa-users"></i>
-												<p>Liste</p>
+											<router-link :to="{name:'Companieslist'}">
+												<i class="fas fa-building"></i>
+												<p>Liste Companies</p>
 											</router-link>
 										</li>
 										<li>
-											<router-link :to="{name : 'addEmploye'}">
-												<i class="fas fa-user-plus"></i>
-												<p>Ajouter</p>
+											<router-link :to="{name : 'Formuleslist'}">
+												<i class="fas fa-calendar-alt"></i>
+												<p>Plans</p>
 											</router-link>
 										</li>
 										<li>
-											<router-link :to="{name:'DepartementsList'}">
+											<router-link :to="{name:'Abonnementslist'}">
 												<i class="fas fa-sitemap"></i>
-												<p>Départements</p>
+												<p>Abonnements</p>
 											</router-link>
 										</li>
 										<li>
@@ -163,7 +163,7 @@
 								</div>
 							</li>
 						</template>
-						<template v-if="user.role=='admin'">
+						<template v-if="user.role=='superadmin'">
 							<li class="nav-item" :class="{active: $route.meta.route=='user'}">
 								<a data-toggle="collapse" href="#charts">
 									<i class="fas fa-user-lock"></i>

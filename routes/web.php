@@ -12,10 +12,8 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('rtl', 'ZkController@Rtl');
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('login/{provider}', 'SocialController@redirect');
+Route::get('login/{provider}/callback', 'SocialController@callback');
 
 Auth::routes();
 
@@ -28,10 +26,25 @@ Route::group( ['middleware' => 'auth' ], function(){
 
     Route::get('/', function () {
         return view('layouts.main');
-    });
+    })->name('home');
     
 
     Route::get('/users', function () {
+        return view('layouts.main');
+    });
+    Route::get('/companies', function () {
+        return view('layouts.main');
+    });
+    Route::get('/formules', function () {
+        return view('layouts.main');
+    });
+    Route::get('/abonnements', function () {
+        return view('layouts.main');
+    });
+    Route::get('/createformules', function () {
+        return view('layouts.main');
+    });
+    Route::get('/abonnements/{id}', function () {
         return view('layouts.main');
     });
     Route::get('/edituser/{id}', function () {

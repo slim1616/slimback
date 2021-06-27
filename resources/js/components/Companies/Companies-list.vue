@@ -11,65 +11,63 @@
                     <i class="flaticon-right-arrow"></i>
                 </li>
                 <li class="nav-item">
-                    <a href="#">{{ $data['plural_lower'] }}</a>
+                    <a href="#">companies</a>
                 </li>
             </ul>
         </div>
         <div class="card">
             <div class="card-header">
                 <div class="header-btns">
-                  <div class="card-title">Liste de {{ $data['plural_lower'] }}</div>
-                  <router-link to="/create{{ $data['plural_lower'] }}" class="btn btn-border btn-round btn-secondary">
+                  <div class="card-title">Liste de companies</div>
+                  <router-link to="/createcompanies" class="btn btn-border btn-round btn-secondary">
                         <i class="fas fa-plus"></i> Ajouter
                   </router-link>
               </div>
             </div>
             <div class="card-body">
                 <div class="table-responsive">
-                    <table class="table table-bordered table-head-bg-primary" v-if="{{ $data['plural_lower'] }}.length > 0">
+                    <table class="table table-bordered table-head-bg-primary" v-if="companies.length > 0">
                         <thead>
                           <tr>
-                          @foreach($data['fields'] as $field)
-                              @if(!($field['name'] == 'id' || $field['name'] == 'updated_at' || $field['name'] == 'created_at' ))   
-                                @if(count($field['relation'])>0)
-
-                                    <th scope="col">{{strtolower($field['relation']['relation_name'])}}</th>
-                                @else
-                                    <th scope="col">{{ ucfirst($field['name'])}}</th>
-                                @endif
-                              @endif
-                          @endforeach
-                              <th scope="col">Actions</th>
+                                                                                                                   
+                                                                    <th scope="col">Title</th>
+                                                                                                                         
+                                                                    <th scope="col">Type</th>
+                                                                                                                         
+                                
+                                    <th scope="col">user</th>
+                                                                                                                                                                                                                                      <th scope="col">Actions</th>
                           </tr>
                         </thead>
                         <tbody>
-                            <template v-for="({{ $data['singular_lower'] }},index) in {{ $data['plural_lower'] }}"  >
-                                <tr :key="{{ $data['singular_lower'] }}.id">
-                                    @foreach($data['fields'] as $field)
-                                        @if(!($field['name'] == 'id' || $field['name'] == 'updated_at' || $field['name'] == 'created_at' ))   
-                                            @if(count($field['relation'])>0)
-
-                                                <td>
-                                                    <router-link :to="'/{{strtolower(Str::plural($field['relation']['relation_name']))}}/'+{{$data['singular_lower']}}.{{ $field['name']}}">
-                                                        <span v-html="{{$data['singular_lower']}}.{{strtolower($field['relation']['relation_name'])}}"></span>
+                            <template v-for="(company,index) in companies"  >
+                                <tr :key="company.id">
+                                                                                                                                                           
+                                                                                            <td>
+                                                    <router-link :to="'/companies/'+company.id">
+                                                    <span v-html="company.title"> </span>
                                                     </router-link>
                                                 </td>
-                                            @else
-                                                <td>
-                                                    <router-link :to="'/{{ $data['plural_lower'] }}/'+{{ $data['singular_lower'] }}.id">
-                                                    <span v-html="{{$data['singular_lower']}}.{{ $field['name']}}"> </span>
+                                                                                                                                                                   
+                                                                                            <td>
+                                                    <router-link :to="'/companies/'+company.id">
+                                                    <span v-html="company.type"> </span>
                                                     </router-link>
                                                 </td>
-                                            @endif
-                                        @endif
-                                    @endforeach
-                                    <td>
+                                                                                                                                                                   
+                                            
+                                                <td>
+                                                    <router-link :to="'/users/'+company.user_id">
+                                                        <span v-html="company.user"></span>
+                                                    </router-link>
+                                                </td>
+                                                                                                                                                                                                                                                                                                                    <td>
                                       <div class="action-btns">
-                                          <router-link :to="'/{{ $data['plural_lower'] }}/'+{{ $data['singular_lower'] }}.id" class="edit-btn">
+                                          <router-link :to="'/companies/'+company.id" class="edit-btn">
                                               <i class="icon-note"></i>
                                           </router-link>
 
-                                          <a href="#" @click.prevent.stop="delete{{$data['singular']}}({{ $data['singular_lower'] }},index)" class="delete-btn">
+                                          <a href="#" @click.prevent.stop="deleteCompany(company,index)" class="delete-btn">
                                             <i class="icon-close" ></i>
                                           </a>
                                       </div>
@@ -87,31 +85,34 @@
 <script>
 import { Form, HasError, AlertError } from 'vform'
 export default {
-  name: '{{ $data['singular'] }}',
+  name: 'Company',
   components: {HasError},
   data: function(){
     return {
-      {{ $data['plural_lower'] }} : false,
+      companies : false,
       form: new Form({
-@foreach($data['fields'] as $field)
-          {{$field['name']}} : "",
-@endforeach
+          id : "",
+          title : "",
+          type : "",
+          user_id : "",
+          created_at : "",
+          updated_at : "",
       })
     }
   },
   created: function(){
-    this.list{{$data['plural']}}();
+    this.listCompanies();
   },
   methods: {
-    list{{ $data['plural'] }}: function(){
+    listCompanies: function(){
       
       var that = this;
       this.$store.dispatch('setLoader', true)
-      this.form.get('{{config('vueApi.vue_url_prefix')}}/{{ $data['plural_lower'] }}')
+      this.form.get('/api/companies')
       .then(function(response){
               that.$store.dispatch('setLoader', false)
                 if (response.status==200){
-                  that.{{ $data['plural_lower'] }} = response.data;
+                  that.companies = response.data;
               }else{
                 that.$store.dispatch('setLoader', false)
                 swal("Erreur", "Erreru de requete", {
@@ -138,19 +139,19 @@ export default {
             });
       
     },
-    create{{ $data['singular'] }}: function(){
+    createCompany: function(){
       
       var that = this;
-      this.form.post('{{config('vueApi.vue_url_prefix')}}/{{ $data['plural_lower'] }}').then(function(response){
-        that.{{ $data['plural_lower'] }}.push(response.data);
+      this.form.post('/api/companies').then(function(response){
+        that.companies.push(response.data);
       })
       
     },
-    delete{{$data['singular']}}: function({{ $data['singular_lower'] }}, index){
+    deleteCompany: function(company, index){
           var that = this;
           swal({
                 title: 'Vous êtes sure?',
-                text: "Vous allez effacer {{ $data['singular'] }}!",
+                text: "Vous allez effacer Company!",
                 type: 'warning',
                 buttons:{
                     
@@ -166,8 +167,8 @@ export default {
                 }
             }).then((Delete) => {
                 if (Delete) {
-                  this.form.delete('{{config('vueApi.vue_url_prefix')}}/{{ $data['plural_lower'] }}/'+{{ $data['singular_lower'] }}.id).then(function(response){
-                    that.{{ $data['plural_lower'] }}.splice(index,1);
+                  this.form.delete('/api/companies/'+company.id).then(function(response){
+                    that.companies.splice(index,1);
                   })
                 } else {
                     swal.close();

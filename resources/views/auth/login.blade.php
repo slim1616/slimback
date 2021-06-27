@@ -2,6 +2,24 @@
 
 @section('content')
 
+<script>
+  window.fbAsyncInit = function() {
+    FB.init({
+      appId      : '395202121896561',
+      xfbml      : true,
+      version    : 'v7.0'
+    });
+    FB.AppEvents.logPageView();
+  };
+
+  (function(d, s, id){
+     var js, fjs = d.getElementsByTagName(s)[0];
+     if (d.getElementById(id)) {return;}
+     js = d.createElement(s); js.id = id;
+     js.src = "https://connect.facebook.net/en_US/sdk.js";
+     fjs.parentNode.insertBefore(js, fjs);
+   }(document, 'script', 'facebook-jssdk'));
+</script>
 <div class="limiter">
 		<div class="container-login100" style="background-image: url('cnx/images/isc.jpeg');">
 			<div class="wrap-login100 p-b-30">
@@ -58,6 +76,14 @@
 						<a href="{{ route('password.request') }}" class="txt1">
 							Mot de passe / email oublié?
 						</a>
+					</div>
+					<div class="social-login">
+						<h4>Login Via Social Account</h4>
+						<ul>
+							<!-- <li><a href="{{url('login/apple')}}" style="background: #000;border: solid 1px #000;"><i class="fa fa-apple"></i>Login Via Apple</a></li> -->
+							<li><a href="{{url('login/facebook')}}" title="" class="facebook"><i class="fa fa-facebook"></i>Login Via Facebook</a></li>
+							<li><a href="login/google" title="" class="google"><i class="fa fa-google"></i>Login Via Google</a></li>
+						</ul>
 					</div>
 
 					
