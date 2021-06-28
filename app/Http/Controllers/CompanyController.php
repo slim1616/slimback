@@ -14,6 +14,10 @@ class CompanyController extends Controller
                         
                         
                         
+                        
+                        
+                        
+                        
         
         $response['users'] = \App\User::all();
                         
@@ -25,6 +29,10 @@ class CompanyController extends Controller
      public function data(Request $request){
         $response = [];
                 
+                        
+                        
+                        
+                        
                         
                         
                         

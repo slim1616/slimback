@@ -17,6 +17,15 @@ class User extends Authenticatable implements HasMedia
 {
     use HasApiTokens, Notifiable, HasMediaTrait;
 
+    /**
+     * Get the Company that owns the User
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function Company()
+    {
+        return $this->belongsTo('App\Company', 'company_id');
+    }
     public function Role()
     {
         return $this->belongsTo('App\Role', 'role_id');

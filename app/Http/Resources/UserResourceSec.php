@@ -14,10 +14,12 @@ class UserResourceSec extends JsonResource
      */
     public function toArray($request)
     {
-        // dd($this->avatar->getUrl('avatar'));
+        // dd($this->Company);
         return [
             'id' => $this->id,
             // 'name' => !is_null($this->name),
+            'company_id' => $this->company_id,
+            'company' => !is_null($this->Company)? $this->Company->title :'',
             'email' => $this->email,
             'nom' => $this->nom,
             'prenom' => $this->prenom,

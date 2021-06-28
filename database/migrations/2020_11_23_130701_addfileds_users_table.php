@@ -24,6 +24,7 @@ class AddfiledsUsersTable extends Migration
             $table->string('avatar_id')->default(1);
             $table->boolean('active')->default(true);
             
+            
         });
     }
 

@@ -8,3 +8,8 @@ ul {
   list-style: none;
 }
 
+.router-link-exact-active,
+.router-link-active {
+  color: #333 !important;
+}
+

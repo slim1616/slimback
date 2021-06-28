@@ -63,7 +63,7 @@ class UserController extends Controller
     }
 
     public function editSingleUser(Request $request){
-        if ($request->user()->Role->slug=="admin"){
+        if ($request->user()->Role->slug=="superadmin"){
             $validator = Validator::make($request->all(), [
                 'nom' => 'required|min:3',
                 'prenom' => 'required',
@@ -105,7 +105,7 @@ class UserController extends Controller
     
     public function changePassword(Request $request){
         // dd($request->all());
-        if ($request->user()->Role->slug=="admin"){
+        if ($request->user()->Role->slug=="superadmin"){
             $user = User::find($request->user_id);
             if ($user){
                 if ($request->password==$request->confirm){
@@ -150,7 +150,7 @@ class UserController extends Controller
     public function add(Request $request)
     {
         // dd($request->all());
-        if ($request->user()->Role->slug=="admin"){
+        if ($request->user()->Role->slug=="superadmin"){
             $validator = Validator::make($request->all(), [
                 'nom' => 'required|min:3',
                 'prenom' => 'required',
@@ -233,7 +233,7 @@ class UserController extends Controller
     public function update(Request $request)
     {
         // dd($request->all());
-        if ($request->user()->id==$request->id||$request->user()->Role->slug=="admin"){
+        if ($request->user()->id==$request->id||$request->user()->Role->slug=="superadmin"){
             $user = User::findOrfail($request->id);
             $user->nom = $request->nom;
             $user->prenom = $request->prenom;

@@ -50,6 +50,30 @@
                   </div>
                                                           <div class="col-sm-4">
                       <div class="form-group">
+                                                                                                      <label>Adresse</label>
+                                          <input class="form-control" type="text" v-model="form.adresse"  maxlength="255" />
+                                                                                              </div>
+                  </div>
+                                                          <div class="col-sm-4">
+                      <div class="form-group">
+                                                                                                      <label>Email</label>
+                                          <input class="form-control" type="text" v-model="form.email"  maxlength="255" />
+                                                                                              </div>
+                  </div>
+                                                          <div class="col-sm-4">
+                      <div class="form-group">
+                                                                                                      <label>Tel</label>
+                                          <input class="form-control" type="text" v-model="form.tel"  maxlength="255" />
+                                                                                              </div>
+                  </div>
+                                                          <div class="col-sm-4">
+                      <div class="form-group">
+                                                                                                      <label>Codetva</label>
+                                          <input class="form-control" type="text" v-model="form.codetva"  maxlength="255" />
+                                                                                              </div>
+                  </div>
+                                                          <div class="col-sm-4">
+                      <div class="form-group">
                                                             
                                             <label>User</label>
                                             <select class="form-control" v-model="form.user_id">
@@ -99,6 +123,10 @@ export default {
                         
                         
                         
+                        
+                        
+                        
+                        
                 
         users : [],
                         
@@ -108,6 +136,10 @@ export default {
           id : "",
           title : "",
           type : "",
+          adresse : "",
+          email : "",
+          tel : "",
+          codetva : "",
           user_id : "",
           created_at : "",
           updated_at : "",
@@ -127,6 +159,10 @@ export default {
               that.$store.dispatch('setLoader', false)
                 if (response.status==200||response.status==201){
                             
+                                                
+                                                
+                                                
+                                                
                                                 
                                                 
                                                 

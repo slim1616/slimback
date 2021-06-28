@@ -34,7 +34,7 @@
                         @if($field['name'] == 'id' || $field['name'] == 'updated_at' || $field['name'] == 'created_at' )   
 
                                           <input class="form-control" type="hidden" v-model="form.{{$field['name']}}"/>
-                        @elseif($field['simplified_type'] == 'text' || $field['type'] == 'enum' || $field['type'] == 'bigint')
+                        @elseif($field['simplified_type'] == 'text' || $field['type'] == 'enum' || $field['type'] == 'bigint' || $field['type'] == 'date')
 
                                     @if($field['type'] == 'enum')
                                             <label>{{ ucfirst($field['name']) }}</label>
@@ -43,17 +43,25 @@
                                                     <option value="{{$option}}">{{$option}}</option>
                                                 @endforeach
                                             </select>
+                                    @elseif($field['type'] == 'date')
+                                       
+                                       <datetime v-model="form.{{$field['name']}}"
+                                       value-zone="Africa/Tunis"
+                                       type="date"
+                                       format="yyyy-MM-dd"
+                                       input-class="form-control"/>
                                     @elseif(count($field['relation'])>0)
 
                                     <label>{{$field['relation']['relation_name']}}</label>
                                     <select class="form-control" v-model="form.{{$field['name']}}">
                                             
                                             <option v-for="{{strtolower($field['relation']['relation_name'])}} in {{strtolower(Str::plural($field['relation']['relation_name']))}}" :value="{{strtolower($field['relation']['relation_name'])}}.id">
-                                                 {{ <?php echo strtolower($field['relation']['relation_name']) . '.title';?> }}
+                                                 {{ <?php echo strtolower($field['relation']['relation_name'])=='user'? strtolower($field['relation']['relation_name']) . '.name':strtolower($field['relation']['relation_name']) . '.title';?> }}
                                             </option>
 
                                         </select>
                                     @else
+                                        
                                           <label>{{ ucfirst($field['name']) }}</label>
                                           <input class="form-control" type="text" v-model="form.{{$field['name']}}" @if($field['max']) maxlength="{{$field['max']}}" @endif/>
                                     @endif
@@ -98,11 +106,13 @@
 
 <script>
 import { Form, HasError, AlertError } from 'vform'
-
+import * as moment from 'moment';
+import { Datetime } from 'vue-datetime';
+import 'vue-datetime/dist/vue-datetime.css'
 
 export default {
   name: '{{ $data['singular'] }}',
-  components: {HasError},
+  components: {HasError, Datetime},
   data: function(){
     return {
       loaded: false,
@@ -149,6 +159,14 @@ export default {
       var that = this;
 
         this.$store.dispatch('setLoader', true)
+        @foreach($data['fields'] as $field)
+        
+        @if($field['type']=='date')
+
+            this.form.{{$field['name']}} = moment(this.form.{{$field['name']}}).format('YYYY-MM-DD')
+        @endif
+        @endforeach
+
         this.form.put('{{config('vueApi.vue_url_prefix')}}/{{ $data['plural_lower'] }}/'+this.$route.params.id)
           .then(function(response){
               that.$store.dispatch('setLoader', false)

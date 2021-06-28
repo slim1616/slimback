@@ -34,6 +34,14 @@
                                                                                                                          
                                                                     <th scope="col">Type</th>
                                                                                                                          
+                                                                    <th scope="col">Adresse</th>
+                                                                                                                         
+                                                                    <th scope="col">Email</th>
+                                                                                                                         
+                                                                    <th scope="col">Tel</th>
+                                                                                                                         
+                                                                    <th scope="col">Codetva</th>
+                                                                                                                         
                                 
                                     <th scope="col">user</th>
                                                                                                                                                                                                                                       <th scope="col">Actions</th>
@@ -52,6 +60,30 @@
                                                                                             <td>
                                                     <router-link :to="'/companies/'+company.id">
                                                     <span v-html="company.type"> </span>
+                                                    </router-link>
+                                                </td>
+                                                                                                                                                                   
+                                                                                            <td>
+                                                    <router-link :to="'/companies/'+company.id">
+                                                    <span v-html="company.adresse"> </span>
+                                                    </router-link>
+                                                </td>
+                                                                                                                                                                   
+                                                                                            <td>
+                                                    <router-link :to="'/companies/'+company.id">
+                                                    <span v-html="company.email"> </span>
+                                                    </router-link>
+                                                </td>
+                                                                                                                                                                   
+                                                                                            <td>
+                                                    <router-link :to="'/companies/'+company.id">
+                                                    <span v-html="company.tel"> </span>
+                                                    </router-link>
+                                                </td>
+                                                                                                                                                                   
+                                                                                            <td>
+                                                    <router-link :to="'/companies/'+company.id">
+                                                    <span v-html="company.codetva"> </span>
                                                     </router-link>
                                                 </td>
                                                                                                                                                                    
@@ -94,6 +126,10 @@ export default {
           id : "",
           title : "",
           type : "",
+          adresse : "",
+          email : "",
+          tel : "",
+          codetva : "",
           user_id : "",
           created_at : "",
           updated_at : "",

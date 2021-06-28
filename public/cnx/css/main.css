@@ -533,3 +533,59 @@ iframe {
     padding-right: 15px;
   }
 }
+.social-login{
+    width: 100%;
+    text-align: center;
+    margin-top: 20px;
+}
+.social-login h4 {
+    color: #e8f0fe;
+    font-size: 1.3em;
+    font-weight: 700;
+    margin-bottom: 30px;
+    text-transform: uppercase;
+}
+.social-login ul {
+    display: flex;
+    justify-content: space-evenly;
+    list-style: none;
+    padding: 0;
+}
+.social-login ul li {
+    display: flex;
+    list-style: none;
+    flex: 1;
+    margin: 0 7px;
+    justify-content: center;
+}
+.social-login ul li a {
+    color: #ffffff;
+    font-size: 15px;
+    font-weight: 500;
+    float: left;
+    width: 100%;
+	padding: 4px 0;
+	text-decoration: none;
+	-webkit-border-radius: 50px;
+	-moz-border-radius: 50px;
+	-ms-border-radius: 50px;
+	-o-border-radius: 50px;
+    border-radius: 50px;
+    width: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.social-login ul li a i {
+    margin-right: 7px;
+    font-size: 1.5em;
+}
+.facebook {
+	background-color: #3b5998;
+}
+.fa-facebook-f:before, .fa-facebook:before{
+	content : "\f09a" !important;
+}
+.google {
+	background-color: #df4a32;
+}

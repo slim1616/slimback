@@ -34,7 +34,8 @@
                                 <div class="form-group">
                         
                         
-                                                                              <label>Title</label>
+                                                                            
+                                          <label>Title</label>
                                           <input class="form-control" type="text" v-model="form.title"  maxlength="255" />
                                                             
                                           <has-error :form="form" field="title"></has-error>
@@ -56,6 +57,54 @@
                                                             
                                           <has-error :form="form" field="type"></has-error>
                                                 
+                        
+                                </div>
+                            </div>
+                                                                        
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                        
+                        
+                                                                            
+                                          <label>Adresse</label>
+                                          <input class="form-control" type="text" v-model="form.adresse"  maxlength="255" />
+                                                                                    
+                        
+                                </div>
+                            </div>
+                                                                        
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                        
+                        
+                                                                            
+                                          <label>Email</label>
+                                          <input class="form-control" type="text" v-model="form.email"  maxlength="255" />
+                                                                                    
+                        
+                                </div>
+                            </div>
+                                                                        
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                        
+                        
+                                                                            
+                                          <label>Tel</label>
+                                          <input class="form-control" type="text" v-model="form.tel"  maxlength="255" />
+                                                                                    
+                        
+                                </div>
+                            </div>
+                                                                        
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                        
+                        
+                                                                            
+                                          <label>Codetva</label>
+                                          <input class="form-control" type="text" v-model="form.codetva"  maxlength="255" />
+                                                                                    
                         
                                 </div>
                             </div>
@@ -104,15 +153,21 @@
 
 <script>
 import { Form, HasError, AlertError } from 'vform'
-
+import * as moment from 'moment';
+import { Datetime } from 'vue-datetime';
+import 'vue-datetime/dist/vue-datetime.css'
 
 export default {
   name: 'Company',
-  components: {HasError},
+  components: {HasError, Datetime},
   data: function(){
     return {
       loaded: false,
                 
+                        
+                        
+                        
+                        
                         
                         
                         
@@ -124,6 +179,10 @@ export default {
                                 id : "",
                                 title : "",
                                 type : "",
+                                adresse : "",
+                                email : "",
+                                tel : "",
+                                codetva : "",
                                 user_id : "",
                                 created_at : "",
                                 updated_at : "",
@@ -144,6 +203,10 @@ export default {
                         
                         
                         
+                        
+                        
+                        
+                        
                 
         that.users =  response.data.users;
                         
@@ -160,6 +223,17 @@ export default {
       var that = this;
 
         this.$store.dispatch('setLoader', true)
+                
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                
         this.form.put('/api/companies/'+this.$route.params.id)
           .then(function(response){
               that.$store.dispatch('setLoader', false)

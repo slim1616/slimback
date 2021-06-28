@@ -2,6 +2,7 @@ import {store} from './store.js';
 
 import home from './pages/home'
 import notFound from './pages/notFound'
+import editProfile from './components/profile/editProfile'
 import usersList from './components/profile/usersList'
 import addUser from './components/profile/addUser'
 import editUser from './components/profile/editUser'
@@ -20,13 +21,25 @@ import Abonnementscreate from './components/Abonnements/Abonnements-create'
 const routes = [
 
     {path : '/', component : home, name : 'home', props: true, meta: { route: 'home' } },
+    {path : '/editprofile', component : editProfile, name : 'editProfile'},
     {path : '/adduser', component : addUser, name : 'addUser', meta: { route: 'user' } },
     {path : '/edituser/:id', component : editUser, name : 'editUser', meta: { route: 'user' } },
     {path : '/users', component : usersList, name : 'usersList', meta: { route: 'user' }},
     {path : '/passwordchange', component : myPasswordChange, name : 'myPasswordChange'},
+    {path : '/users/:id', component : editUser, name : 'editUser', meta: { route: 'user' },beforeEnter(to, from, next){
+        console.log(store.getters.getUser.role=='superadmin')
+        if (store.getters.getUser.role=='superadmin'){
+            next()
+        }else{
+            alert('Vous ne pouvez pas entrer!')
+            next({
+                name: "home" // back to safety route //
+              });
+        }
+    }  },
     {path : '/settings', component : Settingssingle, name : 'settings', meta: { route: 'settings' }, beforeEnter(to, from, next){
-            console.log(store.getters.getUser.role=='admin')
-            if (store.getters.getUser.role=='admin'){
+            console.log(store.getters.getUser.role=='superadmin')
+            if (store.getters.getUser.role=='superadminadmin'){
                 next()
             }else{
                 alert('Vous ne pouvez pas entrer!')
@@ -35,15 +48,15 @@ const routes = [
                   });
             }
     } },
-    {path : '/abonnements/:id', component : Abonnementssingle, name : 'Abonnementssingle', props: true, meta: { route: 'Abonnementssingle' } },
-    {path : '/abonnements', component : Abonnementslist , name : 'Abonnementslist', props: true, meta: { route: 'Abonnementslist' } },
-    {path : '/createabonnements', component : Abonnementscreate , name : 'Abonnementscreate', props: true, meta: { route: 'Abonnementscreate' } },
-    {path : '/formules/:id', component : Formulessingle, name : 'Formulessingle', props: true, meta: { route: 'Formulessingle' } },
-    {path : '/formules', component : Formuleslist , name : 'Formuleslist', props: true, meta: { route: 'Formuleslist' } },
-    {path : '/createformules', component : Formulescreate , name : 'Formulescreate', props: true, meta: { route: 'Formulescreate' } },
-    {path : '/companies/:id', component : Companiessingle, name : 'Companiessingle', props: true, meta: { route: 'Companiessingle' } },
-    {path : '/companies', component : Companieslist , name : 'Companieslist', props: true, meta: { route: 'Companieslist' } },
-    {path : '/createcompanies', component : Companiescreate , name : 'Companiescreate', props: true, meta: { route: 'Companiescreate' } },
+    {path : '/abonnements/:id', component : Abonnementssingle, name : 'Abonnementssingle', props: true, meta: { route: 'parametres' } },
+    {path : '/abonnements', component : Abonnementslist , name : 'Abonnementslist', props: true, meta: { route: 'parametres' } },
+    {path : '/createabonnements', component : Abonnementscreate , name : 'Abonnementscreate', props: true, meta: { route: 'parametres' } },
+    {path : '/formules/:id', component : Formulessingle, name : 'Formulessingle', props: true, meta: { route: 'parametres' } },
+    {path : '/formules', component : Formuleslist , name : 'Formuleslist', props: true, meta: { route: 'parametres' } },
+    {path : '/createformules', component : Formulescreate , name : 'Formulescreate', props: true, meta: { route: 'parametres' } },
+    {path : '/companies/:id', component : Companiessingle, name : 'Companiessingle', props: true, meta: { route: 'parametres' } },
+    {path : '/companies', component : Companieslist , name : 'Companieslist', props: true, meta: { route: 'parametres' } },
+    {path : '/createcompanies', component : Companiescreate , name : 'Companiescreate', props: true, meta: { route: 'parametres' } },
     
     {path : '*' , component : notFound, name : '404'}
 ]

@@ -15,7 +15,7 @@ trait IssueTokenTrait{
     		'client_secret' => $this->client->secret,
     		'scope' => $scope
     	];
-        if(!in_array($grantType, array('social', 'child'))){
+        if(!in_array($grantType, array('social'))){
 			$params['username'] = $request->username ?: $request->email;
 			if(is_numeric($params['username'])){
 				$params['phone'] = $params['username'];

@@ -35,18 +35,25 @@ Route::group( ['middleware' => 'auth' ], function(){
     Route::get('/companies', function () {
         return view('layouts.main');
     });
+    Route::get('/companies/{id}', function () {
+        return view('layouts.main');
+    });
     Route::get('/formules', function () {
         return view('layouts.main');
     });
     Route::get('/abonnements', function () {
         return view('layouts.main');
     });
-    Route::get('/createformules', function () {
+    Route::get('/createabonnements', function () {
         return view('layouts.main');
     });
     Route::get('/abonnements/{id}', function () {
         return view('layouts.main');
     });
+    Route::get('/createformules', function () {
+        return view('layouts.main');
+    });
+    
     Route::get('/edituser/{id}', function () {
         return view('layouts.main');
     });

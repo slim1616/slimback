@@ -24,6 +24,13 @@
 											<span class="link-collapse">Edit Profile</span>
 										</router-link>
 									</li>
+									<template v-if="['superadmin', 'admin'].includes(user.role)">
+									<li v-if="user.company_id!=null">
+										<router-link :to="{name : 'Companiessingle', params:{id : user.company_id}}">
+											<span class="link-collapse">Edit Company</span>
+										</router-link>
+									</li>
+									</template>
 									<li>
 										<router-link :to="{name : 'myPasswordChange'}">
 											<span class="link-collapse">Mot de passe</span>
@@ -46,11 +53,11 @@
 							</span>
 							<h4 class="text-section">Menu</h4>
 						</li>
-						<template v-if="['superadmin'].includes(user.role)">
+						<template v-if="['superadmin', 'admin'].includes(user.role)">
 							<li class="nav-item" :class="{active: $route.meta.route=='zones'}">
 								<a data-toggle="collapse" href="#base">
 									<i class="fas fa-building"></i>
-									<p>Batiments et accès</p>
+									<p>Mon Compte</p>
 									<span class="caret"></span>
 								</a>
 								<div class="collapse" id="base">
@@ -60,21 +67,12 @@
 												<span class="sub-item">Batiemnts</span>
 											</router-link>
 										</li>
-										<li>
-											<router-link :to="{name : 'ZonesList'}">
-												<span class="sub-item">Zones</span>
-											</router-link>
-										</li>
-										<li>
-											<router-link :to="{name : 'PortesList'}">
-												<span class="sub-item">Portes</span>
-											</router-link>
-										</li>
+										
 									</ul>
 								</div>
 							</li>
 						</template>
-						<template v-if="['superadmin', 'rh'].includes(user.role)">
+						<template v-if="['superadmin', 'admin'].includes(user.role)">
 							<li class="nav-item" :class="{active: $route.meta.route=='timezone'}">
 								<a data-toggle="collapse" href="#sidebarLayouts">
 									<i class="fas far fa-clock"></i>
@@ -88,22 +86,13 @@
 												<span class="sub-item">Time zones</span>
 											</router-link>
 										</li>
-										<li>
-											<router-link :to="{name : 'accessAffectations'}">
-												<span class="sub-item">Affectations d'accès</span>
-											</router-link>
-										</li>
-										<!-- <li>
-											<router-link :to="{name : 'rapportAffectations'}">
-												<span class="sub-item">Rapport des Affectations</span>
-											</router-link>
-										</li> -->
+									
 									</ul>
 								</div>
 							</li>
 						</template>
 						
-						<template v-if="['superadmin', 'rh'].includes(user.role)">
+						<template v-if="['superadmin', 'admin'].includes(user.role)">
 							<li class="nav-item" :class="{active: $route.meta.route=='historique'}">
 								<a data-toggle="collapse" href="#maps">
 									<i class="fas fa-file-alt"></i>
@@ -117,32 +106,27 @@
 												<span class="sub-item">Pointage</span>
 											</router-link>
 										</li>
-										<li>
-											<router-link :to="{name:'historique'}">
-												<span class="sub-item">Historique</span>
-											</router-link>
-										</li>
 									</ul>
 								</div>
 							</li>
 						</template>
-						<template v-if="['superadmin', 'rh'].includes(user.role)">
-							<li class="nav-item" :class="{active: $route.meta.route=='employe'}">
-								<a data-toggle="collapse" href="#employes">
+						<template v-if="['superadmin'].includes(user.role)">
+							<li class="nav-item" :class="{active: $route.meta.route=='parametres'}">
+								<a data-toggle="collapse" href="#params" :aria-expanded="$route.meta.route=='parametres'">
 									<i class="fas fa-user-lock"></i>
 									<p>Paramètres de l'app</p>
 									<span class="caret"></span>
 								</a>
-								<div class="collapse" id="employes">
+								<div class="collapse" id="params" :class="{show: $route.meta.route=='parametres'}">
 									<ul class="nav nav-collapse">
 										<li>
-											<router-link :to="{name:'Companieslist'}">
+											<router-link :to="{name:'Companieslist'}" >
 												<i class="fas fa-building"></i>
 												<p>Liste Companies</p>
 											</router-link>
 										</li>
 										<li>
-											<router-link :to="{name : 'Formuleslist'}">
+											<router-link :to="{name : 'Formuleslist'}" >
 												<i class="fas fa-calendar-alt"></i>
 												<p>Plans</p>
 											</router-link>
@@ -151,12 +135,6 @@
 											<router-link :to="{name:'Abonnementslist'}">
 												<i class="fas fa-sitemap"></i>
 												<p>Abonnements</p>
-											</router-link>
-										</li>
-										<li>
-											<router-link :to="{name : 'affectationEmploi'}">
-												<i class="far fa-calendar-alt"></i>
-												<p>Affectation des Emplois</p>
 											</router-link>
 										</li>
 									</ul>

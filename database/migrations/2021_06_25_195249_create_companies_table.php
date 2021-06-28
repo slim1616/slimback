@@ -17,12 +17,21 @@ class CreateCompaniesTable extends Migration
             $table->id();
             $table->string('title');
             $table->enum('type', ['SUARL','SARL','SA'])->default('SA');
+            $table->string('adresse')->nullable();
+            $table->string('email')->nullable();
+            $table->string('tel')->nullable();
+            $table->string('codetva')->nullable();
             $table->bigInteger('user_id')->unsigned()->default(1);
             $table->foreign('user_id')->references('id')->on('users');
             $table->timestamps();
         });
+        
+        Schema::table('users', function (Blueprint $table) {
+            $table->bigInteger('company_id')->unsigned()->nullable();
+            $table->foreign('company_id')->references('id')->on('companies');
+            
+        });
     }
-
     /**
      * Reverse the migrations.
      *

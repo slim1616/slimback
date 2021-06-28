@@ -64,7 +64,7 @@
                                 </template>
                             </td>
                             <td>
-                                <template v-if="user.role=='admin'">
+                                <template v-if="user.role=='superadmin'">
                                     <div class="header-btns">
                                     <router-link :to="{name : 'editUser', params : {id : u.id}}" class="btn btn-icon btn-round btn-info edituser">
                                         <i class="fa fa-edit"></i>

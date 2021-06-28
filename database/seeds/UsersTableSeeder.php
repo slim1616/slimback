@@ -20,6 +20,7 @@ class UsersTableSeeder extends Seeder
             'nom' => 'BOUAZIZ',
             'role_id' => 1,
             'password' => bcrypt('000000'),
+        
 
         ]);
         $media = $user->addMediaFromUrl(asset('img/avatar.jpg'))->toMediaCollection('avatar');
@@ -33,6 +34,7 @@ class UsersTableSeeder extends Seeder
             'nom' => 'BOUAZIZ',
             'role_id' => 2,
             'password' => bcrypt('000000'),
+        
 
         ]);
         $user1->avatar_id = $media->id;
@@ -45,6 +47,7 @@ class UsersTableSeeder extends Seeder
             'nom' => 'BOUAZIZ',
             'role_id' => 3,
             'password' => bcrypt('000000'),
+        
 
         ]);
 

@@ -93,9 +93,14 @@
                             <div class="col-sm-4">
                                 <div class="form-group">
                         
-                                                                  <label>Start_at</label>
-                                          <input class="form-control" type="number" v-model="form.start_at"/>
-                                                
+                        
+                                                                           
+                                       <datetime v-model="form.start_at"
+                                       value-zone="Africa/Tunis"
+                                       type="date"
+                                       format="yyyy-MM-dd"
+                                       input-class="form-control"/>
+                                                                                    
                         
                                 </div>
                             </div>
@@ -103,9 +108,14 @@
                             <div class="col-sm-4">
                                 <div class="form-group">
                         
-                                                                  <label>End_at</label>
-                                          <input class="form-control" type="number" v-model="form.end_at"/>
-                                                
+                        
+                                                                           
+                                       <datetime v-model="form.end_at"
+                                       value-zone="Africa/Tunis"
+                                       type="date"
+                                       format="yyyy-MM-dd"
+                                       input-class="form-control"/>
+                                                                                    
                         
                                 </div>
                             </div>
@@ -134,11 +144,13 @@
 
 <script>
 import { Form, HasError, AlertError } from 'vform'
-
+import * as moment from 'moment';
+import { Datetime } from 'vue-datetime';
+import 'vue-datetime/dist/vue-datetime.css'
 
 export default {
   name: 'Abonnement',
-  components: {HasError},
+  components: {HasError, Datetime},
   data: function(){
     return {
       loaded: false,
@@ -204,6 +216,19 @@ export default {
       var that = this;
 
         this.$store.dispatch('setLoader', true)
+                
+                        
+                        
+                        
+                        
+        
+            this.form.start_at = moment(this.form.start_at).format('YYYY-MM-DD')
+                        
+        
+            this.form.end_at = moment(this.form.end_at).format('YYYY-MM-DD')
+                        
+                        
+                
         this.form.put('/api/abonnements/'+this.$route.params.id)
           .then(function(response){
               that.$store.dispatch('setLoader', false)

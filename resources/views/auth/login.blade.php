@@ -81,8 +81,8 @@
 						<h4>Login Via Social Account</h4>
 						<ul>
 							<!-- <li><a href="{{url('login/apple')}}" style="background: #000;border: solid 1px #000;"><i class="fa fa-apple"></i>Login Via Apple</a></li> -->
-							<li><a href="{{url('login/facebook')}}" title="" class="facebook"><i class="fa fa-facebook"></i>Login Via Facebook</a></li>
-							<li><a href="login/google" title="" class="google"><i class="fa fa-google"></i>Login Via Google</a></li>
+							<li><a href="{{url('login/facebook')}}" title="" class="facebook"><i class="fa fa-facebook"></i>Login</a></li>
+							<li><a href="login/google" title="" class="google"><i class="fa fa-google"></i>Login</a></li>
 						</ul>
 					</div>
 

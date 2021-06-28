@@ -18,7 +18,7 @@ class {{ $data['singular'].'Resource' }} extends JsonResource
                     '{{$field['name']}}' => $this->{{$field['name']}},
                     @if(count($field['relation'])>0)
         
-                    '{{strtolower($field['relation']['relation_name'])}}' => $this->{{$field['relation']['relation_name']}}->title,
+                    '{{strtolower($field['relation']['relation_name'])}}' => $this->{{$field['relation']['relation_name']}}->{{$field['relation']['relation_name']=='User' ? 'name' :'title'}},
                     @endif
             @endforeach
         ];

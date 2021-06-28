@@ -27,7 +27,7 @@ class AbonnementResource extends JsonResource
                                         
                     'user_id' => $this->user_id,
                             
-                    'user' => $this->User->title,
+                    'user' => $this->User->name,
                                         
                     'start_at' => $this->start_at,
                                         
