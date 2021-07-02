@@ -102,6 +102,7 @@ import { Form, HasError, AlertError } from 'vform'
 import * as moment from 'moment';
 import { Datetime } from 'vue-datetime';
 import 'vue-datetime/dist/vue-datetime.css'
+import {mapGetters} from 'vuex'
 
 
 export default {
@@ -167,8 +168,10 @@ export default {
         @foreach($data['fields'] as $field)
         
         @if($field['type']=='date')
-
-            this.form.{{$field['name']}} = moment(this.form.{{$field['name']}}).format('YYYY-MM-DD')
+            
+        if (this.form.{{$field['name']}}!=""){
+                this.form.{{$field['name']}} = moment(this.form.{{$field['name']}}).format('YYYY-MM-DD')
+        }
         @endif
         @endforeach
       this.form.post('{{config('vueApi.vue_url_prefix')}}/{{ $data['plural_lower'] }}')
@@ -193,6 +196,11 @@ export default {
       });  
     },
 
+  },
+  computed:{
+      ...mapGetters({
+          user : 'getUser',
+      })
   }
 }
 </script>

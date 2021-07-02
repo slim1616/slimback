@@ -215,11 +215,15 @@ export default {
                         
                         
                         
-        
-            this.form.start_at = moment(this.form.start_at).format('YYYY-MM-DD')
+                    
+        if (this.form.start_at!=""){
+                this.form.start_at = moment(this.form.start_at).format('YYYY-MM-DD')
+        }
                         
-        
-            this.form.end_at = moment(this.form.end_at).format('YYYY-MM-DD')
+                    
+        if (this.form.end_at!=""){
+                this.form.end_at = moment(this.form.end_at).format('YYYY-MM-DD')
+        }
                         
                         
                       this.form.post('/api/abonnements')

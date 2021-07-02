@@ -34,7 +34,8 @@
                                 <div class="form-group">
                         
                         
-                                                                              <label>Title</label>
+                                                                            
+                                          <label>Title</label>
                                           <input class="form-control" type="text" v-model="form.title"  maxlength="255" />
                                                             
                                           <has-error :form="form" field="title"></has-error>
@@ -67,6 +68,30 @@
                                 </div>
                             </div>
                                                                         
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                        
+                                                                  <label>Nbsurvey</label>
+                                          <input class="form-control" type="number" v-model="form.nbsurvey"/>
+                        
+                                          <has-error :form="form" field="nbsurvey"></has-error>
+                                                
+                        
+                                </div>
+                            </div>
+                                                                        
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                        
+                                                                  <label>Nbsemplacements</label>
+                                          <input class="form-control" type="number" v-model="form.nbsemplacements"/>
+                        
+                                          <has-error :form="form" field="nbsemplacements"></has-error>
+                                                
+                        
+                                </div>
+                            </div>
+                                                                        
                            
 
                                           <input class="form-control" type="hidden" v-model="form.created_at"/>
@@ -91,15 +116,19 @@
 
 <script>
 import { Form, HasError, AlertError } from 'vform'
-
+import * as moment from 'moment';
+import { Datetime } from 'vue-datetime';
+import 'vue-datetime/dist/vue-datetime.css'
 
 export default {
   name: 'Formule',
-  components: {HasError},
+  components: {HasError, Datetime},
   data: function(){
     return {
       loaded: false,
                 
+                        
+                        
                         
                         
                         
@@ -110,6 +139,8 @@ export default {
                                 title : "",
                                 online : "",
                                 price : "",
+                                nbsurvey : "",
+                                nbsemplacements : "",
                                 created_at : "",
                                 updated_at : "",
                   })
@@ -131,6 +162,8 @@ export default {
                         
                         
                         
+                        
+                        
                         that.loaded = true;
       }).catch(function(e){
           if (e.response && e.response.status == 404) {
@@ -143,6 +176,15 @@ export default {
       var that = this;
 
         this.$store.dispatch('setLoader', true)
+                
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                
         this.form.put('/api/formules/'+this.$route.params.id)
           .then(function(response){
               that.$store.dispatch('setLoader', false)

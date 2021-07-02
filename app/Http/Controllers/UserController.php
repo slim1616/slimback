@@ -30,6 +30,14 @@ class UserController extends Controller
         return back();
     }
 
+    public function UsersCompany(Request $request){
+        $user = $request->user();
+        if ($user->Role->slug=='admin'){
+            return response(['status' => true, 'users' => UserResourceSec::collection($user->Company->Users)]); 
+        }else{
+            return response(['status' => true, 'users' => []]); 
+        }
+    }
     
     public function getSingleUser(Request $request, $id){
         $user= User::find($id);
@@ -81,6 +89,7 @@ class UserController extends Controller
                 $user->email = $request->email;
                 $user->adress = $request->adress;
                 $user->sexe = $request->sexe;
+                $user->fonction = $request->fonction;
                 $user->role_id = $request->role_id;
                 // $user->birthday = $request->birthday;
                 // $user->postal_code = $request->postal_code;
@@ -101,7 +110,50 @@ class UserController extends Controller
             return response()->json( ["status" => false, "msg" => 'Not Allowaed' ]);
         }
     }
-
+    public function editSingleComanyUser(Request $request){
+        if ($request->user()->Role->slug=="admin"){
+            $validator = Validator::make($request->all(), [
+                'nom' => 'required|min:3',
+                'prenom' => 'required',
+                'email' => 'required|email',
+                ]);
+            
+            if ($validator->fails()){
+                return response()->json( ["status" => false, "errors" => $validator->errors() ] );
+            }
+            $user = User::find($request->id);
+            if ($user){
+                if ($user->Company->id==$request->user()->Company->id){
+                    $user->nom = $request->nom;
+                    $user->prenom = $request->prenom;
+                    $user->phone = $request->phone;
+                    $user->email = $request->email;
+                    $user->adress = $request->adress;
+                    $user->sexe = $request->sexe;
+                    $user->fonction = $request->fonction;
+                    $user->role_id = $request->role_id;
+                    // $user->birthday = $request->birthday;
+                    // $user->postal_code = $request->postal_code;
+                    if (!is_null($request->active)){
+                        $user->active = $request->active==true? true : false;
+                        // dd($employe->active);
+                    }
+                    try{
+                        $user->save();
+                    }catch(Exception $e){
+                        return response()->json( ["status" => false, "msg" => $e->getMessage() ]);
+                    }
+                    return response()->json( ["status" => true, "user" => new UserResourceSec($user) ]);
+                }else{
+                    return response()->json( ["status" => false, "msg" => 'Not Allowaed' ]);   
+                }
+            }else{
+                return response()->json( ["status" => false, "msg" => "utilisateur n'existe pas" ]);    
+            }
+        }else{
+            return response()->json( ["status" => false, "msg" => 'Not Allowaed' ]);
+        }
+    }
     
     public function changePassword(Request $request){
         // dd($request->all());
@@ -147,6 +199,47 @@ class UserController extends Controller
             return response()->json(['succes' => true, 'msg' => 'Password updated succussful', 'user' =>  new UserResourceSec($user)]);
         }
     }
+    
+    public function adduserCompany(Request $request){
+        if ($request->user()->Role->slug=="admin"){
+            $validator = Validator::make($request->all(), [
+                'nom' => 'required|min:3',
+                'prenom' => 'required',
+                'email' => 'required|email|unique:users',
+                ]);
+            
+            if ($validator->fails()){
+                return response()->json( ["status" => false, "errors" => $validator->errors() ] );
+            }
+            $user = new  User();
+            $user->nom = $request->nom;
+            $user->prenom = $request->prenom;
+            $user->phone = $request->phone;
+            $user->email = $request->email;
+            $user->adress = $request->adress;
+            $user->sexe = $request->sexe;
+            $user->fonction = $request->fonction;
+            $user->role_id = $request->role_id;
+            $user->company_id = $request->user()->Company->id;
+            if (!is_null($request->active)){
+                $user->active = $request->active==true? true : false;
+                // dd($employe->active);
+            }
+            if ($request->password==$request->passwordconfirm){
+                $user->password = Hash::make($request->password);
+            }
+            // $user->birthday = $request->birthday;
+            // $user->postal_code = $request->postal_code;
+            try{
+                $user->save();
+            }catch(Exception $e){
+                return response()->json( ["status" => false, "msg" => $e->getMessage() ]);
+            }
+            return response()->json( ["status" => true, "user" => new UserResourceSec($user) ]);
+        }else{
+            return response()->json( ["status" => false, "msg" => 'Not Allowaed' ]);
+        }   
+    }
     public function add(Request $request)
     {
         // dd($request->all());
@@ -167,6 +260,7 @@ class UserController extends Controller
             $user->email = $request->email;
             $user->adress = $request->adress;
             $user->sexe = $request->sexe;
+            $user->fonction = $request->fonction;
             $user->role_id = $request->role_id;
             if (!is_null($request->active)){
                 $user->active = $request->active==true? true : false;
@@ -241,6 +335,7 @@ class UserController extends Controller
             $user->email = $request->email;
             $user->adress = $request->adress;
             $user->sexe = $request->sexe;
+            $user->fonction = $request->fonction;
             
             // $user->birthday = $request->birthday;
             // $user->postal_code = $request->postal_code;
@@ -261,11 +356,21 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
-    {
-        $user = User::findOrfail($id);
-        $user->delete();
-        return response()->json(["status" => true, "msg" => "User deleted"]);
+    public function destroy(Request $request, $id)
+    {   
+        if ($request->User()->Role->slug=='superadmin'){
+            $user = User::findOrfail($id);
+            $user->delete();
+            return response()->json(["status" => true, "msg" => "User deleted"]);
+        }elseif ($request->User()->Role->slug=='admin'){
+            $user = User::findOrfail($id);
+            if ($user->Company->id==$request->User()->Company->id){
+                $user->delete();
+                return response()->json(["status" => true, "msg" => "User deleted"]);
+            }
+        }else{
+            return response()->json( ["status" => false, "msg" => 'Not Allowaed' ]);
+        }
     }
 
     public function rolesList(Request $request)

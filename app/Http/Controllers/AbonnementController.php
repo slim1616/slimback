@@ -52,6 +52,11 @@ class AbonnementController extends Controller
       return response(AbonnementResource::collection(Abonnement::get()));
     }
     
+    public function CompanyAbs(Request $request){
+      $user = $request->user();
+      return response(AbonnementResource::collection($user->Company->Abonnements));
+    }
+    
     public function create(Request $request){
         
       $validatedData = $request->validate([

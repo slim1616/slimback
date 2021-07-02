@@ -23,6 +23,6 @@ class Formule extends Model
     protected $casts = [
         ''
     ];
-                                                                                
+                                                                                                        
     
     } ?>

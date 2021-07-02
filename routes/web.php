@@ -12,10 +12,11 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+Auth::routes();
+
 Route::get('login/{provider}', 'SocialController@redirect');
 Route::get('login/{provider}/callback', 'SocialController@callback');
 
-Auth::routes();
 
 
 Route::group( ['middleware' => 'auth' ], function(){
@@ -79,6 +80,9 @@ Route::group( ['middleware' => 'auth' ], function(){
     Route::get('/404', function () {
         return view('layouts.main');
     });
+    Route::get('{any}', function () {
+        return view('layouts.main');
+    })->where('any', '.*');
     
 });
 

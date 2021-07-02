@@ -35,7 +35,7 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
 <body>
-        <div class="wrapper" id="app" data-user="{{Auth::user()? Auth::user()->id : null}}">
+        <div class="wrapper" :class="{ 'sidebar_minimize' : hideSideBar }" id="app" data-user="{{Auth::user()? Auth::user()->id : null}}">
                 @yield('content')
         </div>
 	<!-- <script src="//{{ Request::getHost() }}:6001/socket.io/socket.io.js"></script> -->

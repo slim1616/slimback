@@ -4,7 +4,7 @@ import Vuex from 'vuex';
 import VueNotification from "@kugatsu/vuenotification";
 import JsonExcel from "vue-json-excel";
 import VueToastify from "vue-toastify";
-
+import {mapGetters} from 'vuex';
 Vue.use(VueToastify);
 Vue.component("downloadExcel", JsonExcel);
 
@@ -13,7 +13,7 @@ Vue.use(VueNotification, {
 });
 Vue.use(VueRouter)
 Vue.use(Vuex);
-
+import {store} from './store.js';
 require('./bootstrap');
 
 // window.Vue = require('vue');
@@ -25,7 +25,7 @@ const router = new VueRouter({
     
 })
 
-import {store} from './store.js';
+
 
 /**
  * The following block of code may be used to automatically register your
@@ -45,6 +45,7 @@ import navigation from './template/navigation'
 import loader from './template/loader'
 
 const app = new Vue({
+   
     components : {headerSite, navigation, loader},
     el: '#app',
     router,
@@ -89,5 +90,10 @@ const app = new Vue({
            console.log('mounted App')
         
 
+    },
+    computed:{
+        ...mapGetters({
+            hideSideBar : 'getSideBarHide'
+        })
     }
 });

@@ -16,7 +16,9 @@ class DatabaseSeeder extends Seeder
         $this->call(UsersTableSeeder::class);
         $this->call(CompanySeeder::class);
         $this->call(FormuleSeeder::class);
+        $this->call(AbonnementSeeder::class);
         $this->call(SettingSeeder::class);
+        
 
         
         

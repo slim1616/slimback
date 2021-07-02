@@ -32,24 +32,44 @@
                 
                                                           <div class="col-sm-4">
                       <div class="form-group">
-                                                                                                      <label>Title</label>
-                                          <input class="form-control" type="text" v-model="form.title"  maxlength="255" />
-                                                                          <has-error :form="form" field="title"/>
-                                                          </div>
+                                                                                                                <label>Title</label>
+                                                <input class="form-control" type="text" v-model="form.title"  maxlength="255" />
+                                                      
+                <has-error :form="form" field="title"/>
+                                    
+                      </div>
                   </div>
                                                           <div class="col-sm-4">
                       <div class="form-group">
                                                     <label>Online</label>
                             <input class="form-control" type="number" v-model="form.online"/>
                                       <has-error :form="form" field="online"/>
-                                                          </div>
+                                    
+                      </div>
                   </div>
                                                           <div class="col-sm-4">
                       <div class="form-group">
                                                     <label>Price</label>
                             <input class="form-control" type="number" v-model="form.price"/>
                                       <has-error :form="form" field="price"/>
-                                                          </div>
+                                    
+                      </div>
+                  </div>
+                                                          <div class="col-sm-4">
+                      <div class="form-group">
+                                                    <label>Nbsurvey</label>
+                            <input class="form-control" type="number" v-model="form.nbsurvey"/>
+                                      <has-error :form="form" field="nbsurvey"/>
+                                    
+                      </div>
+                  </div>
+                                                          <div class="col-sm-4">
+                      <div class="form-group">
+                                                    <label>Nbsemplacements</label>
+                            <input class="form-control" type="number" v-model="form.nbsemplacements"/>
+                                      <has-error :form="form" field="nbsemplacements"/>
+                                    
+                      </div>
                   </div>
                                            
                   
@@ -77,14 +97,20 @@
 
 <script>
 import { Form, HasError, AlertError } from 'vform'
+import * as moment from 'moment';
+import { Datetime } from 'vue-datetime';
+import 'vue-datetime/dist/vue-datetime.css'
+
 
 export default {
   name: 'Formule',
-  components: {HasError},
+  components: {HasError, Datetime},
   data: function(){
     return {
       formules : false,
                 
+                        
+                        
                         
                         
                         
@@ -96,6 +122,8 @@ export default {
           title : "",
           online : "",
           price : "",
+          nbsurvey : "",
+          nbsemplacements : "",
           created_at : "",
           updated_at : "",
       })
@@ -114,6 +142,8 @@ export default {
               that.$store.dispatch('setLoader', false)
                 if (response.status==200||response.status==201){
                             
+                                                
+                                                
                                                 
                                                 
                                                 
@@ -139,7 +169,15 @@ export default {
     createFormule: function(){
       
       var that = this;
-      this.form.post('/api/formules')
+                
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                      this.form.post('/api/formules')
       .then(function(response){
               that.$store.dispatch('setLoader', false)
               if (response.status==200||response.status==201){

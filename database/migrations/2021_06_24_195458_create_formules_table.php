@@ -17,7 +17,10 @@ class CreateFormulesTable extends Migration
             $table->id();
             $table->string('title');
             $table->boolean('online')->default(true);
-            $table->double('price', 8,3)->default(0);
+            $table->double('price', 8.3)->default(0);
+            $table->integer('nbsurvey')->default(1);
+            $table->integer('nbmois')->default(1);
+            $table->integer('nbsemplacements')->default(1);
             $table->timestamps();
         });
     }

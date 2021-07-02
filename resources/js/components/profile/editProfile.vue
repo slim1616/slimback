@@ -65,6 +65,12 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="col-sm-4">
+                            <div class="form-groFonctionup">
+                                <label for="">Tel </label>
+                                <input type="text" class="form-control" id="" aria-describedby="" v-model="user.fonction" placeholder="fonction">
+                            </div>
+                        </div>
                     </div>
                     <div class="row">
                         <div class="col-sm-8">

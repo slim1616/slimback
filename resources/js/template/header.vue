@@ -129,9 +129,19 @@
 									</li>
 									<li>
 										<div class="dropdown-divider"></div>
-										<router-link :to="{name : 'editProfile'}" class="dropdown-item" href="#">My Profile</router-link>
+										<router-link :to="{name : 'editProfile'}" class="dropdown-item">
+											Mon Profil
+										</router-link>
 										<div class="dropdown-divider"></div>
-										<a class="dropdown-item" href="#">Mon Profil</a>
+										<router-link :to="{name : 'myPasswordChange'}" class="dropdown-item">
+											Mot de passe
+										</router-link>
+										<div class="dropdown-divider"></div>
+										<template v-if="user.company_id!=null">
+											<router-link :to="{name : 'Companiessingle', params:{id : user.company_id}}" class="dropdown-item">
+												<span class="link-collapse">{{user.company}}</span>
+											</router-link>
+										</template>
 										<div class="dropdown-divider"></div>
 										<a class="dropdown-item" href="#" @click.prevent.stop="logout()">Déconnexion</a>
 									</li>
@@ -142,6 +152,137 @@
 				</div>
 			</nav>
 			<!-- End Navbar -->
+			<div class="modal fade" id="plan-choser-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+				<div class="modal-dialog modal-lg" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title" id="exampleModalLabel">Choisir une formule</h5>
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+						<div class="modal-body">
+							<div class="row justify-content-center align-items-center mb-1">
+								<div class="col-md-3 pl-md-0">
+									<div class="card card-pricing">
+										<div class="card-header">
+											<h4 class="card-title">Basic</h4>
+											<div class="card-price">
+												<span class="price">$25</span>
+												<span class="text">/mo</span>
+											</div>
+										</div>
+										<div class="card-body">
+											<ul class="specification-list">
+												<li>
+													<span class="name-specification">Customizer</span>
+													<span class="status-specification">14 days trial</span>
+												</li>
+												<li>
+													<span class="name-specification">Chat History</span>
+													<span class="status-specification">No</span>
+												</li>
+												<li>
+													<span class="name-specification">Statistics</span>
+													<span class="status-specification">14 days trial</span>
+												</li>
+												<li>
+													<span class="name-specification">Support</span>
+													<span class="status-specification">Yes</span>
+												</li>
+												<li>
+													<span class="name-specification">Live Support</span>
+													<span class="status-specification">No</span>
+												</li>
+											</ul>
+										</div>
+										<div class="card-footer">
+											<button class="btn btn-primary btn-block"><b>Get Started</b></button>
+										</div>
+									</div>
+								</div>
+								<div class="col-md-3 pl-md-0 pr-md-0">
+									<div class="card card-pricing card-pricing-focus card-primary">
+										<div class="card-header">
+											<h4 class="card-title">Professional</h4>
+											<div class="card-price">
+												<span class="price">$35</span>
+												<span class="text">/mo</span>
+											</div>
+										</div>
+										<div class="card-body">
+											<ul class="specification-list">
+												<li>
+													<span class="name-specification">Customizer</span>
+													<span class="status-specification">Yes</span>
+												</li>
+												<li>
+													<span class="name-specification">Chat History</span>
+													<span class="status-specification">3 Month</span>
+												</li>
+												<li>
+													<span class="name-specification">Statistics</span>
+													<span class="status-specification">3 Month</span>
+												</li>
+												<li>
+													<span class="name-specification">Support</span>
+													<span class="status-specification">Yes</span>
+												</li>
+												<li>
+													<span class="name-specification">Live Support</span>
+													<span class="status-specification">Yes</span>
+												</li>
+											</ul>
+										</div>
+										<div class="card-footer">
+											<button class="btn btn-light btn-block"><b>Get Started</b></button>
+										</div>
+									</div>
+								</div>
+								<div class="col-md-3 pr-md-0">
+									<div class="card card-pricing">
+										<div class="card-header">
+											<h4 class="card-title">Team</h4>
+											<div class="card-price">
+												<span class="price">$75</span>
+												<span class="text">/mo</span>
+											</div>
+										</div>
+										<div class="card-body">
+											<ul class="specification-list">
+												<li>
+													<span class="name-specification">Customizer</span>
+													<span class="status-specification">Yes</span>
+												</li>
+												<li>
+													<span class="name-specification">Chat History</span>
+													<span class="status-specification">1 Year</span>
+												</li>
+												<li>
+													<span class="name-specification">Statistics</span>
+													<span class="status-specification">1 Year</span>
+												</li>
+												<li>
+													<span class="name-specification">Support</span>
+													<span class="status-specification">Yes</span>
+												</li>
+												<li>
+													<span class="name-specification">Live Support</span>
+													<span class="status-specification">Yes</span>
+												</li>
+											</ul>
+										</div>
+										<div class="card-footer">
+											<button class="btn btn-primary btn-block"><b>Get Started</b></button>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						
+					</div>
+				</div>
+			</div>
 		</div>
 
 </template>

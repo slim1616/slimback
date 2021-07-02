@@ -23,6 +23,11 @@ class FormuleResource extends JsonResource
                                         
                     'price' => $this->price,
                                         
+                    'nbsurvey' => $this->nbsurvey,
+                    'nbmois' => $this->nbmois,
+                                        
+                    'nbsemplacements' => $this->nbsemplacements,
+                                        
                     'created_at' => $this->created_at,
                                         
                     'updated_at' => $this->updated_at,

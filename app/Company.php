@@ -29,9 +29,24 @@ class Company extends Model
                 return $this->belongsTo('App\User', 'user_id');
             }
                                         
-            
+            public function Emplacements(){
+                return $this->hasMany('App\Emplacement');
+            }
             public function Abonnements(){
                 return $this->hasMany('App\Abonnement');
+            }
+        
+            public function Users(){
+                return $this->hasMany('App\User');
+            }
+        
+        
+            public function Enquetes(){
+                return $this->hasMany('App\Enquete');
+            }
+        
+            public function Questions(){
+                return $this->hasMany('App\Question');
             }
         
     

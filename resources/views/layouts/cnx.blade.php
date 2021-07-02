@@ -30,14 +30,7 @@
 
                 @yield('content')
 
-        <script src="{{ asset('cnx/vendor/jquery/jquery-3.2.1.min.js')}}"></script>
-<!--===============================================================================================-->
-	<script src="{{ asset('cnx/vendor/bootstrap/js/popper.js')}}"></script>
-	<script src="{{ asset('cnx/vendor/bootstrap/js/bootstrap.min.js')}}"></script>
-<!--===============================================================================================-->
-	<script src="{{ asset('cnx/vendor/select2/select2.min.js')}}"></script>
-<!--===============================================================================================-->
-	<script src="{{ asset('cnx/js/main.js')}}"></script>
+
 
   
     

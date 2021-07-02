@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 use Validator,Redirect,Response,File;
 use Socialite;
 use App\User;
+use App\Abonnement;
+use App\Company;
+use App\Emplacement;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -88,6 +91,19 @@ class SocialController extends Controller
                 return $user;
             }
         }
+        $company = new Company();
+        $company->title = $nameuser;
+        $company->type = 'Personnel';
+        $company->user_id = $user->id;
+        $company->save();
+        $emplacement = Emplacement::create(['title' => 'Siège '.$company->title , 'company_id' => $company->id, 'user_id' => $user->id]);
+        $user->company_id = $company->id;
+        $user->save();
+        $abonnement = new Abonnement ();
+        $abonnement->formule_id = 1;
+        $abonnement->company_id = $company->id;
+        $abonnement->user_id = $user->id;
+        $abonnement->save();
         return $user;
     }
 

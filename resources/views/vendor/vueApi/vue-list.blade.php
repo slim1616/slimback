@@ -86,6 +86,8 @@
 
 <script>
 import { Form, HasError, AlertError } from 'vform'
+import {mapGetters} from 'vuex'
+
 export default {
   name: '{{ $data['singular'] }}',
   components: {HasError},
@@ -177,6 +179,11 @@ export default {
       
       
     }
+  },
+  computed:{
+      ...mapGetters({
+          user : 'getUser',
+      })
   }
 }
 </script>

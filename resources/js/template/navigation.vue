@@ -19,23 +19,27 @@
 
 							<div class="collapse in" id="collapseExample">
 								<ul class="nav">
-									<li>
-										<router-link :to="{name : 'editProfile'}">
-											<span class="link-collapse">Edit Profile</span>
-										</router-link>
-									</li>
-									<template v-if="['superadmin', 'admin'].includes(user.role)">
-									<li v-if="user.company_id!=null">
-										<router-link :to="{name : 'Companiessingle', params:{id : user.company_id}}">
-											<span class="link-collapse">Edit Company</span>
-										</router-link>
-									</li>
+									
+									<template v-if="['admin','user'].includes(user.role)">
+										<li v-if="user.company_id!=null">
+											<router-link :to="{name : 'Companiessingle', params:{id : user.company_id}}">
+												<span class="link-collapse">{{user.company}}</span>
+											</router-link>
+										</li>
+										<li v-if="user.company_id!=null">
+											<template v-if="user.currentAbonnement!=null">
+												<router-link :to="{name : 'Abonnementssingle', params:{id : user.currentAbonnement.id}}">
+													<span class="link-collapse">{{user.currentFormule.title}}</span>
+												</router-link>
+											</template>
+											<template v-else>
+												<router-link to="#">
+													<span class="link-collapse">{{user.currentFormule.title}}</span>
+												</router-link>
+											</template>
+										</li>
 									</template>
-									<li>
-										<router-link :to="{name : 'myPasswordChange'}">
-											<span class="link-collapse">Mot de passe</span>
-										</router-link>
-									</li>
+									
 								</ul>
 							</div>
 						</div>
@@ -53,18 +57,28 @@
 							</span>
 							<h4 class="text-section">Menu</h4>
 						</li>
-						<template v-if="['superadmin', 'admin'].includes(user.role)">
-							<li class="nav-item" :class="{active: $route.meta.route=='zones'}">
+						<template v-if="['superadmin', 'admin', 'user'].includes(user.role)">
+							<li class="nav-item" :class="{active: $route.meta.route=='menu'}">
 								<a data-toggle="collapse" href="#base">
 									<i class="fas fa-building"></i>
 									<p>Mon Compte</p>
 									<span class="caret"></span>
 								</a>
-								<div class="collapse" id="base">
+								<div class="collapse" id="base" :class="{show: $route.meta.route=='menu'}">
 									<ul class="nav nav-collapse">
 										<li>
-											<router-link :to="{name : 'BatimentsList'}">
-												<span class="sub-item">Batiemnts</span>
+											<router-link :to="{name : 'Enqueteslist'}">
+												<span class="sub-item">Enquetes</span>
+											</router-link>
+										</li>
+										<li>
+											<router-link :to="{name : 'MesEmplacements'}">
+												<span class="sub-item">Emplacements</span>
+											</router-link>
+										</li>
+										<li>
+											<router-link :to="{name : 'Questionslist'}">
+												<span class="sub-item">Questions</span>
 											</router-link>
 										</li>
 										
@@ -72,25 +86,7 @@
 								</div>
 							</li>
 						</template>
-						<template v-if="['superadmin', 'admin'].includes(user.role)">
-							<li class="nav-item" :class="{active: $route.meta.route=='timezone'}">
-								<a data-toggle="collapse" href="#sidebarLayouts">
-									<i class="fas far fa-clock"></i>
-									<p>Horaires de travail</p>
-									<span class="caret"></span>
-								</a>
-								<div class="collapse" id="sidebarLayouts">
-									<ul class="nav nav-collapse">
-										<li>
-											<router-link :to="{name : 'TimezonesList'}">
-												<span class="sub-item">Time zones</span>
-											</router-link>
-										</li>
-									
-									</ul>
-								</div>
-							</li>
-						</template>
+			
 						
 						<template v-if="['superadmin', 'admin'].includes(user.role)">
 							<li class="nav-item" :class="{active: $route.meta.route=='historique'}">
@@ -110,6 +106,7 @@
 								</div>
 							</li>
 						</template>
+						<!-- superadmin -->
 						<template v-if="['superadmin'].includes(user.role)">
 							<li class="nav-item" :class="{active: $route.meta.route=='parametres'}">
 								<a data-toggle="collapse" href="#params" :aria-expanded="$route.meta.route=='parametres'">
@@ -164,7 +161,7 @@
 								</div>
 							</li>
 						</template>
-						<template v-if="user.role=='admin'">
+						<template v-if="user.role=='superadmin'">
 							<li class="nav-item" :class="{active: $route.meta.route=='settings'}">
 									<router-link :to="{name:'settings'}">
 										<i class="fas fa-cogs"></i>
@@ -173,9 +170,53 @@
 								
 							</li>
 						</template>
+						<!-- superadmin -->
+
+						<!-- admin -->
+						<template v-if="user.role=='admin'">
+							<li class="nav-item" :class="{active: $route.meta.route=='user'}">
+								<a data-toggle="collapse" href="#params">
+									<i class="fas fa-user-lock"></i>
+									<p>Utisateurs</p>
+									<span class="caret"></span>
+								</a>
+								<div class="collapse" id="params" :class="{show: $route.meta.route=='user'}">
+									<ul class="nav nav-collapse">
+										<li>
+											<router-link :to="{name : 'CompanyUsersList'}">
+												<span class="sub-item">Liste</span>
+											</router-link>
+										</li>
+										<li>
+											<router-link :to="{name : 'CompanyAddUser'}">
+												<span class="sub-item">Ajouter</span>
+											</router-link>
+										</li>
+									</ul>
+								</div>
+							</li>
+						</template>
+						<!-- admin -->
+						<li class="nav-item" :class="{active: $route.meta.route=='details'}">
+							<a data-toggle="collapse" href="#params">
+								<i class="fas fa-user-lock"></i>
+								<p>App</p>
+								<span class="caret"></span>
+							</a>
+							<div class="collapse" id="params" :class="{show: $route.meta.route=='details'}">
+								<ul class="nav nav-collapse">
+									<li>
+										<router-link :to="{name : 'formulesView'}">
+											<span class="sub-item">Formules</span>
+										</router-link>
+									</li>
+								</ul>
+							</div>
+						</li>
 					</ul>
 				</div>
 			</div>
+			
 		</div>
 		<!-- End Sidebar -->
 </template>

@@ -16,7 +16,7 @@ class CreateCompaniesTable extends Migration
         Schema::create('companies', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->enum('type', ['SUARL','SARL','SA'])->default('SA');
+            $table->enum('type', ['Personnel','SUARL','SARL','SA'])->default('Personnel');
             $table->string('adresse')->nullable();
             $table->string('email')->nullable();
             $table->string('tel')->nullable();
@@ -28,7 +28,7 @@ class CreateCompaniesTable extends Migration
         
         Schema::table('users', function (Blueprint $table) {
             $table->bigInteger('company_id')->unsigned()->nullable();
-            $table->foreign('company_id')->references('id')->on('companies');
+            // $table->foreign('company_id')->references('id')->on('companies');
             
         });
     }

@@ -35,6 +35,10 @@
                                                                     <th scope="col">Online</th>
                                                                                                                          
                                                                     <th scope="col">Price</th>
+                                                                                                                         
+                                                                    <th scope="col">Nbsurvey</th>
+                                                                                                                         
+                                                                    <th scope="col">Nbsemplacements</th>
                                                                                                                                                                                                                                       <th scope="col">Actions</th>
                           </tr>
                         </thead>
@@ -57,6 +61,18 @@
                                                                                             <td>
                                                     <router-link :to="'/formules/'+formule.id">
                                                     <span v-html="formule.price"> </span>
+                                                    </router-link>
+                                                </td>
+                                                                                                                                                                   
+                                                                                            <td>
+                                                    <router-link :to="'/formules/'+formule.id">
+                                                    <span v-html="formule.nbsurvey"> </span>
+                                                    </router-link>
+                                                </td>
+                                                                                                                                                                   
+                                                                                            <td>
+                                                    <router-link :to="'/formules/'+formule.id">
+                                                    <span v-html="formule.nbsemplacements"> </span>
                                                     </router-link>
                                                 </td>
                                                                                                                                                                                                                                                                                                                     <td>
@@ -93,6 +109,8 @@ export default {
           title : "",
           online : "",
           price : "",
+          nbsurvey : "",
+          nbsemplacements : "",
           created_at : "",
           updated_at : "",
       })

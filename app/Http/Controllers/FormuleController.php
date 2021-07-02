@@ -16,6 +16,8 @@ class FormuleController extends Controller
                         
                         
                         
+                        
+                        
                 
         return response($response);
     }
@@ -23,6 +25,8 @@ class FormuleController extends Controller
      public function data(Request $request){
         $response = [];
                 
+                        
+                        
                         
                         
                         
@@ -41,14 +45,19 @@ class FormuleController extends Controller
       $validatedData = $request->validate([
         'title' => 'required |max:255 ',
         'online' => 'required |max:1 ',
-        'price' => 'required |max:8 ',
+        'price' => 'required ',
+        'nbsurvey' => 'required |max:11 ',
+        'nbsemplacements' => 'required |max:11 ',
       ],[
         'title.required' => 'title est obligatoire.',
         'title.max' => 'title doit avoir aux max 255 characters.',
         'online.required' => 'online est obligatoire.',
         'online.max' => 'online doit avoir aux max 1 characters.',
         'price.required' => 'price est obligatoire.',
-        'price.max' => 'price doit avoir aux max 8 characters.',
+        'nbsurvey.required' => 'nbsurvey est obligatoire.',
+        'nbsurvey.max' => 'nbsurvey doit avoir aux max 11 characters.',
+        'nbsemplacements.required' => 'nbsemplacements est obligatoire.',
+        'nbsemplacements.max' => 'nbsemplacements doit avoir aux max 11 characters.',
       ]);
 
         $formules = Formule::create($request->all());    
@@ -60,14 +69,19 @@ class FormuleController extends Controller
       $validatedData = $request->validate([
         'title' => 'required |max:255 ',
         'online' => 'required |max:1 ',
-        'price' => 'required |max:8 ',
+        'price' => 'required ',
+        'nbsurvey' => 'required |max:11 ',
+        'nbsemplacements' => 'required |max:11 ',
       ],[
         'title.required' => 'title est obligatoire.',
         'title.max' => 'title doit avoir aux max 255 characters.',
         'online.required' => 'online est obligatoire.',
         'online.max' => 'online doit avoir aux max 1 characters.',
         'price.required' => 'price est obligatoire.',
-        'price.max' => 'price doit avoir aux max 8 characters.',
+        'nbsurvey.required' => 'nbsurvey est obligatoire.',
+        'nbsurvey.max' => 'nbsurvey doit avoir aux max 11 characters.',
+        'nbsemplacements.required' => 'nbsemplacements est obligatoire.',
+        'nbsemplacements.max' => 'nbsemplacements doit avoir aux max 11 characters.',
       ]);
 
         $formules = Formule::findOrFail($id);

@@ -32,49 +32,58 @@
                 
                                                           <div class="col-sm-4">
                       <div class="form-group">
-                                                                                                      <label>Title</label>
-                                          <input class="form-control" type="text" v-model="form.title"  maxlength="255" />
-                                                                          <has-error :form="form" field="title"/>
-                                                          </div>
+                                                                                                                <label>Title</label>
+                                                <input class="form-control" type="text" v-model="form.title"  maxlength="255" />
+                                                      
+                <has-error :form="form" field="title"/>
+                                    
+                      </div>
                   </div>
                                                           <div class="col-sm-4">
                       <div class="form-group">
-                                                                                                        <label>Type</label>
+                                                                                                            <label>Type</label>
                                             <select class="form-control" v-model="form.type">
+                                                                                                    <option value="Personnel">Personnel</option>
                                                                                                     <option value="SUARL">SUARL</option>
                                                                                                     <option value="SARL">SARL</option>
                                                                                                     <option value="SA">SA</option>
                                                                                             </select>
-                                                                                  <has-error :form="form" field="type"/>
-                                                          </div>
+                                                      
+                <has-error :form="form" field="type"/>
+                                    
+                      </div>
                   </div>
                                                           <div class="col-sm-4">
                       <div class="form-group">
-                                                                                                      <label>Adresse</label>
-                                          <input class="form-control" type="text" v-model="form.adresse"  maxlength="255" />
-                                                                                              </div>
+                                                                                                                <label>Adresse</label>
+                                                <input class="form-control" type="text" v-model="form.adresse"  maxlength="255" />
+                                                                                
+                      </div>
                   </div>
                                                           <div class="col-sm-4">
                       <div class="form-group">
-                                                                                                      <label>Email</label>
-                                          <input class="form-control" type="text" v-model="form.email"  maxlength="255" />
-                                                                                              </div>
+                                                                                                                <label>Email</label>
+                                                <input class="form-control" type="text" v-model="form.email"  maxlength="255" />
+                                                                                
+                      </div>
                   </div>
                                                           <div class="col-sm-4">
                       <div class="form-group">
-                                                                                                      <label>Tel</label>
-                                          <input class="form-control" type="text" v-model="form.tel"  maxlength="255" />
-                                                                                              </div>
+                                                                                                                <label>Tel</label>
+                                                <input class="form-control" type="text" v-model="form.tel"  maxlength="255" />
+                                                                                
+                      </div>
                   </div>
                                                           <div class="col-sm-4">
                       <div class="form-group">
-                                                                                                      <label>Codetva</label>
-                                          <input class="form-control" type="text" v-model="form.codetva"  maxlength="255" />
-                                                                                              </div>
+                                                                                                                <label>Codetva</label>
+                                                <input class="form-control" type="text" v-model="form.codetva"  maxlength="255" />
+                                                                                
+                      </div>
                   </div>
                                                           <div class="col-sm-4">
                       <div class="form-group">
-                                                            
+                                                                
                                             <label>User</label>
                                             <select class="form-control" v-model="form.user_id">
                                                     
@@ -83,8 +92,10 @@
                                                     </option>
 
                                                 </select>
-                                                                                  <has-error :form="form" field="user_id"/>
-                                                          </div>
+                                                      
+                <has-error :form="form" field="user_id"/>
+                                    
+                      </div>
                   </div>
                                            
                   
@@ -112,10 +123,14 @@
 
 <script>
 import { Form, HasError, AlertError } from 'vform'
+import * as moment from 'moment';
+import { Datetime } from 'vue-datetime';
+import 'vue-datetime/dist/vue-datetime.css'
+
 
 export default {
   name: 'Company',
-  components: {HasError},
+  components: {HasError, Datetime},
   data: function(){
     return {
       companies : false,
@@ -190,7 +205,17 @@ export default {
     createCompany: function(){
       
       var that = this;
-      this.form.post('/api/companies')
+                
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                        
+                      this.form.post('/api/companies')
       .then(function(response){
               that.$store.dispatch('setLoader', false)
               if (response.status==200||response.status==201){

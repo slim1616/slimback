@@ -18,6 +18,7 @@ class AddfiledsUsersTable extends Migration
             $table->string('prenom')->nullable();
             $table->date('birthday')->nullable();
             $table->string('phone')->nullable();
+            $table->string('fonction')->default('DG')->nullable();
             $table->enum('sexe', ['M','F'])->default('M');
             $table->string('adress')->nullable();
             $table->integer('postal_code')->nullable();

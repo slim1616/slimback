@@ -6,6 +6,9 @@ use App\Http\Controllers\Api\Auth\IssueTokenTrait;
 use App\Http\Controllers\Controller;
 use App\SocialAccount;
 use App\User;
+use App\Abonnement;
+use App\Company;
+use App\Emplacement;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Validation\Rule;
@@ -119,8 +122,8 @@ class SocialAuthController extends Controller
         $this->socialUser = array(
             'email' => $email,
             'name' => str_replace(" ","_", $request->givenName) . time(),
-            'firstname' => $firstname,
-            'nameuser' => $nameuser,
+            'nom' => $firstname,
+            'prenom' => $nameuser,
             'provider' => $request->provider,
             'provider_id' => $request->provider_user_id
         );
@@ -141,6 +144,20 @@ class SocialAuthController extends Controller
             $user->avatar_id = $media->id;
             $user->save();
         }
+        $company = new Company();
+        $company->title = $nameuser;
+        $company->type = 'Personnel';
+        $company->user_id = $user->id;
+        $company->save();
+        $emplacement = Emplacement::create(['title' => 'Siège '.$company->title , 'company_id' => $company->id, 'user_id' => $user->id]);
+        $user->company_id = $company->id;
+        $user->save();
+        $abonnement = new Abonnement ();
+        $abonnement->formule_id = 1;
+        $abonnement->company_id = $company->id;
+        $abonnement->user_id = $user->id;
+        $abonnement->save();
+
         // dd($user);
         // return true;
 
