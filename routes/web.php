@@ -19,16 +19,12 @@ Route::get('login/{provider}/callback', 'SocialController@callback');
 
 
 
-Route::group( ['middleware' => 'auth' ], function(){
+
+Route::group( ['middleware' => 'auth' ,'prefix' => 'admin' ], function(){
     Route::post('file-import', 'UserController@fileImport')->name('file-import');
     Route::get('importusers', function(){
         return view('excel.import');
     });
-
-    Route::get('/', function () {
-        return view('layouts.main');
-    })->name('home');
-    
 
     Route::get('/users', function () {
         return view('layouts.main');
@@ -38,7 +34,7 @@ Route::group( ['middleware' => 'auth' ], function(){
     });
     Route::get('/companies/{id}', function () {
         return view('layouts.main');
-    });
+    })->name('companie');
     Route::get('/formules', function () {
         return view('layouts.main');
     });
@@ -63,7 +59,9 @@ Route::group( ['middleware' => 'auth' ], function(){
     });
 
     
-    
+    Route::get('/editprofile', function () {
+        return view('layouts.main');
+    })->name('editprofile');
     Route::get('/settings', function () {
         return view('layouts.main');
     });
@@ -84,7 +82,12 @@ Route::group( ['middleware' => 'auth' ], function(){
         return view('layouts.main');
     })->where('any', '.*');
     
+    Route::get('/', function () {
+        return view('layouts.main');
+    })->name('home');
 });
 
 
-// Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/', 'HomeController@accueil')->name('accueil');
+
+Route::get('/enquete/{id}','HomeController@passEnquete')->name('passenquete');

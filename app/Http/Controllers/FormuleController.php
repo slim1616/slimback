@@ -10,34 +10,19 @@ class FormuleController extends Controller
     public function get(Request $request, $id){
         $response = [];
         $response['formule'] = new FormuleResource(Formule::findOrFail($id));
-                
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                
         return response($response);
     }
 
      public function data(Request $request){
-        $response = [];
-                
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                
+        $response = [];          
         return response($response);
     }
     
     public function list(Request $request){
       return response(FormuleResource::collection(Formule::get()));
+    }
+    public function formulesActifs(Request $request){
+      return response(FormuleResource::collection(Formule::where('online',1)->get()));
     }
     
     public function create(Request $request){

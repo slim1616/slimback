@@ -20,32 +20,68 @@
      fjs.parentNode.insertBefore(js, fjs);
    }(document, 'script', 'facebook-jssdk'));
 </script>
-<div class="limiter">
-		<div class="container-login100" style="background-image: url('cnx/images/isc.jpeg');">
-			<div class="wrap-login100 p-b-30">
+<div class="wrapper">
+        <div class="left">
 
+        </div>
+		<div class="rigth" >
+			<div class="wrap-login100">
+
+                <div class="login100-form-avatar">
+                    <div>
+                        <a href="{{ route('accueil')}}">
+                            <img src="cnx/images/logo.png" alt="logo">
+                        </a>
+                    </div>
+                </div>
+                <div class="title">
+                    <span class="login100-form-title">
+                        Trust Access
+                    </span>
+                </div>
+                <div class="title">
+                    <p>Pas encore de compte? <a href="{{ route('register')}}">Créer</a></p>
+                </div>
+                <div class="social-login">
+                    <ul>
+                        <li>
+                            <a href="{{url('login/facebook')}}" title="" class="facebook social-link">
+                                <div>
+                                    <i class="fa fa-facebook"></i>
+                                </div>
+                                <div class="login-btn">
+                                    <span>Facebook</span>
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="login/google" title="" class="google social-link">
+                                    <div>
+                                        <img src="cnx/images/google.png" class="img-google"> 
+                                    </div>
+                                    <div class="login-btn">
+                                        <span style="color: #8a8a8a;">Google</span>
+                                    </div>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div style="display: flex;justify-content: center;">
+                    <div class="divider">
+                        <p>ou par email</p>
+                    </div>
+                </div>
                 <form method="POST" action="{{ route('login') }}" class="login100-form validate-form">
                         @csrf
-					<div class="login100-form-avatar">
-                        <div>
-                            <img src="cnx/images/logo.png" alt="AVATAR">
-                        </div>
-					</div>
-
-					<span class="login100-form-title p-t-20 p-b-45">
-						Trust Access
-                    </span>
+                    
                     @if(Session::get('errors')||count( $errors ) > 0)
                         @foreach ($errors->all() as $error)
                             <p style="color: #ff5151;margin: 15px auto;">{{ $error }}</p>
                         @endforeach
                     @endif
-					<div class="wrap-input100 validate-input m-b-10" data-validate = "email obligatoire">
-                        <input class="input100" id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus placeholder="{{ __('E-Mail Address') }}">                        
-						<span class="focus-input100"></span>
-						<span class="symbol-input100">
-							<i class="fa fa-user"></i>
-						</span>
+					<div class="wrap-input100" data-validate = "email obligatoire">
+                            <label>Email</label>
+                            <input class="input100" id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus placeholder="{{ __('E-Mail Address') }}">                        
                     </div>
                     @error('email')
                         <span class="invalid-feedback" role="alert">
@@ -53,12 +89,9 @@
                         </span>
                     @enderror
 
-					<div class="wrap-input100 validate-input m-b-10" data-validate = "Mot de passe obligatoire">
+					<div class="wrap-input100" data-validate = "Mot de passe obligatoire">
+                        <label>Mot de passe</label>
 						<input class="input100"  id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password" placeholder="{{ __('Password') }}">
-						<span class="focus-input100"></span>
-						<span class="symbol-input100">
-							<i class="fa fa-lock"></i>
-						</span>
                     </div>
                     @error('password')
                         <span class="invalid-feedback" role="alert">
@@ -66,9 +99,9 @@
                         </span>
                     @enderror
 
-					<div class="container-login100-form-btn p-t-10">
+					<div class="submit-div">
 						<button class="login100-form-btn">
-							Login
+							Connexion
 						</button>
 					</div>
 
@@ -77,16 +110,6 @@
 							Mot de passe / email oublié?
 						</a>
 					</div>
-					<div class="social-login">
-						<h4>Login Via Social Account</h4>
-						<ul>
-							<!-- <li><a href="{{url('login/apple')}}" style="background: #000;border: solid 1px #000;"><i class="fa fa-apple"></i>Login Via Apple</a></li> -->
-							<li><a href="{{url('login/facebook')}}" title="" class="facebook"><i class="fa fa-facebook"></i>Login</a></li>
-							<li><a href="login/google" title="" class="google"><i class="fa fa-google"></i>Login</a></li>
-						</ul>
-					</div>
-
-					
 				</form>
 			</div>
 		</div>

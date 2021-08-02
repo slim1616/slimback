@@ -9,38 +9,37 @@ class CompanyController extends Controller
 {
   public function get(Request $request, $id){
     $response = [];
-    $response['company'] = new CompanyResource(Company::findOrFail($id));
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    $response['users'] = \App\User::all();
-    
-    
-    
-    return response($response);
+    $bool = false;
+    if  ($request->user()->Role->slug=='superadmin'){
+      $bool = true;
+
+    }else if  ($request->user()->Role->slug=='admin'){
+      if ($request->user()->Company->id==$id){
+        $bool = true;
+      }else{
+        $bool = false;
+      }
+    }else{
+      $bool = false;
+    }
+
+    if ($bool==true){
+      $response['status'] = true;
+      $response['company'] = new CompanyResource(Company::findOrFail($id));
+      $response['users'] = \App\User::all();
+      return response($response);
+    }else{
+      $response['company'] = [];
+      $response['users'] = [];
+      $response['status'] = false;
+      $response['msg'] = "Not allowed";
+      return response($response);
+    }
   }
   
   public function data(Request $request){
     $response = [];
-    
-    
-    
-    
-    
-    
-    
-    
-    
     $response['users'] = \App\User::all();
-    
-    
-    
     return response($response);
   }
   

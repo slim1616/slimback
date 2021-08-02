@@ -182,15 +182,15 @@ class QuestionController extends Controller
                             ->orderBy('order')
                             ->get();
             if($questions){
-                return response(['statue' => true, 'questions' => QuestionResource::collection($questions)]);
+                return response(['status' => true, 'questions' => QuestionResource::collection($questions)]);
             }else{
-                return response(['statue' => false, 'msg' => 'Error...']);
+                return response(['status' => false, 'msg' => 'Error...']);
             }
         }else{
-            return response(['statue' => false, 'msg' => 'Error...']);
+            return response(['status' => false, 'msg' => 'Error...']);
         }
     }else{
-        return response(['statue' => false, 'msg' => 'Not Allowed']);
+        return response(['status' => false, 'msg' => 'Not Allowed']);
     }
 }
 }

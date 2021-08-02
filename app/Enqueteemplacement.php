@@ -13,7 +13,7 @@ class Enqueteemplacement extends Model
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function Enquete(): BelongsTo
+    public function Enquete()
     {
         return $this->belongsTo(Enquete::class, 'enqueste_id');
     }
@@ -23,7 +23,7 @@ class Enqueteemplacement extends Model
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function Emplacement(): BelongsTo
+    public function Emplacement()
     {
         return $this->belongsTo(Emplacement::class, 'emplacement_id');
     }

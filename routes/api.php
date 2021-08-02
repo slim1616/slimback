@@ -41,7 +41,7 @@ Route::group(['middleware' => 'auth:api'], function(){
     Route::get('enquetes', 'EnqueteController@list');
     Route::get('dataenquetes', 'EnqueteController@data');
     Route::get('enquetes/{id}', 'EnqueteController@get');
-    Route::get('enquetes/front/{id}', 'EnqueteController@getFront'); 
+    
     
     
     Route::post('enquetes', 'EnqueteController@create');
@@ -77,6 +77,8 @@ Route::group(['middleware' => 'auth:api'], function(){
     
     
 });
+Route::get('enquetes/front/{id}', 'EnqueteController@getFront'); 
+Route::post('enquetes/front/{id}', 'EnqueteController@getFrontMobile'); 
 Route::post('enquetes/addresponse', 'EnqueteController@addResponse'); 
 Route::get('enquetes/myresponses/{unique}', 'EnqueteController@getResponses'); 
 Route::get('enquetes/hresponses/{id}', 'EnqueteController@getHistorique'); 
@@ -86,6 +88,7 @@ Route::post('enquetes/filterreponsesbydates', 'EnqueteController@getHistoriqueBy
 
 
 
+Route::get('formules/actifs', 'FormuleController@formulesActifs');
 Route::get('formules', 'FormuleController@list');
 Route::get('dataformules', 'FormuleController@data');
 Route::get('formules/{id}', 'FormuleController@get');
@@ -95,9 +98,11 @@ Route::delete('formules/{id}', 'FormuleController@delete');
 
 
 
-
-
+// get emplacement by code
+Route::post('emplacements/newpass', 'EmplacementController@newpass'); 
 Route::get('emplacements', 'EmplacementController@list');
+// qr code
+Route::post("generateqrcode", "QRcodeController@generate");
 
 
 

@@ -14,7 +14,7 @@ class CreateEmplacementTable extends Migration
     public function up()
     {
         Schema::create('emplacements', function (Blueprint $table) {
-            $table->id();
+            $table->uuid('id')->primary();
             $table->string('title');
             $table->string('adresse')->nullable();
             $table->string('email')->nullable();

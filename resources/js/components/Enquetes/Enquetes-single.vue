@@ -15,12 +15,20 @@
                 </li>
             </ul>
         </div>
+
         <div class="card">
             <div class="card-header d-flex justify-content-between">
                 <div class="card-title">Modifier enquete</div>
-                <router-link :to="{name : 'singleFront', params:{id : form.id}}">
+                <a :href="'/enquete/' + form.id">
                     <i class="flaticon-chain"></i>
-                </router-link>
+                </a>
+                <a href="#" @click.prevent.stop="copiedUrl">
+                    <i class="far fa-copy"></i>
+                </a>
+                <a href="#" @click.prevent.stop="copiedUrl">
+                    <i class="fab fa-facebook-f"></i>
+                </a>
+                <input type="text" style="opacity:0" :value="'/enquete/' + form.id" id="cplink"/> 
             </div>
             <div class="card-body">
                 
@@ -86,11 +94,25 @@
                                         <has-error :form="form" field="objectif"></has-error>
                                     </div>
                                 </div>
-                                
+                                <div class="col-sm-2">
+                                    <div class="form-check">
+                                        <label class="form-check-label">
+                                            <input class="form-check-input" type="checkbox" v-model="form.online">
+                                            <span class="form-check-sign">En ligne</span>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-sm-2">
+                                    <template v-if="$refs.qpp">
+                                    <div class="form-group" :class="{'has-error' : form.questionParPage>$refs.qpp.$data.questions.length }">
+                                        <label>Questions/Page</label>
+                                        <input class="form-control" type="number" v-model="form.questionParPage" :max="$refs.qpp.$data.questions.length"/>                                
+                                        <has-error :form="form" field="questionParPage"></has-error>
+                                    </div>
+                                    </template>
+                                </div>
                                 <div class="col-sm-3">
                                     <div class="form-group">
-                                        
-                                        
                                         <label>Début</label>
                                         <datetime v-model="form.start_at"
                                         value-zone="Africa/Tunis"
@@ -102,7 +124,7 @@
                                     </div>
                                 </div>
                                 
-                                <div class="col-sm-4">
+                                <div class="col-sm-3">
                                     <div class="form-group">
                                         <label>fin</label>
                                         <datetime v-model="form.end_at"
@@ -114,29 +136,51 @@
                                         
                                     </div>
                                 </div>
-                                <div class="col-sm-4">
+                                <div class="col-sm-5">
                                     <div class="form-group">
                                         <label for="smallSelect">Emplacements</label>
                                         <ul class="form-control form-control-sm" id="smallSelect">
                                             <li v-for="location in emplacements">
-                                                <div class="form-check">
+                                                    <input type="text" style="opacity:0;position: absolute;" v-model="location.password" :id="'pass-'+location.emplacement_id"/>
+                                                <div class="form-check justify-content-between d-flex">
                                                     <label class="form-check-label">
-                                                        <input class="form-check-input" name="emplacement" type="checkbox" :value="location.id" v-model="form.selectedEmplacements">
+                                                        <input class="form-check-input" name="emplacement" type="checkbox" :value="location.emplacement_id" v-model="form.selectedEmplacements">
                                                         <span class="form-check-sign">{{location.title}}</span>
                                                     </label>
+                                                    <div>
+                                                        
+                                                        
+                                                        <div class="btn-group dropdown">
+                                                            <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                                                <span class="btn-label">
+                                                                    <i class="fa fa-cog"></i>
+                                                                </span>
+                                                            </button>
+                                                            <ul class="dropdown-menu" role="menu" x-placement="bottom-start" style="position: absolute; transform: translate3d(0px, 32px, 0px); top: 0px; left: 0px; will-change: transform;">
+                                                                <li>
+                                                                    <router-link class="dropdown-item" :to="{ name : 'Emplacementssingle', params : { id : location.emplacement_id}}">
+                                                                        <i class="fas fa-eye"></i> Voir
+                                                                    </router-link>
+                                                                    <a href="#" class="dropdown-item" @click.prevent.stop="copiedPass(location.emplacement_id)" title="copier le mot de passe">
+                                                                        <i class="fas fa-copy"></i> copier le mot de passe
+                                                                    </a>
+                                                                    <a href="#" class="dropdown-item" @click.prevent.stop="regeneratePass(location.emplacement_id)" title="regenerer le mot de passe">
+                                                                        <i class="fas fa-redo"></i> régénérer mot de passe
+                                                                    </a>
+                                                                    
+                                                                    <div class="dropdown-divider"></div>
+                                                                    <vue-qrcode :value="`[ '${location.emplacement_id}' ,  ${form.id}, '${location.password}' ]`" />
+                                                                    <p style="text-align: center;">{{location.title}}</p>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                        
+                                                    </div>
                                                 </div>
                                             </li>
                                         </ul>
                                     </div>
                                 </div>
-                                
-                                
-                                <input class="form-control" type="hidden" v-model="form.created_at"/>
-                                
-                                
-                                
-                                
-                                <input class="form-control" type="hidden" v-model="form.updated_at"/>
                                 
                             </div>
                             <template v-if="['superadmin', 'admin'].includes(user.role)">
@@ -149,7 +193,7 @@
                         </form>
                         <span v-else>Loading enquete...</span>
                             <template v-if="form.id!=''">
-                            <survey :survey="form"/>
+                            <survey :survey="form" ref="qpp"/>
                             </template>
                     </div>
                     <div class="tab-pane fade" id="pills-profile-icon" role="tabpanel" aria-labelledby="pills-profile-tab-icon">
@@ -178,21 +222,26 @@
     import {mapGetters} from 'vuex'
     import Survey from '../survey/Single'
     import historiqueReponses from './historiqueReponses'
+    import VueQrcode from 'vue-qrcode'
+
     export default {
         name: 'Enquete',
-        components: {HasError, Datetime, Survey, historiqueReponses},
+        components: {HasError, Datetime, Survey, historiqueReponses, VueQrcode},
         data: function(){
             return {
                 selectedtab : 'form',
                 loaded: false,
                 companies : [],
                 users : [],
+                emplacements : [],
                 // selectedEmplacements : [],
                 form: new Form({
                     selectedEmplacements : [],
                     confidentiality : "",
                     id : "",
                     title : "",
+                    online : 0,
+                    questionParPage : 1,
                     description : "",
                     company_id : "",
                     objectif : "",
@@ -206,10 +255,116 @@
         },
         created: function(){
             this.getEnquete();
+            
         },
         methods: {
+            async regenerateQrCode(emplacement_id){
+                console.log(emplacement_id)
+                let res = await fetch(window.location.origin + '/api/generateqrcode', {
+                    method : 'post',
+                    body : JSON.stringify({enquete_id : this.form.id, emplacement_id : emplacement_id}),
+                    headers : {
+                        'Content-type' : 'Application/json',
+                        'X-Requested-With' : 'XMLHttpRequest',
+                        'X-CSRF-TOKEN' : document.head.querySelector('meta[name="csrf-token"]').content
+                    }
+                })
+                .then((response) => {
+                    
+                    if (response.status==200) {
+                        return response.json();
+                    }else if (response.status==401) {
+                        //window.location.replace(window.location.href);  
+                    }
+                    this.loader = false
+                })
+                .then(data => {
+                    this.loader = false
+                    console.log(data)
+                    if (data.status){
+
+                        swal({
+                            icon: 'success',
+                            title: 'Success',
+                            text: "Mot de passe généré avec succès",
+                            type: 'success'
+                        })
+                        
+                    }
+
+                })
+                .catch(err => {
+                    console.log(err)
+                    this.loader = false
+                })
+            },
+            async regeneratePass(emplacement_id){
+                console.log(emplacement_id)
+                let res = await fetch(window.location.origin + '/api/emplacements/newpass', {
+                    method : 'post',
+                    body : JSON.stringify({enquete_id : this.form.id, emplacement_id : emplacement_id}),
+                    headers : {
+                        'Content-type' : 'Application/json',
+                        'X-Requested-With' : 'XMLHttpRequest',
+                        'X-CSRF-TOKEN' : document.head.querySelector('meta[name="csrf-token"]').content
+                    }
+                })
+                .then((response) => {
+                    
+                    if (response.status==200) {
+                        return response.json();
+                    }else if (response.status==401) {
+                        //window.location.replace(window.location.href);  
+                    }
+                    this.loader = false
+                })
+                .then(data => {
+                    this.loader = false
+                    if (data.status){
+                        this.emplacements = this.emplacements.map(emp => { if (emp.emplacement_id==emplacement_id){
+                                                        emp.password = data.password
+                                                    }
+                                                    return emp;
+                        }) 
+                        console.log(this.emplacements)
+                        swal({
+                            icon: 'success',
+                            title: 'Success',
+                            text: "Mot de passe généré avec succès",
+                            type: 'success'
+                        })
+                        
+                    }
+
+                })
+                .catch(err => {
+                    console.log(err)
+                    this.loader = false
+                })
+            },
+            copiedPass(id){
+                var copyText = document.getElementById("pass-"+id);
+                copyText.focus()
+                /* Select the text field */
+                copyText.select();
+                copyText.setSelectionRange(0, 99999); /* For mobile devices */
+
+                /* Copy the text inside the text field */
+                document.execCommand("copy");
+            },
+            copiedUrl(){
+                var copyText = document.getElementById("cplink");
+                copyText.value = window.location.origin + copyText.value
+                console.log(copyText.value)
+                copyText.focus()
+                /* Select the text field */
+                copyText.select();
+                copyText.setSelectionRange(0, 99999); /* For mobile devices */
+
+                /* Copy the text inside the text field */
+                document.execCommand("copy");
+            },
             getEnquete: function(Enquete){
-                
                 var that = this;
                 this.form.get('/api/enquetes/'+this.$route.params.id).then(function(response){
                     that.form.fill(response.data.enquete);

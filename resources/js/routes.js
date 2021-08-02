@@ -105,7 +105,14 @@ const routes = [
     }  },
     {path : '/createcompanies', component : Companiescreate , name : 'Companiescreate', props: true, meta: { route: 'parametres' } },
     {path : '/emplacements/:id', component : Emplacementssingle, name : 'Emplacementssingle', props: true, meta: { route: 'menu' } },
-    {path : '/emplacements', component : Emplacementslist , name : 'Emplacementslist', props: true, meta: { route: 'menu' } },
+    {path : '/emplacements', component : Emplacementslist , name : 'Emplacementslist', props: true, meta: { route: 'menu' }, beforeEnter(to, from, next){
+        if (store.getters.getUser.role=='superadmin'){
+            next()
+        }else{
+            alert('Vous ne pouvez pas entrer!')
+            $router.go(-1)
+        }
+    }  },
     {path : '/createemplacements', component : Emplacementscreate , name : 'Emplacementscreate', props: true, meta: { route: 'menu' } },
     {path : '/enquetes/:id', component : Enquetessingle, name : 'Enquetessingle', props: true, meta: { route: 'menu' } },
     {path : '/enquetes', component : Enqueteslist , name : 'Enqueteslist', props: true, meta: { route: 'menu' } },

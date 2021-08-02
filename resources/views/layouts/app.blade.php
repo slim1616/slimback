@@ -70,6 +70,7 @@
 	<!-- <script src="{{ asset('js/plugin/jqvmap/jquery.vmap.min.js')}}"></script> -->
 	<!-- <script src="{{ asset('js/plugin/jqvmap/maps/jquery.vmap.world.js')}}"></script> -->
 
+
 	<!-- Sweet Alert -->
 	<script src="{{ asset('js/sweetalert.min.js')}}"></script>
 

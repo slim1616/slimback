@@ -170,15 +170,7 @@
         data: function(){
             return {
                 loaded: false,
-                
-                
-                
-                
-                
-                
-                
-                
-                
+
                 users : [],
                 
                 
@@ -205,17 +197,14 @@
                 
                 var that = this;
                 this.form.get('/api/companies/'+this.$route.params.id).then(function(response){
-                    that.form.fill(response.data.company);
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    that.users =  response.data.users;
+                    console.log(response.data.status==true)
+                    if (response.data.status==true){
+                        that.form.fill(response.data.company);
+                        that.users =  response.data.users;
+                    }else{
+                        alert(response.data.msg)
+                        that.$router.push({name : 'accueil'})
+                    }
                     
                     
                     that.loaded = true;

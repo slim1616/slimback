@@ -7,8 +7,10 @@ use App\Enqueteemplacement;
 use App\Section;
 use App\Reponse;
 use App\Singlereponse;
+use App\Emplacement;
 use App\Http\Resources\EnqueteResource;
 use App\Http\Resources\EmplacementResource;
+use App\Http\Resources\EnqEmplacementResource;
 use App\Http\Resources\QuestionResource;
 use App\Http\Resources\ReponsesResources;
 use Carbon\Carbon;
@@ -20,23 +22,79 @@ class EnqueteController extends Controller
         $enquete = Enquete::findOrFail($id);
         $response['enquete'] = new EnqueteResource($enquete);
         $response['companies'] = \App\Company::all();
-        $response['emplacements'] = EmplacementResource::collection($enquete->Company->Emplacements);
+        // $response['emplacements'] = EmplacementResource::collection($enquete->Company->Emplacements);
+        $emps = $enquete->Company->Emplacements;
+
+        // dd($enquete->Enqueteemplacements->pluck('id')->toArray());
+        $ems = [];
+        foreach ($emps as $emp) {
+          if (in_array($emp->id,$enquete->Enqueteemplacements->pluck('emplacement_id')->toArray())){
+            foreach (json_decode(EnqEmplacementResource::collection($emp->Enqueteemplacements)->toJson()) as $e) {
+              $ems[] = $e;
+            }
+          }else{
+            $ems[] = array('emplacement_id' => $emp->id, 'enquete_id' => $enquete->id, 'password'=>null, 'title' => $emp->title);
+          }
+        }
+        $response['emplacements'] = $ems;
         $response['users'] = \App\User::all();       
         
         return response($response);
     }
     public function getFront(Request $request, $id){
       $response = [];
-      $enquete = Enquete::findOrFail($id);
-      $response['questions'] = QuestionResource::collection(Section::where('enquete_id', $id)
-                          ->orderBy('order')
-                          ->get());
-      $response['enquete'] = new EnqueteResource($enquete);
-      $response['uniqid'] = uniqid($id);
-      
-      
+      $enquete = Enquete::find($id);
+      if ($enquete){
+          if ($enquete->where('online')){
+            $response['questions'] = QuestionResource::collection(Section::where('enquete_id', $id)
+            ->orderBy('order')
+            ->get());
+            $response['enquete'] = new EnqueteResource($enquete);
+            $response['uniqid'] = uniqid($id);
+            $response['status'] = true;
+          }else{
+            $response['status'] = false;
+          }
+      }else{
+        $response['status'] = false;
+      }
       return response($response);
   }
+  public function getFrontMobile(Request $request, $id){
+    // return response($id);
+
+    $Enqueteemplacement = Enqueteemplacement::where('emplacement_id', $request->emplacement_id)
+                                              ->where('enquete_id', $id)
+                                      ->first();
+    if (!is_null($Enqueteemplacement)){
+      if (strcmp($Enqueteemplacement->password,$request->password)==0){
+
+      }else{
+        return response(['status' => false]);
+      }
+    }else{
+      return response(['status' => false]);
+    }
+
+    $response = [];
+    $enquete = Enquete::find($id);
+    if ($enquete){
+        if ($enquete->where('online')){
+          $response['questions'] = QuestionResource::collection(Section::where('enquete_id', $id)
+          ->orderBy('order')
+          ->get());
+          $response['enquete'] = new EnqueteResource($enquete);
+          $response['emplacement'] = new EmplacementResource(Emplacement::find($request->emplacement_id));
+          $response['uniqid'] = uniqid($id);
+          $response['status'] = true;
+        }else{
+          $response['status'] = false;
+        }
+    }else{
+      $response['status'] = false;
+    }
+    return response($response);
+}
 
      public function data(Request $request){
         $response = [];
@@ -46,7 +104,8 @@ class EnqueteController extends Controller
     }
     
     public function list(Request $request){
-      return response(EnqueteResource::collection(Enquete::get()));
+      $user = $request->user();
+      return response(EnqueteResource::collection($user->Enquetes));
     }
     
     public function create(Request $request){
@@ -83,6 +142,10 @@ class EnqueteController extends Controller
         if($enquetes->Enqueteemplacements){
           $enquetes->Enqueteemplacements()->delete();
         }
+        if (!is_null($request->online)){
+          $enquetes->online = $request->online==true? true : false;
+          // dd($employe->active);
+        }
         if (count($request->selectedEmplacements)>0){
           foreach ($request->selectedEmplacements as $emplacement_id) {
             // $enqemp = Enqueteemplacement::where('emplacement_id', $emplacement_id)
@@ -92,6 +155,14 @@ class EnqueteController extends Controller
             $enqemp->emplacement_id = $emplacement_id;
             $enqemp->company_id = $enquetes->Company->id;
             $enqemp->enquete_id = $id;
+            $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+            $charactersLength = strlen($characters);
+            $randomString = '';
+            for ($i = 0; $i < 7; $i++) {
+                $randomString .= $characters[rand(0, $charactersLength - 1)]; 
+            }
+            $newpass = $randomString;
+            $enqemp->password = $newpass;
             $enqemp->save();
           }
         }
@@ -105,6 +176,7 @@ class EnqueteController extends Controller
         $enquetes->delete();
     }
     public function addResponse(Request $request){
+      
       $uniqid = $request->uniqid;
       $enquete_id = $request->enquete_id;
       $enquete = Enquete::find($enquete_id);
@@ -113,7 +185,11 @@ class EnqueteController extends Controller
         $reponse = new Reponse();
         $reponse->enquete_id = $enquete_id;
         $reponse->company_id = $company_id;
+        if ($request->emplacement_id){
+          $reponse->emplacement_id = $request->emplacement_id;
+        }
         $reponse->uniqid = $uniqid;
+        $reponse->source = $request->source;
         $reponse->ip = $request->ip();
         $reponse->save();
         foreach ($request->responses as $response) {
@@ -125,6 +201,10 @@ class EnqueteController extends Controller
           $singlereponse->section_id = $response['section_id'];
           $singlereponse->reponse = $response['reponse'];
           $singlereponse->uniqid = $uniqid;
+          $singlereponse->source = $request->source;
+          if ($request->emplacement_id){
+            $singlereponse->emplacement_id = $request->emplacement_id;
+          }
           $singlereponse->reponse_id = $reponse->id;
           $singlereponse->save();
         }

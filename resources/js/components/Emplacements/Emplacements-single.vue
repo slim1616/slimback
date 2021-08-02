@@ -21,7 +21,7 @@
             </div>
             <div class="card-body">      
                 <form @submit.prevent="updateEmplacement" v-if="loaded">
-                    <router-link to="/emplacements" class="back-to"><i class="icon-arrow-left"></i> emplacements</router-link>
+                    <router-link to="/mesemplacements" class="back-to"><i class="icon-arrow-left"></i> emplacements</router-link>
                     <div class="row">
                         
                         
@@ -46,28 +46,17 @@
                         
                         <div class="col-sm-4">
                             <div class="form-group">
-                                
-                                
-                                
                                 <label>Adresse</label>
                                 <input class="form-control" type="text" v-model="form.adresse"  maxlength="255" />
-                                
-                                
                             </div>
                         </div>
                         
                         <div class="col-sm-4">
                             <div class="form-group">
-                                
-                                
-                                
                                 <label>Email</label>
                                 <input class="form-control" type="text" v-model="form.email"  maxlength="255" />
-                                
-                                
                             </div>
                         </div>
-                        
                         <div class="col-sm-4">
                             <div class="form-group">
                                 
@@ -119,12 +108,6 @@
             return {
                 loaded: false,
                 
-                
-                
-                
-                
-                
-                
                 companies : [],
                 
                 
@@ -148,26 +131,20 @@
             this.getEmplacement();
         },
         methods: {
-            
             getEmplacement: function(Emplacement){
                 
                 var that = this;
                 this.form.get('/api/emplacements/'+this.$route.params.id).then(function(response){
-                    that.form.fill(response.data.emplacement);
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    that.companies =  response.data.companies;
-                    
-                    
-                    that.users =  response.data.users;
-                    
-                    
                     that.loaded = true;
+                    console.log(response.data.status)
+                    if(response.data.status){
+                        that.form.fill(response.data.emplacement);
+                        that.companies =  response.data.companies;
+                        that.users =  response.data.users;
+                    }else{
+                        alert('Erreur, accès interdit')
+                        this.$router.go(-1)
+                    }
                 }).catch(function(e){
                     if (e.response && e.response.status == 404) {
                         that.$router.push('/404');

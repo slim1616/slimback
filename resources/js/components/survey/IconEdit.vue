@@ -49,20 +49,24 @@ export default {
             this.question.questions.map((question,i) => {
                 if (type=='star'){
                     question.icon = 'fas fa-star'
+                    question.mobicon = 'star'
                     question.color = 'yellow'
                 }
                 if (type=='face'){
                     if (i==0){
                         question.color = 'red'
                         question.icon = 'far fa-frown'
+                        question.mobicon = 'frown-o'
                     }
                     if (i==1){
                         question.color = 'orange'
                         question.icon = 'far fa-meh'
+                        question.mobicon = 'meh-o'
                     }
                     if (i==2){
                         question.color = 'green'
                         question.icon = 'far fa-smile'
+                        question.mobicon = 'smile-o'
                     }
                 }
             })

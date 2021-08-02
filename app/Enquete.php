@@ -56,6 +56,11 @@ class Enquete extends Model
             {
                 return $this->hasMany(Section::class, 'enquete_id');
             }
+
+            public function Reponses()
+            {
+                return $this->hasMany(Reponse::class, 'enquete_id');
+            }
         
     
     } ?>

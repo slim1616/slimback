@@ -3,8 +3,8 @@ import VueRouter from 'vue-router'
 import Vuex from 'vuex';
 import VueNotification from "@kugatsu/vuenotification";
 import JsonExcel from "vue-json-excel";
-import VueToastify from "vue-toastify";
 import {mapGetters} from 'vuex';
+import VueToastify from "vue-toastify";
 Vue.use(VueToastify);
 Vue.component("downloadExcel", JsonExcel);
 
@@ -20,6 +20,7 @@ require('./bootstrap');
 
 import routes from './routes'
 const router = new VueRouter({
+    base : '/admin/',
     mode : 'history',
     routes,
     

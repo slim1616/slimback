@@ -19,12 +19,12 @@ class CreateSinglereponsesTable extends Migration
             $table->BigInteger('company_id')->unsigned();
             $table->BigInteger('section_id')->unsigned();
             $table->BigInteger('reponse_id')->unsigned();
-            $table->BigInteger('emplacement_id')->unsigned()->nullable();
+            $table->uuid('emplacement_id')->nullable();
             $table->BigInteger('user_id')->unsigned()->nullable();
             $table->string('uniqid');
             $table->string('ip');
             $table->json('reponse');
-
+            $table->enum('source', ['web', 'mobile'])->default('web');
             $table->foreign('emplacement_id')->references('id')->on('emplacements');
             $table->foreign('reponse_id')->references('id')->on('reponses');
             $table->foreign('section_id')->references('id')->on('sections')->onDelete('cascade');

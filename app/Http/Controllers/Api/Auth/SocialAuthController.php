@@ -148,7 +148,7 @@ class SocialAuthController extends Controller
         $company->title = $nameuser;
         $company->type = 'Personnel';
         $company->user_id = $user->id;
-        $company->save();
+        $company->save();       
         $emplacement = Emplacement::create(['title' => 'Siège '.$company->title , 'company_id' => $company->id, 'user_id' => $user->id]);
         $user->company_id = $company->id;
         $user->save();

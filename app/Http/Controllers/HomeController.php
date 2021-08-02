@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Formule;
 
 class HomeController extends Controller
 {
@@ -13,7 +14,7 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
+        // $this->middleware('auth');
     }
 
     /**
@@ -21,8 +22,13 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function index()
+    public function accueil()
     {
-        return view('home');
+        $formules = Formule::where('online',1)->get();
+        return view('home.accueil', compact('formules'));
     }
+    public function passEnquete(Request $request, $enquete_id){
+        return view('home.passexam', compact('enquete_id'));
+    }
+    
 }

@@ -3,17 +3,33 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Emplacement;
+use App\Enqueteemplacement;
 use App\Http\Resources\EmplacementResource;
+use Illuminate\Support\Str;
 
 class EmplacementController extends Controller
 {
     public function get(Request $request, $id){
         $response = [];
-        $response['emplacement'] = new EmplacementResource(Emplacement::findOrFail($id));
+        $emplacement =  Emplacement::findOrFail($id);
         $response['companies'] = \App\Company::all();   
         $response['users'] = \App\User::all();
-     
-        return response($response);
+        if ($request->user()->Role->slug=='superadmin'){
+          $response['emplacement'] = new EmplacementResource($emplacement);
+          $response['status'] = true;
+        }else if ($request->user()->Role->slug=='admin'){
+            if ($request->user()->Company->id==$emplacement->company_id){
+              $response['emplacement'] = new EmplacementResource($emplacement);
+              $response['status'] = true;
+            }else{
+              $response['status'] = false;
+            }
+
+        }else{
+          $response['status'] = false;
+        }
+          
+          return response($response);
     }
     public function MesEmplacements(Request $request){
         $user = $request->user();
@@ -49,6 +65,7 @@ class EmplacementController extends Controller
         'title.max' => 'title doit avoir aux max 255 characters.',
       ]);
       $user = $request->user();
+
       if ($user->Role->slug=='admin'){
         request()->merge(['company_id' => $user->Company->id, 'user_id' => $user->id]);
         $emplacement = Emplacement::create($request->all());    
@@ -76,6 +93,21 @@ class EmplacementController extends Controller
     public function delete(Request $request, $id){
         $emplacements = Emplacement::findOrFail($id);
         $emplacements->delete();
+    }
+    public function newpass(Request $request){
+        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        $charactersLength = strlen($characters);
+        $randomString = '';
+        for ($i = 0; $i < 7; $i++) {
+            $randomString .= $characters[rand(0, $charactersLength - 1)]; 
+        }
+        $enqemp = Enqueteemplacement::where('emplacement_id', $request->emplacement_id)
+                                ->where('enquete_id', $request->enquete_id)
+                                ->first();
+        $enqemp->password = $randomString;
+        $enqemp->save();
+        return response(['status' => true, 'password' => $randomString]);
+
     }
 }
  ?>
