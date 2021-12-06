@@ -38,7 +38,7 @@
     "extra": {
         "laravel": {
             "dont-discover": [
-                "laravel-vue-api-crud-generator"
+                "lummy/laravel-vue-api-crud-generator"
             ]
         }
     },

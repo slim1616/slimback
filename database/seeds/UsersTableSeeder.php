@@ -24,8 +24,8 @@ class UsersTableSeeder extends Seeder
         
 
         ]);
-        $media = $user->addMediaFromUrl(asset('img/avatar.jpg'))->toMediaCollection('avatar');
-        $user->avatar_id = $media->id;
+        // $media = $user->addMediaFromUrl(asset('img/avatar.jpg'))->toMediaCollection('avatar');
+        // $user->avatar_id = $media->id;
         $user->save();
         $user1 = User::create([
             'name' => 'slimk',
@@ -39,7 +39,7 @@ class UsersTableSeeder extends Seeder
         
 
         ]);
-        $user1->avatar_id = $media->id;
+        // $user1->avatar_id = $media->id;
         $user1->save();
         $user2 = User::create([
             'name' => 'med',
@@ -54,7 +54,7 @@ class UsersTableSeeder extends Seeder
 
         ]);
 
-        $user2->avatar_id = $media->id;
+        // $user2->avatar_id = $media->id;
         $user2->save();
         $user3 = User::create([
             'name' => 'hafed',
@@ -69,7 +69,7 @@ class UsersTableSeeder extends Seeder
 
         ]);
 
-        $user3->avatar_id = $media->id;
+        // $user3->avatar_id = $media->id;
         $user3->save();
         $user4 = User::create([
             'name' => 'mouna',
@@ -84,7 +84,7 @@ class UsersTableSeeder extends Seeder
 
         ]);
 
-        $user4->avatar_id = $media->id;
+        // $user4->avatar_id = $media->id;
         $user4->save();
 
     }

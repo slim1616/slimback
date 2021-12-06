@@ -140,8 +140,8 @@ class SocialAuthController extends Controller
         }
         if ($request->avatar){
             $image = $request->post('avatar');
-            $media = $user->addMediaFromUrl($avatarUrl)->toMediaCollection('avatar');
-            $user->avatar_id = $media->id;
+            //$media = $user->addMediaFromUrl($avatarUrl)->toMediaCollection('avatar');
+            //$user->avatar_id = $media->id;
             $user->save();
         }
         $company = new Company();

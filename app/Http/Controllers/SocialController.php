@@ -83,8 +83,8 @@ class SocialController extends Controller
     }
         if ($user) {
             try{
-                $media = $user->addMediaFromUrl($avatarUrl)->toMediaCollection('avatar');
-                $user->avatar_id = $media->id;
+                // $media = $user->addMediaFromUrl($avatarUrl)->toMediaCollection('avatar');
+                // $user->avatar_id = $media->id;
                 $user->save();
             }catch (\Exception $e){
                 Log::info('Social login ' . $name . ' ' . $e->getMessage());

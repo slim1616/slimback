@@ -4,18 +4,14 @@ namespace App;
 
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 // use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Spatie\MediaLibrary\File;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Passport\HasApiTokens;
-use Spatie\MediaLibrary\HasMedia\HasMedia;
-use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
-use Spatie\MediaLibrary\Models\Media;
 use Carbon\Carbon;
 
-class User extends Authenticatable implements HasMedia
+class User extends Authenticatable 
 {
-    use HasApiTokens, Notifiable, HasMediaTrait;
+    use HasApiTokens, Notifiable;
 
     /**
      * Get the Company that owns the User
@@ -30,13 +26,7 @@ class User extends Authenticatable implements HasMedia
     {
         return $this->belongsTo('App\Role', 'role_id');
     }
-    public function avatar(){
-        return $this->HasOne(Media::class,'id','avatar_id');
-    }
-    public function registerMediaConversions(Media $media = null)
-    {
-        $this->addMediaConversion('avatar');
-    }
+   
     /**
      * Get all of the Enquetes for the User
      *
