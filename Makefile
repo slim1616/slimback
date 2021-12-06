@@ -15,7 +15,7 @@ deploy:
 	rsync -a --progress deploy.zip -e '$(ssh)' :~/
 	$(ssh) "unzip -o ./deploy.zip -d $(dir)/"
 	$(ssh) "cd $(dir); composer install --no-dev --optimize-autoloader"
-	$(ssh) "cd $(dir); php artisan migrate"
+	$(ssh) "cd $(dir); php artisan migrate:fresh --seed"
 	$(ssh) "cd $(dir); npm i"
 	# $(ssh) "cd $(js); rm *.js"
 	$(ssh) "cd $(dir); npm run production"
