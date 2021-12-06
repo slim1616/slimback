@@ -1,5 +1,5 @@
 .PHONY:dev deploy
-ssh=ssh ubuntu@vps-ded539c2.vps.ovh.net
+ssh=ssh root@vps-f639010f.vps.ovh.net
 dir=/var/www/survey
 p=/var/www/survey/public
 js=/var/www/survey/public/js
@@ -11,7 +11,7 @@ dev:
 		split-window -h "laravel-echo-server start" \;\
 
 deploy:
-	git archive master -o deploy.zip
+	git archive main -o deploy.zip
 	rsync -a --progress deploy.zip -e '$(ssh)' :~/
 	$(ssh) "unzip -o ./deploy.zip -d $(dir)/"
 	$(ssh) "cd $(dir); composer install --no-dev --optimize-autoloader"

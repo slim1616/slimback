@@ -22,11 +22,7 @@ Route::get('my-demo-mail','MailController@myDemoMail');
 Route::get('chart', 'BornesreponseController@chart');
 
 Route::group( ['middleware' => 'auth' ,'prefix' => 'admin' ], function(){
-    Route::post('file-import', 'UserController@fileImport')->name('file-import');
-    Route::get('importusers', function(){
-        return view('excel.import');
-    });
-
+   
     Route::get('/users', function () {
         return view('layouts.main');
     });

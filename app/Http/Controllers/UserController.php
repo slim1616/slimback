@@ -7,9 +7,6 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Http\Resources\UserResourceSec;
 use Illuminate\Support\Facades\Validator;
-use Maatwebsite\Excel\Facades\Excel;
-use App\Imports\UsersImport;
-use App\Exports\UsersExport;
 use App\User;
 use App\Role;
 
