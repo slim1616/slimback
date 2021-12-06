@@ -44,9 +44,7 @@
                             <th scope="col">Email</th>
                             <th>Role</th>
                             <th scope="col">Etat</th>
-                            <template v-if="user.role=='admin'">
-                                <th scope="col">Action</th>
-                            </template>
+                            <th scope="col">Action</th>
                         </tr>
                     </thead>
                     <tbody>

@@ -26,13 +26,11 @@
                     </template>
                     <template v-if="question.question_type=='choix'">
                         <ul class="">
-                            <li v-for="quest in question.questions">
-                                <div href="#" class="align-items-center d-flex">
-                                    <label :class="[question.typeinput=='checkbox' ? 'form-check-input': 'form-radio-input']" >
+                            <li v-for="quest in question.questions" class="align-items-center d-flex">
+                                    <label :class="[question.typeinput=='checkbox' ? '': 'form-radio-input']" >
                                         <input :type="question.typeinput" name="question" :class="[question.typeinput=='checkbox' ? 'form-check-label': 'form-radio-label']" @change="addResponse(question.id, quest, question.typeinput)"/>
                                         <span :class="[question.typeinput=='checkbox' ? 'form-check-sign': 'form-radio-sign']">{{quest.text}}</span>
                                     </label>
-                                </div>
                             </li>
                         </ul>
                     </template>
@@ -191,7 +189,7 @@ export default {
                     this.loading = false
                     this.loader = false
                     if (data.status){
-
+                        this.questionParPage = data.enquete.questionParPage
                         this.enquete = data.enquete
                         this.questions = data.questions
                         this.uniqid = data.uniqid

@@ -32,9 +32,6 @@
                         
                         <div class="col-sm-4">
                             <div class="form-group">
-                                
-                                
-                                
                                 <label>Title</label>
                                 <input class="form-control" type="text" v-model="form.title"  maxlength="255" />
                                 
@@ -59,16 +56,26 @@
                         </div>
                         <div class="col-sm-4">
                             <div class="form-group">
-                                
-                                
-                                
                                 <label>Tel</label>
                                 <input class="form-control" type="text" v-model="form.tel"  maxlength="255" />
                                 
                                 
                             </div>
                         </div>
-                        
+                        <div class="col-sm-2">
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                    <input class="form-check-input" type="checkbox" v-model="form.borne">
+                                    <span class="form-check-sign">Borne?</span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-sm-4" v-if="form.borne==1">
+                            <div class="form-group">
+                                <label>Code borne</label>
+                                <input class="form-control" type="text" v-model="form.code_borne"  maxlength="255" />
+                            </div>
+                        </div>
                         
                         
                         
@@ -115,6 +122,8 @@
                 
                 
                 form: new Form({
+                    code_borne : "",
+                    borne : "",
                     id : "",
                     title : "",
                     adresse : "",
@@ -136,14 +145,13 @@
                 var that = this;
                 this.form.get('/api/emplacements/'+this.$route.params.id).then(function(response){
                     that.loaded = true;
-                    console.log(response.data.status)
                     if(response.data.status){
                         that.form.fill(response.data.emplacement);
                         that.companies =  response.data.companies;
                         that.users =  response.data.users;
                     }else{
                         alert('Erreur, accès interdit')
-                        this.$router.go(-1)
+                        that.$router.go(-1)
                     }
                 }).catch(function(e){
                     if (e.response && e.response.status == 404) {

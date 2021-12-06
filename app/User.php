@@ -50,7 +50,7 @@ class User extends Authenticatable implements HasMedia
         return $this->hasMany('App\Abonnement');
     }
     public function getLastAbonnementsAttribute(){
-        $abonnement = $this->Abonnements->last();
+        $abonnement = $this->Company->Abonnements->last();
         if ($abonnement->Formule->id==1){
             return $abonnement->Formule->title;
         }else{

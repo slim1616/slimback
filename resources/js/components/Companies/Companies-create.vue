@@ -39,18 +39,16 @@
                                     
                       </div>
                   </div>
-                                                          <div class="col-sm-4">
-                      <div class="form-group">
-                                                                                                            <label>Type</label>
-                                            <select class="form-control" v-model="form.type">
-                                                                                                    <option value="Personnel">Personnel</option>
-                                                                                                    <option value="SUARL">SUARL</option>
-                                                                                                    <option value="SARL">SARL</option>
-                                                                                                    <option value="SA">SA</option>
-                                                                                            </select>
-                                                      
-                <has-error :form="form" field="type"/>
-                                    
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <label>Type</label>
+                        <select class="form-control" v-model="form.type">
+                                <option value="Personnel">Personnel</option>
+                                <option value="SUARL">SUARL</option>
+                                <option value="SARL">SARL</option>
+                                <option value="SA">SA</option>
+                        </select>
+                        <has-error :form="form" field="type"/>            
                       </div>
                   </div>
                                                           <div class="col-sm-4">

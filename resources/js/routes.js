@@ -37,6 +37,13 @@ import Abonnementscreate from './components/Abonnements/Abonnements-create'
 import MesEmplacements from './components/Emplacements/MesEmplacements'
 import CompanyAbonnements from './components/Abonnements/CompanyAbonnements'
 
+import Bornessingle from './components/Bornes/Bornes-single'
+import Borneslist from './components/Bornes/Bornes-list'
+import Bornescreate from './components/Bornes/Bornes-create'
+
+import Compagnessingle from './components/Compagnes/Compagnes-single'
+import Compagneslist from './components/Compagnes/Compagnes-list'
+import Compagnescreate from './components/Compagnes/Compagnes-create'
 
 const routes = [
 
@@ -47,7 +54,6 @@ const routes = [
     {path : '/companyadduser', component : CompanyAddUser, name : 'CompanyAddUser', meta: { route: 'user' } },
     {path : '/companyusers', component : CompanyUsersList, name : 'CompanyUsersList', meta: { route: 'user' }},
     {path : '/adduser', component : addUser, name : 'addUser', meta: { route: 'user' } },
-    {path : '/edituser/:id', component : editUser, name : 'editUser', meta: { route: 'user' } },
     {path : '/editcuser/:id', component : editCompanyUser, name : 'editCompanyUser', meta: { route: 'user' },beforeEnter(to, from, next){
 
         if (['admin','superadmin'].includes(store.getters.getUser.role)){
@@ -124,25 +130,19 @@ const routes = [
     {path : '/questions/:id', component : Questionssingle, name : 'Questionssingle', props: true, meta: { route: 'menu' } },
     {path : '/questions', component : Questionslist , name : 'Questionslist', props: true, meta: { route: 'menu' } },
     {path : '/createquestions', component : Questionscreate , name : 'Questionscreate', props: true, meta: { route: 'menu' } },
+    
+    {path : '/bornes/:id', component : Bornessingle, name : 'Bornessingle', props: true, meta: { route: 'Bornessingle' }, meta: { route: 'menu' }  },
+    {path : '/bornes', component : Borneslist , name : 'Borneslist', props: true, meta: { route: 'Borneslist' }, meta: { route: 'menu' }  },
+    {path : '/createbornes', component : Bornescreate , name : 'Bornescreate', props: true, meta: { route: 'Bornescreate' }, meta: { route: 'menu' }  },
+
+    {path : '/compagnes/:id', component : Compagnessingle, name : 'Compagnessingle', props: true, meta: { route: 'Compagnessingle' }, meta: { route: 'menu' }  },
+    {path : '/compagnes', component : Compagneslist , name : 'Compagneslist', props: true, meta: { route: 'Compagneslist' }, meta: { route: 'menu' }  },
+    {path : '/createcompagnes', component : Compagnescreate , name : 'Compagnescreate', props: true, meta: { route: 'Compagnescreate' }, meta: { route: 'menu' }  },
 
     {path : '*' , component : notFound, name : '404'}
 ]
 
 export default routes
- 
-
- 
-
- 
-
- 
- 
- 
- 
- 
- 
- 
- 
  
  
  

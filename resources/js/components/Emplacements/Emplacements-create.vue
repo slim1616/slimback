@@ -59,7 +59,21 @@
                                 <input class="form-control" type="text" v-model="form.tel"  maxlength="255" />
                                 
                             </div>
-                        </div>                        
+                        </div>    
+                        <div class="col-sm-2">
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                    <input class="form-check-input" type="checkbox" v-model="form.borne">
+                                    <span class="form-check-sign">Borne?</span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-sm-4" v-if="form.borne==1">
+                            <div class="form-group">
+                                <label>Code borne</label>
+                                <input class="form-control" type="text" v-model="form.code_borne"  maxlength="255" />
+                            </div>
+                        </div>                    
                         <input class="form-control" type="hidden" v-model="form.created_at"/>
                         <input class="form-control" type="hidden" v-model="form.updated_at"/>
                         
@@ -86,21 +100,11 @@
         components: {HasError, Datetime},
         data: function(){
             return {
+                code_borne : "",
+                borne : "",
                 emplacements : false,
-                
-                
-                
-                
-                
-                
-                
                 companies : [],
-                
-                
                 users : [],
-                
-                
-                
                 form: new Form({
                     id : "",
                     title : "",

@@ -71,6 +71,17 @@
                                     
                       </div>
                   </div>
+                  <div class="col-sm-4">
+                        <div class="form-group">
+                            <label>Type</label>
+                            <select class="form-control" v-model="form.type">
+                                    <option value="borne">Borne</option>
+                                    <option value="app">Applications</option>
+                                    <option value="multiple">Borne + Application</option>
+                            </select>
+                            <has-error :form="form" field="type"/>            
+                        </div>
+                </div>
                                            
                   
                           

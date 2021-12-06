@@ -18,7 +18,9 @@
         <div class="card">
             <div class="card-header">
                 <div class="header-btns">
-                  <div class="card-title">Liste d'emplacements ({{emplacements.length}}/{{user.currentFormule.nbsemplacements}})</div>
+                    <template v-if="user.currentFormule">
+                        <div class="card-title">Liste d'emplacements ({{emplacements.length}}/{{user.currentFormule.nbsemplacements}})</div>
+                    </template>
                   <template v-if="['admin'].includes(user.role)">
                     <template v-if="user.currentFormule.nbsemplacements>emplacements.length">
                         <router-link to="/createemplacements" class="btn btn-border btn-round btn-secondary">

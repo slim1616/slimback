@@ -67,30 +67,12 @@
 								<div class="scroll-wrapper quick-actions-scroll scrollbar-outer" style="position: relative;"><div class="quick-actions-scroll scrollbar-outer scroll-content" style="height: auto; margin-bottom: 0px; margin-right: 0px; max-height: 276px;">
 									<div class="quick-actions-items">
 										<div class="row m-0">
-											<router-link :to="{name:'pointage'}" class="col-6 col-md-4 p-0">
-												<div class="quick-actions-item">
-													<i class="flaticon-file-1"></i>
-													<span class="text">Pointages</span>
-												</div>
-											</router-link>
-											<router-link :to="{name:'historique'}" class="col-6 col-md-4 p-0">
-												<div class="quick-actions-item">
-													<i class="flaticon-database"></i>
-													<span class="text">Historique</span>
-												</div>
-											</router-link>
 											<a class="col-6 col-md-4 p-0" href="#">
 												<div class="quick-actions-item">
 													<i class="flaticon-cloud"></i>
 													<span class="text">Import</span>
 												</div>
 											</a>
-											<router-link :to="{name : 'PortesList'}" class="col-6 col-md-4 p-0">
-												<div class="quick-actions-item">
-													<i class="flaticon-wifi"></i>
-													<span class="text">Portes</span>
-												</div>
-											</router-link>
 											<template v-if="['admin'].includes(user.role)">
 												<router-link :to="{name : 'usersList'}" class="col-6 col-md-4 p-0">
 													<div class="quick-actions-item">
@@ -99,12 +81,7 @@
 													</div>
 												</router-link>
 											</template>
-											<router-link :to="{name : 'employesList'}" class="col-6 col-md-4 p-0">
-												<div class="quick-actions-item">
-													<i class="la flaticon-users"></i>
-													<span class="text">Employé</span>
-												</div>
-											</router-link>
+
 										</div>
 									</div>
 								</div><div class="scroll-element scroll-x"><div class="scroll-element_outer"><div class="scroll-element_size"></div><div class="scroll-element_track"></div><div class="scroll-bar ui-draggable ui-draggable-handle" style="width: 100px;"></div></div></div><div class="scroll-element scroll-y"><div class="scroll-element_outer"><div class="scroll-element_size"></div><div class="scroll-element_track"></div><div class="scroll-bar ui-draggable ui-draggable-handle" style="height: 100px;"></div></div></div></div>

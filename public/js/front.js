@@ -81,7 +81,7 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 1);
+/******/ 	return __webpack_require__(__webpack_require__.s = 7);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -325,8 +325,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
-//
-//
 var isBetween = function isBetween(num1, num2, value) {
   return value >= num1 && value <= num2;
 };
@@ -503,6 +501,7 @@ var isBetween = function isBetween(num1, num2, value) {
                   _this2.loader = false;
 
                   if (data.status) {
+                    _this2.questionParPage = data.enquete.questionParPage;
                     _this2.enquete = data.enquete;
                     _this2.questions = data.questions;
                     _this2.uniqid = data.uniqid;
@@ -2088,61 +2087,56 @@ var render = function() {
                       "ul",
                       {},
                       _vm._l(question.questions, function(quest) {
-                        return _c("li", [
-                          _c(
-                            "div",
-                            {
-                              staticClass: "align-items-center d-flex",
-                              attrs: { href: "#" }
-                            },
-                            [
-                              _c(
-                                "label",
-                                {
+                        return _c(
+                          "li",
+                          { staticClass: "align-items-center d-flex" },
+                          [
+                            _c(
+                              "label",
+                              {
+                                class: [
+                                  question.typeinput == "checkbox"
+                                    ? ""
+                                    : "form-radio-input"
+                                ]
+                              },
+                              [
+                                _c("input", {
                                   class: [
                                     question.typeinput == "checkbox"
-                                      ? "form-check-input"
-                                      : "form-radio-input"
-                                  ]
-                                },
-                                [
-                                  _c("input", {
+                                      ? "form-check-label"
+                                      : "form-radio-label"
+                                  ],
+                                  attrs: {
+                                    type: question.typeinput,
+                                    name: "question"
+                                  },
+                                  on: {
+                                    change: function($event) {
+                                      return _vm.addResponse(
+                                        question.id,
+                                        quest,
+                                        question.typeinput
+                                      )
+                                    }
+                                  }
+                                }),
+                                _vm._v(" "),
+                                _c(
+                                  "span",
+                                  {
                                     class: [
                                       question.typeinput == "checkbox"
-                                        ? "form-check-label"
-                                        : "form-radio-label"
-                                    ],
-                                    attrs: {
-                                      type: question.typeinput,
-                                      name: "question"
-                                    },
-                                    on: {
-                                      change: function($event) {
-                                        return _vm.addResponse(
-                                          question.id,
-                                          quest,
-                                          question.typeinput
-                                        )
-                                      }
-                                    }
-                                  }),
-                                  _vm._v(" "),
-                                  _c(
-                                    "span",
-                                    {
-                                      class: [
-                                        question.typeinput == "checkbox"
-                                          ? "form-check-sign"
-                                          : "form-radio-sign"
-                                      ]
-                                    },
-                                    [_vm._v(_vm._s(quest.text))]
-                                  )
-                                ]
-                              )
-                            ]
-                          )
-                        ])
+                                        ? "form-check-sign"
+                                        : "form-radio-sign"
+                                    ]
+                                  },
+                                  [_vm._v(_vm._s(quest.text))]
+                                )
+                              ]
+                            )
+                          ]
+                        )
                       }),
                       0
                     )
@@ -14565,7 +14559,7 @@ var app = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
 
 /***/ }),
 
-/***/ 1:
+/***/ 7:
 /*!*************************************!*\
   !*** multi ./resources/js/front.js ***!
   \*************************************/

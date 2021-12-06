@@ -20,10 +20,12 @@
                 <div class="header-btns">
                     <div class="card-title">Liste de emplacements</div>
                     <template v-if="['admin'].includes(user.role)">
-                        <template v-if="user.currentFormule.nbsemplacements<emplacements.length">
-                            <router-link to="/createemplacements" class="btn btn-border btn-round btn-secondary">
-                                <i class="fas fa-plus"></i> Ajouter
-                            </router-link>
+                        <template v-if="user.currentFormule">
+                            <template v-if="user.currentFormule.nbsemplacements<emplacements.length">
+                                <router-link to="/createemplacements" class="btn btn-border btn-round btn-secondary">
+                                    <i class="fas fa-plus"></i> Ajouter
+                                </router-link>
+                            </template>
                         </template>
                     </template>
                 </div>
@@ -45,8 +47,6 @@
                                 
                                 <th scope="col">company</th>
                                 
-                                
-                                <th scope="col">user</th>
                                 <template v-if="['superadmin', 'admin'].includes(user.role)">
                                 <th scope="col">Actions</th>
                                 </template>
@@ -88,11 +88,6 @@
                                     </td>
                                     
                                     
-                                    <td>
-                                        <router-link :to="'/users/'+emplacement.user_id">
-                                            <span v-html="emplacement.user"></span>
-                                        </router-link>
-                                    </td>
                                     <template v-if="['superadmin', 'admin'].includes(user.role)">
                                     <td>
                                         <div class="action-btns">

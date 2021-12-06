@@ -85,6 +85,7 @@ class UserController extends Controller
             if ($user){
                 $user->nom = $request->nom;
                 $user->prenom = $request->prenom;
+                $user->name = $request->nom . ' ' . $request->prenom;
                 $user->phone = $request->phone;
                 $user->email = $request->email;
                 $user->adress = $request->adress;
@@ -214,6 +215,7 @@ class UserController extends Controller
             $user = new  User();
             $user->nom = $request->nom;
             $user->prenom = $request->prenom;
+            $user->name = $request->nom . ' ' . $request->prenom;
             $user->phone = $request->phone;
             $user->email = $request->email;
             $user->adress = $request->adress;

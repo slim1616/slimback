@@ -23,7 +23,7 @@ class EnqueteController extends Controller
         $response['enquete'] = new EnqueteResource($enquete);
         $response['companies'] = \App\Company::all();
         // $response['emplacements'] = EmplacementResource::collection($enquete->Company->Emplacements);
-        $emps = $enquete->Company->Emplacements;
+        $emps = $enquete->Company->Emplacements;//->where('borne',0);
 
         // dd($enquete->Enqueteemplacements->pluck('id')->toArray());
         $ems = [];
@@ -70,10 +70,10 @@ class EnqueteController extends Controller
       if (strcmp($Enqueteemplacement->password,$request->password)==0){
 
       }else{
-        return response(['status' => false]);
+        return response(['status' => false, 'msg' => 'Mot de passe incorrect']);
       }
     }else{
-      return response(['status' => false]);
+      return response(['status' => false, 'msg' => "cette enquete n'est pas activé"]);
     }
 
     $response = [];
@@ -105,7 +105,12 @@ class EnqueteController extends Controller
     
     public function list(Request $request){
       $user = $request->user();
-      return response(EnqueteResource::collection($user->Enquetes));
+      if ($user->Role->slug=='superadmin'){
+        return response(EnqueteResource::collection(Enquete::get()));
+      }else{
+        return response(EnqueteResource::collection($user->Company->Enquetes));
+      }
+      
     }
     
     public function create(Request $request){

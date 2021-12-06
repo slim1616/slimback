@@ -17,8 +17,9 @@ Auth::routes();
 Route::get('login/{provider}', 'SocialController@redirect');
 Route::get('login/{provider}/callback', 'SocialController@callback');
 
+Route::get('my-demo-mail','MailController@myDemoMail');
 
-
+Route::get('chart', 'BornesreponseController@chart');
 
 Route::group( ['middleware' => 'auth' ,'prefix' => 'admin' ], function(){
     Route::post('file-import', 'UserController@fileImport')->name('file-import');

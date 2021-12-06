@@ -31,7 +31,7 @@
                         <div class="col-sm-4">
                             <div class="form-group">
                                 <label for="">Prénom </label>
-                                <input type="text" class="form-control" aria-describedby="" v-model="user.prenom" placeholder="Nom">
+                                <input type="text" class="form-control" aria-describedby="" v-model="user.prenom" placeholder="Prénom">
                             </div>
                         </div>
                         <div class="col-sm-4">
@@ -45,7 +45,7 @@
                         <div class="col-sm-4">
                             <div class="form-group">
                                 <label for="">Tel </label>
-                                <input type="number" class="form-control" id="" aria-describedby="" v-model="user.phone" placeholder="Nom">
+                                <input type="number" class="form-control" id="" aria-describedby="" v-model="user.phone" placeholder="Tel">
                             </div>
                         </div>
                         <div class="col-sm-4">
@@ -67,7 +67,7 @@
                         </div>
                         <div class="col-sm-4">
                             <div class="form-groFonctionup">
-                                <label for="">Tel </label>
+                                <label for="">Fonction </label>
                                 <input type="text" class="form-control" id="" aria-describedby="" v-model="user.fonction" placeholder="fonction">
                             </div>
                         </div>

@@ -19,6 +19,8 @@ class CreateEmplacementTable extends Migration
             $table->string('adresse')->nullable();
             $table->string('email')->nullable();
             $table->string('tel')->nullable();
+            $table->boolean('borne')->default(false);
+            $table->string('code_borne')->nullable();
             $table->bigInteger('company_id')->unsigned()->default(1);
             $table->bigInteger('user_id')->unsigned()->default(1);
             $table->foreign('user_id')->references('id')->on('users');

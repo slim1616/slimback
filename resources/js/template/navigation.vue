@@ -77,8 +77,13 @@
 											</router-link>
 										</li>
 										<li>
-											<router-link :to="{name : 'Questionslist'}">
-												<span class="sub-item">Questions</span>
+											<router-link :to="{name : 'Compagneslist'}">
+												<span class="sub-item">Compagnes</span>
+											</router-link>
+										</li>
+										<li>
+											<router-link :to="{name : 'Borneslist'}">
+												<span class="sub-item">Bornes</span>
 											</router-link>
 										</li>
 										
@@ -88,24 +93,6 @@
 						</template>
 			
 						
-						<template v-if="['superadmin', 'admin'].includes(user.role)">
-							<li class="nav-item" :class="{active: $route.meta.route=='historique'}">
-								<a data-toggle="collapse" href="#maps">
-									<i class="fas fa-file-alt"></i>
-									<p>Reporting</p>
-									<span class="caret"></span>
-								</a>
-								<div class="collapse" id="maps">
-									<ul class="nav nav-collapse">
-										<li>
-											<router-link :to="{name:'pointage'}">
-												<span class="sub-item">Pointage</span>
-											</router-link>
-										</li>
-									</ul>
-								</div>
-							</li>
-						</template>
 						<!-- superadmin -->
 						<template v-if="['superadmin'].includes(user.role)">
 							<li class="nav-item" :class="{active: $route.meta.route=='parametres'}">

@@ -18,8 +18,8 @@
         <div class="card">
             <div class="card-header">
                 <div class="header-btns">
-                    <div class="card-title">Liste de enquetes ({{enquetes.length}}/{{user.currentFormule.nbsurvey}})</div>
                     <template v-if="['admin'].includes(user.role)">
+                        <div class="card-title">Liste de enquetes ({{enquetes.length}}/{{user.currentFormule.nbsurvey}})</div>
                         <template v-if="user.currentFormule.nbsurvey>enquetes.length">
                             <router-link to="/createenquetes" class="btn btn-border btn-round btn-secondary">
                                 <i class="fas fa-plus"></i> Ajouter

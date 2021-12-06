@@ -32,10 +32,13 @@ class EmplacementController extends Controller
           return response($response);
     }
     public function MesEmplacements(Request $request){
-        $user = $request->user();
+      $user = $request->user();
+      if ($user->Role->slug=='superadmin'){
+        $response['emplacements'] =  EmplacementResource::collection(Emplacement::get()); 
+      }else{
         $company = $user->Company;
-
         $response['emplacements'] =  EmplacementResource::collection($company->Emplacements); 
+      }
         return $response;
     }
 
@@ -53,7 +56,12 @@ class EmplacementController extends Controller
     }
     
     public function list(Request $request){
-      return response(EmplacementResource::collection(Emplacement::get()));
+      $user = $request->user();
+      if ($user->Role->slug=='superadmin'){
+        return response(EmplacementResource::collection(Emplacement::get()));
+      }else{
+        return response(EmplacementResource::collection($user->Company->Emplacements));
+      }
     }
     
     public function create(Request $request){

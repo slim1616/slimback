@@ -24,6 +24,8 @@ class EmplacementResource extends JsonResource
                     'email' => $this->email,
                                         
                     'tel' => $this->tel,
+                    'borne' => $this->borne,
+                    'code_borne' => $this->code_borne,
                                         
                     'company_id' => $this->company_id,
                             

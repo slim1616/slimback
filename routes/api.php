@@ -74,9 +74,36 @@ Route::group(['middleware' => 'auth:api'], function(){
     Route::post('/enquestions', 'QuestionController@QuestionsByEnquete'); 
     Route::delete('/delquestion/{id}', 'QuestionController@deleteSection'); 
     
+    Route::get('bornes', 'BorneController@list');
+
+    Route::get('databornes', 'BorneController@data');
+    Route::get('bornes/{id}', 'BorneController@get');
+    Route::post('bornes', 'BorneController@create');
+    Route::put('bornes/{id}', 'BorneController@update');
+    Route::delete('bornes/{id}', 'BorneController@delete');
     
+    Route::get('bornesreponses/{id}', 'BornesreponseController@get');
+    Route::delete('bornesreponses/{id}', 'BornesreponseController@delete');
+
+
+    Route::get('datacompagnes', 'CompagneController@data');
+    Route::get('compagnes/{id}', 'CompagneController@get');
+    Route::post('compagnes', 'CompagneController@create');
+    Route::put('compagnes/{id}', 'CompagneController@update');
+    Route::delete('compagnes/{id}', 'CompagneController@delete');
+    Route::get('compagnes', 'CompagneController@list');
     
 });
+
+
+Route::post('borne/filterreponses', 'BornesreponseController@filter');
+Route::post('borne/monthreponses', 'BornesreponseController@getDataMonth');
+
+
+Route::post('addresponses', 'BornesreponseController@MassAdd');
+Route::post('bornesreponses', 'BornesreponseController@create');
+
+
 Route::get('enquetes/front/{id}', 'EnqueteController@getFront'); 
 Route::post('enquetes/front/{id}', 'EnqueteController@getFrontMobile'); 
 Route::post('enquetes/addresponse', 'EnqueteController@addResponse'); 
@@ -115,3 +142,11 @@ Route::get('questions/{id}', 'QuestionController@get');
 Route::post('questions', 'QuestionController@create');
 Route::put('questions/{id}', 'QuestionController@update');
 Route::delete('questions/{id}', 'QuestionController@delete');
+
+
+
+Route::get('bornesreponses', 'BornesreponseController@list');
+
+
+
+
