@@ -5,7 +5,7 @@
 				<div class="sidebar-content">
 					<div class="user">
 						<div class="avatar-sm float-left mr-2">
-							<img :src="user.avatar" alt="..." class="avatar-img rounded-circle">
+							<i class="fas fa-user text-black-50 fa-2x"></i>
 						</div>
 						<div class="info">
 							<a data-toggle="collapse" href="#collapseExample" aria-expanded="true">

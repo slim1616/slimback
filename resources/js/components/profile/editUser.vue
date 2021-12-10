@@ -119,19 +119,7 @@
                                         </label>
                                     </div>
                                 </div>
-                                <div class="col-sm-4"></div>
-                                <div class="">
-                                    <div style="position:relative">
-                                    <button type="button" class="btn btn-icon btn-round btn-primary btn-add-avatar" 
-                                        data-toggle="modal" data-target="#snapshot-modal"
-                                        @click="lunchCam">
-                                        <i class="icon-camera"></i>
-                                    </button>
-                                    <div class="avatar avatar-xxl">
-                                        <img :src="newuser.avatar" alt="..." class="avatar-img rounded-circle">
-                                    </div>
-                                    </div>
-                                </div>
+
                                 
                             </div>
                             <button type="submit"  @click.prevent.stop="editUser" class="btn btn-primary">Enregistrer</button>
@@ -144,37 +132,6 @@
             </div>
         </div>
 
-        <!-- Modal -->
-        <div class="modal fade" id="snapshot-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Ajouter un avatar</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="camera">
-                            <video id="video">Video stream not available.</video>
-                        </div>
-                        <div class="start-button">
-                            <button id="startbutton" type="button" class="btn btn-icon btn-round btn-secondary">
-                                <i class="icon-camera"></i>
-                            </button>
-                        </div>
-                        <canvas id="canvas" style="display:none"></canvas>
-                        <div class="output">
-                            <img id="photo" alt="The screen capture will appear in this box.">
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
-                        <button type="button" class="btn btn-primary" :disabled="disabledbtn" :class="{disabled :disabledbtn}" @click="saveAvatar">Ajouter</button>
-                    </div>
-                </div>
-            </div>
-        </div>
     </div>
 </template>
 

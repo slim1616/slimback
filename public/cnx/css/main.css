@@ -142,7 +142,7 @@ iframe {
 }
 .left{
   flex:1;
-  background-image: url('/cnx/images/1.jpg');
+  background-image: url('/cnx/images/home.jpg');
   background-position: center center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -153,6 +153,9 @@ iframe {
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  background-image: url(/cnx/images/right.jpg);
+  background-size: contain;
+  background-repeat: round;
 }
 .login100-form-avatar, .title{
   display: flex;

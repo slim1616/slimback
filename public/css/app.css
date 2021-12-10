@@ -1,6 +1,3 @@
-a, a:hover{
-  text-decoration: none !important;
-}
 .header-btns {
   display: flex;
   justify-content: space-between;
@@ -122,8 +119,5 @@ ul {
 }
 
 .logo-home{
-  width : 80px;
-}
-.bg-custom{
-  background-color: #becefd;
+  width: 80px;
 }

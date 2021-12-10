@@ -1,10 +1,9 @@
 <template>
     <div class="main-header">
 			<!-- Logo Header -->
-			<div class="logo-header" data-background-color="blue">
-
+			<div class="logo-header align-items-center justify-content-center logo-header" data-background-color="blue">
 				<router-link :to="{name : 'home'}" class="logo">
-					<h3>Trust Acces</h3>
+					<h3>SATIS</h3>
 				</router-link>
 				<button class="navbar-toggler sidenav-toggler ml-auto" type="button" data-toggle="collapse" data-target="collapse" aria-expanded="false" aria-label="Toggle navigation">
 					<span class="navbar-toggler-icon">
@@ -89,15 +88,17 @@
 						</li>
 						<li class="nav-item dropdown hidden-caret submenu show">
 							<a class="dropdown-toggle profile-pic" data-toggle="dropdown" href="#" aria-expanded="true">
-								<div class="avatar-sm">
-									<img :src="user.avatar" alt="..." class="avatar-img rounded-circle">
+								<div class="avatar-sm align-items-center avatar-sm d-flex justify-content-between">
+									<i class="fas fa-user text-white fa-2x"></i>
 								</div>
 							</a>
 							<ul class="dropdown-menu dropdown-user animated fadeIn">
 								<div class="scroll-wrapper dropdown-user-scroll scrollbar-outer" style="position: relative;"><div class="dropdown-user-scroll scrollbar-outer scroll-content" style="height: auto; margin-bottom: 0px; margin-right: 0px; max-height: 271px;">
 									<li>
 										<div class="user-box">
-											<div class="avatar-lg"><img :src="user.avatar" alt="image profile" class="avatar-img rounded"></div>
+											<div class="avatar-lg">
+												<i class="fas fa-user text-black-50 fa-2x"></i>
+											</div>
 											<div class="u-text">
 												<h4>{{user.prenom}} {{user.nom}}</h4>
 												<p class="text-muted">{{user.email}}</p>
