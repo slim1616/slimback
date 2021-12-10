@@ -785,7 +785,7 @@
                         <table width="100%">
                             <tr>
                                 <td>
-                                    <img src="/Users/tech/Desktop/biblio/slimback/public/img/1.png"/>
+                                    <img src="{{base_path()}}/public/img/1.png"/>
                                 </td>
                                 <td>
                                     @if($grouped->count()>0&&isset($grouped['1']))
@@ -797,7 +797,7 @@
                                     @endif
                                 </td>
                                 <td>
-                                    <img src="/Users/tech/Desktop/biblio/slimback/public/img/2.png"/>
+                                    <img src="{{base_path()}}/public/img/2.png"/>
                                 </td>
                                 <td>
                                     @if($grouped->count()>0&&isset($grouped['2']))
@@ -809,7 +809,7 @@
                                     @endif
                                 </td>
                                 <td>
-                                    <img src="/Users/tech/Desktop/biblio/slimback/public/img/3.png"/>
+                                    <img src="{{base_path()}}/public/img/3.png"/>
                                 </td>
                                 <td>
                                     @if($grouped->count()>0&&isset($grouped['3']))
@@ -821,7 +821,7 @@
                                     @endif
                                 </td>
                                 <td>
-                                    <img src="/Users/tech/Desktop/biblio/slimback/public/img/4.png"/>
+                                    <img src="{{base_path()}}/public/img/4.png"/>
                                 </td>
                                 <td>
                                     @if($grouped->count()>0&&isset($grouped['4']))
@@ -901,7 +901,7 @@
                                                     <tr @if($i%2!=0) style="background:#eee" @endif>
                                                         <td width="50%">{{$prog['borne']}}</td>
                                                         <td width="25%" style="text-align:center">{{$prog['indice']}}</td>
-                                                        <td width="25%" style="text-align:center">{{$prog['perc']}}% <img width="15px" height="15px" src="/Users/tech/Desktop/biblio/slimback/public/img/up.png"/></td>
+                                                        <td width="25%" style="text-align:center">{{$prog['perc']}}% <img width="15px" height="15px" src="{{base_path()}}/public/img/up.png"/></td>
                                                     </tr>
                                                 @endforeach
                                             @endif
@@ -925,7 +925,7 @@
                                                     <tr @if($i%2!=0) style="background:#eee" @endif>
                                                         <td width="50%">{{$prog['borne']}}</td>
                                                         <td width="25%" style="text-align:center">{{$prog['indice']}}</td>
-                                                        <td width="25%" style="text-align:center">{{$prog['perc']}}% <img width="15px" height="15px" src="/Users/tech/Desktop/biblio/slimback/public/img/down.png"/></td>
+                                                        <td width="25%" style="text-align:center">{{$prog['perc']}}% <img width="15px" height="15px" src="{{base_path()}}/public/img/down.png"/></td>
                                                     </tr>
                                                 @endforeach
                                             @endif

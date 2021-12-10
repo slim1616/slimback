@@ -282,6 +282,10 @@ form{
     border-radius: 4px;
     border: solid 1px #336aca;
 }
+
+.logo{
+  width: 180px;
+}
 @media (max-width: 576px) {
   .wrapper{
     flex-direction: column;

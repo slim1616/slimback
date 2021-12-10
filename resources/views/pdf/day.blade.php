@@ -659,7 +659,7 @@
                         <table width="100%">
                             <tr>
                                 <td>
-                                    <img src="/Users/tech/Desktop/biblio/slimback/public/img/1.png"/>
+                                    <img src="{{base_path()}}/public/img/1.png"/>
                                 </td>
                                 <td>
                                     @if($grouped->count()>0&&isset($grouped['1']))
@@ -671,7 +671,7 @@
                                     @endif
                                 </td>
                                 <td>
-                                    <img src="/Users/tech/Desktop/biblio/slimback/public/img/2.png"/>
+                                    <img src="{{base_path()}}/public/img/2.png"/>
                                 </td>
                                 <td>
                                     @if($grouped->count()>0&&isset($grouped['2']))
@@ -683,7 +683,7 @@
                                     @endif
                                 </td>
                                 <td>
-                                    <img src="/Users/tech/Desktop/biblio/slimback/public/img/3.png"/>
+                                    <img src="{{base_path()}}/public/img/3.png"/>
                                 </td>
                                 <td>
                                     @if($grouped->count()>0&&isset($grouped['3']))
@@ -695,7 +695,7 @@
                                     @endif
                                 </td>
                                 <td>
-                                    <img src="/Users/tech/Desktop/biblio/slimback/public/img/4.png"/>
+                                    <img src="{{base_path()}}/public/img/4.png"/>
                                 </td>
                                 <td>
                                     @if($grouped->count()>0&&isset($grouped['4']))

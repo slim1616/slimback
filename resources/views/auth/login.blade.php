@@ -2,69 +2,19 @@
 
 @section('content')
 
-<script>
-  window.fbAsyncInit = function() {
-    FB.init({
-      appId      : '395202121896561',
-      xfbml      : true,
-      version    : 'v7.0'
-    });
-    FB.AppEvents.logPageView();
-  };
-
-  (function(d, s, id){
-     var js, fjs = d.getElementsByTagName(s)[0];
-     if (d.getElementById(id)) {return;}
-     js = d.createElement(s); js.id = id;
-     js.src = "https://connect.facebook.net/en_US/sdk.js";
-     fjs.parentNode.insertBefore(js, fjs);
-   }(document, 'script', 'facebook-jssdk'));
-</script>
 <div class="wrapper">
         <div class="left">
 
         </div>
-		<div class="rigth" >
+		<div class="rigth">
 			<div class="wrap-login100">
 
                 <div class="login100-form-avatar">
                     <div>
                         <a href="{{ route('accueil')}}">
-                            <img src="cnx/images/logo.png" alt="logo">
+                            <img src="cnx/images/satis.png" alt="logo" class="logo">
                         </a>
                     </div>
-                </div>
-                <div class="title">
-                    <span class="login100-form-title">
-                        Trust Access
-                    </span>
-                </div>
-                <div class="title">
-                    <p>Pas encore de compte? <a href="{{ route('register')}}">Créer</a></p>
-                </div>
-                <div class="social-login">
-                    <ul>
-                        <li>
-                            <a href="{{url('login/facebook')}}" title="" class="facebook social-link">
-                                <div>
-                                    <i class="fa fa-facebook"></i>
-                                </div>
-                                <div class="login-btn">
-                                    <span>Facebook</span>
-                                </div>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="login/google" title="" class="google social-link">
-                                    <div>
-                                        <img src="cnx/images/google.png" class="img-google"> 
-                                    </div>
-                                    <div class="login-btn">
-                                        <span style="color: #8a8a8a;">Google</span>
-                                    </div>
-                            </a>
-                        </li>
-                    </ul>
                 </div>
                 <div style="display: flex;justify-content: center;">
                     <div class="divider">
