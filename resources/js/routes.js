@@ -131,13 +131,27 @@ const routes = [
     {path : '/questions', component : Questionslist , name : 'Questionslist', props: true, meta: { route: 'menu' } },
     {path : '/createquestions', component : Questionscreate , name : 'Questionscreate', props: true, meta: { route: 'menu' } },
     
-    {path : '/bornes/:id', component : Bornessingle, name : 'Bornessingle', props: true, meta: { route: 'Bornessingle' }, meta: { route: 'menu' }  },
-    {path : '/bornes', component : Borneslist , name : 'Borneslist', props: true, meta: { route: 'Borneslist' }, meta: { route: 'menu' }  },
-    {path : '/createbornes', component : Bornescreate , name : 'Bornescreate', props: true, meta: { route: 'Bornescreate' }, meta: { route: 'menu' }  },
+    {path : '/bornes/:id', component : Bornessingle, name : 'Bornessingle', props: true, meta: { route: 'Bornessingle' }, meta: { route: 'bornes' }, beforeEnter(to, from, next){
+        if (store.getters.getUser.role=='superadmin'){
+            next()
+        }else{
+            alert('Vous ne pouvez pas entrer!')
+            $router.go(-1)
+        }
+    }   },
+    {path : '/bornes', component : Borneslist , name : 'Borneslist', props: true, meta: { route: 'Borneslist' }, meta: { route: 'bornes' }  },
+    {path : '/createbornes', component : Bornescreate , name : 'Bornescreate', props: true, meta: { route: 'Bornescreate' }, meta: { route: 'bornes' } , beforeEnter(to, from, next){
+        if (store.getters.getUser.role=='superadmin'){
+            next()
+        }else{
+            alert('Vous ne pouvez pas entrer!')
+            $router.go(-1)
+        }
+    }  },
 
-    {path : '/compagnes/:id', component : Compagnessingle, name : 'Compagnessingle', props: true, meta: { route: 'Compagnessingle' }, meta: { route: 'menu' }  },
-    {path : '/compagnes', component : Compagneslist , name : 'Compagneslist', props: true, meta: { route: 'Compagneslist' }, meta: { route: 'menu' }  },
-    {path : '/createcompagnes', component : Compagnescreate , name : 'Compagnescreate', props: true, meta: { route: 'Compagnescreate' }, meta: { route: 'menu' }  },
+    {path : '/compagnes/:id', component : Compagnessingle, name : 'Compagnessingle', props: true, meta: { route: 'Compagnessingle' }, meta: { route: 'bornes' }  },
+    {path : '/compagnes', component : Compagneslist , name : 'Compagneslist', props: true, meta: { route: 'Compagneslist' }, meta: { route: 'bornes' }  },
+    {path : '/createcompagnes', component : Compagnescreate , name : 'Compagnescreate', props: true, meta: { route: 'Compagnescreate' }, meta: { route: 'bornes' }  },
 
     {path : '*' , component : notFound, name : '404'}
 ]

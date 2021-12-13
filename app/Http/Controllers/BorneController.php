@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Borne;
 use App\Http\Resources\BorneResource;
+use Carbon\Carbon;
+use App\Bornesreponse;
 
 class BorneController extends Controller
 {
@@ -89,5 +91,82 @@ class BorneController extends Controller
         $bornes = Borne::findOrFail($id);
         $bornes->delete();
     }
+
+    public function HomeStats(Request $request){
+      $user = $request->user();
+      $response = [];
+      $company = $user->Company;
+      setlocale(LC_TIME, "fr_FR");
+      $type = "week";
+      $date = Carbon::now(); // or $date = new Carbon();
+      // dd($date->endOfWeek()->format('Y-m-d H:i:s'));
+      $start = $date->startOfWeek()->format('Y-m-d H:i:s');
+      $end = $date->endOfWeek()->format('Y-m-d H:i:s');
+
+      $data = Bornesreponse::where('company_id', $company->id)
+                              ->where('datetime','>=', $start)
+                              ->where('datetime', '<=', $end)
+                              // ->groupBy('resp')
+                              ->get();
+  
+
+      $grouped = $data->groupBy('resp');
+      $bornes = $data->groupBy('borne_id');
+      $counts = $data->pluck('resp')->countBy();
+      
+      $resps = [];
+      $total = $data->count();
+      for ($i=1; $i <=4 ; $i++) { 
+        // dd($counts[$i]);
+        if (isset($counts[$i])){
+          $resps[$i] = round($counts[$i]/$total*100,0);
+        }else{
+          $resps[$i] = 0;
+        }
+      }
+      // return response(['status' => true, 'resps' => $resps]);
+      $locale = app()->getLocale();
+      Carbon::setlocale($locale);
+      $jours = [];
+      if ($type=='week'){
+        $days = $data->groupBy(function ($item, $key) {
+          return Carbon::parse($item['datetime'])->dayOfWeek;
+        });
+        $days = $days->sortKeys();
+        $jours = array();
+        if ($days){
+          foreach ($days as $key => $jour) {
+            // dd($jour);
+            $jours[$key] = $jour->count(); 
+          }
+            // $indice = $ind;
+        }
+
+            $weekdays = Carbon::getDays();
+            $alljours = [];
+            for ($i=0; $i < 7 ; $i++) { 
+              if (isset($jours[$i])){
+                $alljours[Carbon::create($weekdays[$i])->locale('fr_FR')->dayName] = $jours[$i];
+              }else{
+                $alljours[Carbon::create($weekdays[$i])->locale('fr_FR')->dayName] = 0;
+              }
+            }
+            $tmp = $alljours['dimanche'];
+          }
+        
+        $j = array_shift($alljours);
+        $alljours['dimanche'] = $tmp;
+        $jours = $alljours;
+
+        return response(['status' => true, 
+                         'resps' => $resps,
+                         'semaine' => $alljours
+                      ]);
+     
+
+     
+     
+     
+  }
 }
  ?>

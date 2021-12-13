@@ -72,13 +72,13 @@
                                                                                                                                                                    
                                                                                             <td>
                                                     <router-link :to="'/abonnements/'+abonnement.id">
-                                                    <span v-html="abonnement.start_at"> </span>
+                                                    <span>{{formatDate(abonnement.start_at)}} </span>
                                                     </router-link>
                                                 </td>
                                                                                                                                                                    
                                                                                             <td>
                                                     <router-link :to="'/abonnements/'+abonnement.id">
-                                                    <span v-html="abonnement.end_at"> </span>
+                                                    <span>{{formatDate(abonnement.end_at)}} </span>
                                                     </router-link>
                                                 </td>
                                                                                                                                                                                                                                                                                                                     <td>

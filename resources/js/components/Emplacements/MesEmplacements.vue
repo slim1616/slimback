@@ -21,15 +21,26 @@
                     <template v-if="user.currentFormule">
                         <div class="card-title">Liste d'emplacements ({{emplacements.length}}/{{user.currentFormule.nbsemplacements}})</div>
                     </template>
-                  <template v-if="['admin'].includes(user.role)">
-                    <template v-if="user.currentFormule.nbsemplacements>emplacements.length">
+                    <template v-if="['superadmin'].includes(user.role)">
+                        <div class="card-title">Liste d'emplacements ({{emplacements.length}})</div>
                         <router-link to="/createemplacements" class="btn btn-border btn-round btn-secondary">
-                                <i class="fas fa-plus"></i> Ajouter
+                            <i class="fas fa-plus"></i> Ajouter
                         </router-link>
                     </template>
-                    <template v-if="user.currentFormule.nbsemplacements==emplacements.length">
-                        <p>Vous avez atteind le max d'emplacements</p>
-                    </template>
+                  <template v-if="['admin'].includes(user.role)">
+                        <template v-if="user.currentFormule">
+                            <template v-if="user.currentFormule.nbsemplacements>emplacements.length">
+                                <router-link to="/createemplacements" class="btn btn-border btn-round btn-secondary">
+                                        <i class="fas fa-plus"></i> Ajouter
+                                </router-link>
+                            </template>
+                            <template v-if="user.currentFormule.nbsemplacements==emplacements.length">
+                                <p>Vous avez atteind le max d'emplacements</p>
+                            </template>
+                        </template>
+                        <template v-else>
+                            <p class="card-title">Abonnement expiré</p>
+                        </template>
                 </template>
               </div>
             </div>
@@ -37,24 +48,16 @@
                 <div class="table-responsive">
                     <table class="table table-bordered table-head-bg-primary" v-if="emplacements.length > 0">
                         <thead>
-                          <tr>
-                                                                                                                   
-                                    <th scope="col">Title</th>
-                                                                                            
-                                    <th scope="col">Adresse</th>
-                                                                                            
-                                    <th scope="col">Email</th>
-                                                                                            
-                                    <th scope="col">Tel</th>
-                                                                                                                         
-                                
-                                    <th scope="col">company</th>
-                                                                                                                         
-                                
-                                    <th scope="col">user</th>
-                                    <template v-if="['superadmin', 'admin'].includes(user.role)">
+                          <tr>                                                   
+                                <th scope="col">Title</th>                            
+                                <th scope="col">Adresse</th>                              
+                                <th scope="col">Email</th>                                      
+                                <th scope="col">Tel</th>
+                                <th scope="col">company</th>
+                                <th scope="col">user</th>
+                                <template v-if="['superadmin', 'admin'].includes(user.role)">
                                     <th scope="col">Actions</th>
-                                    </template>
+                                </template>
                           </tr>
                         </thead>
                         <tbody>

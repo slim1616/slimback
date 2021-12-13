@@ -46,22 +46,22 @@
                                     
                       </div>
                   </div>
-                                                          <div class="col-sm-4">
-                      <div class="form-group">
-                                                                
-                                            <label>Company</label>
-                                            <select class="form-control" v-model="form.company_id">
-                                                    
-                                                    <option v-for="company in companies" :value="company.id">
-                                                        {{ company.title }}
-                                                    </option>
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <label>Company</label>
+                        <select class="form-control" v-model="form.company_id" @change="getUsers">
+                                
+                                <option v-for="company in companies" :value="company.id">
+                                    {{ company.title }}
+                                </option>
 
-                                                </select>
-                                                      
-                <has-error :form="form" field="company_id"/>
-                                    
-                      </div>
+                        </select>
+                        <has-error :form="form" field="company_id"/>
+                    </div>
                   </div>
+                                                                
+                                                      
+                                    
                                                           <div class="col-sm-4">
                       <div class="form-group">
                                                                 
@@ -168,6 +168,32 @@ export default {
     this.listdata();
   },
   methods: {
+    getUsers(){
+        let res = fetch(window.location.origin + '/api/user/companyusers/' + this.form.company_id,{
+                headers : {
+                    'Content-type' : 'Application/json',
+                    // 'Accept':'application/json',
+                    'X-Requested-With' : 'XMLHttpRequest',
+                    'X-CSRF-TOKEN' : document.head.querySelector('meta[name="csrf-token"]').content
+                }
+            })
+            .then((response) => {
+                if (response.ok) {
+                return response.json();
+                }
+            })
+            .then(resp => {
+                if (resp.status){
+                    this.users = resp.users;
+                }else{
+                    
+                }
+            })
+            .catch(error => {
+                alert('Erreur')
+                console.log(error)
+            })
+    },
     listdata: function(){
       
       var that = this;

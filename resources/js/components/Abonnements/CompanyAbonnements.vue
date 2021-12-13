@@ -28,20 +28,11 @@
                     <table class="table table-bordered table-head-bg-primary" v-if="abonnements.length > 0">
                         <thead>
                             <tr>
-                                
-                                
                                 <th scope="col">formule</th>
-                                
-                                
                                 <th scope="col">company</th>
-                                
-                                
                                 <th scope="col">user</th>
-                                
                                 <th scope="col">Start_at</th>
-                                
                                 <th scope="col">End_at</th>
-
                             </tr>
                         </thead>
                         <tbody>

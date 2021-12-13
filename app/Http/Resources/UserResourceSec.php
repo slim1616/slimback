@@ -24,10 +24,10 @@ class UserResourceSec extends JsonResource
         }else{
             $abonnement = $this->Company->Abonnements->last();
             if ($abonnement){
-                if ($abonnement->Formule->id==1){
-                    $currentAbonnement = $abonnement;
-                    $currentFormule = $abonnement->Formule;
-                }else{
+                // if ($abonnement->Formule->id==1){
+                //     $currentAbonnement = $abonnement;
+                //     $currentFormule = $abonnement->Formule;
+                // }else{
                     if ($abonnement->start_at&&$abonnement->end_at){
                         $start = Carbon::createFromFormat('Y-m-d', $abonnement->start_at);
                         $end = Carbon::createFromFormat('Y-m-d', $abonnement->end_at);
@@ -36,13 +36,13 @@ class UserResourceSec extends JsonResource
                             $currentFormule = $abonnement->Formule;
                         }else{
                             $currentAbonnement = null;
-                            $currentFormule = Formule::find(1);
+                            $currentFormule = null;
                         }
                     }else{
                         $currentAbonnement = $abonnement;
                         $currentFormule = $abonnement->Formule;
                     }
-                }
+                // }
             }
         }
 
@@ -57,6 +57,7 @@ class UserResourceSec extends JsonResource
             'email' => $this->email,
             'nom' => $this->nom,
             'prenom' => $this->prenom,
+            'name' => $this->name,
             'birthday' => $this->birthday,
             'adress' => $this->adress,
             'phone' => $this->phone,

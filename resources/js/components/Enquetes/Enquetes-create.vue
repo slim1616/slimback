@@ -93,7 +93,12 @@
                         
                     </div>
                     <div class="row">
-                        <button class="btn btn-primary" type="submit" :disabled="form.busy" name="button">{{ (form.busy) ? 'Please wait...' : 'Ajouter'}}</button>
+                        <template v-if="['superadmin'].includes(user.role)">
+                            <button class="btn btn-primary" type="submit" :disabled="form.busy" name="button">{{ (form.busy) ? 'Please wait...' : 'Ajouter'}}</button>
+                        </template>
+                        <template v-if="user.currentFormule">
+                            <button class="btn btn-primary" type="submit" :disabled="form.busy" name="button">{{ (form.busy) ? 'Please wait...' : 'Ajouter'}}</button>
+                        </template>
                     </div>
                 </form>
             </div>
@@ -106,7 +111,7 @@
     import * as moment from 'moment';
     import { Datetime } from 'vue-datetime';
     import 'vue-datetime/dist/vue-datetime.css'
-    
+    import {mapGetters} from 'vuex'
     
     export default {
         name: 'Enquete',
@@ -214,6 +219,11 @@
                 });  
             },
             
+        },
+        computed:{
+            ...mapGetters({
+                user : 'getUser',
+            })
         }
     }
 </script>

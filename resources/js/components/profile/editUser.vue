@@ -101,6 +101,17 @@
                                         <input type="text" class="form-control" v-model="newuser.adress" placeholder="adresse">
                                     </div>
                                 </div>
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <label>Company</label>
+                                        <select class="form-control" v-model="newuser.company_id">
+                                                
+                                                <option v-for="company in companies" :value="company.id">
+                                                    {{ company.title }}
+                                                </option>
+                                        </select>
+                                    </div>
+                                </div>
                                 
                             </div>
                             <div class="row">
@@ -151,6 +162,7 @@ export default {
     components : {changepassword},
     data(){
         return {
+            companies : [],
             roles : [],
             newuser : {
                 nom:'',
@@ -161,7 +173,7 @@ export default {
                 sexe:'M',
                 phone:'',
                 role_id : 1,
-                // postal_code:'',
+                company_id : '',
                 active : true,
             },
             errornom : false,
@@ -329,6 +341,7 @@ export default {
                 this.$store.dispatch('setLoader', false)
                 if (data.status){
                     this.newuser = data.user
+                    this.companies = data.companies
                     
                 }else{
                     

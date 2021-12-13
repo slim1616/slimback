@@ -27,6 +27,7 @@ class FormuleResource extends JsonResource
                     'nbmois' => $this->nbmois,
                                         
                     'nbsemplacements' => $this->nbsemplacements,
+                    'type' => $this->type,
                                         
                     'created_at' => $this->created_at,
                                         

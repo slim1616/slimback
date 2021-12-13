@@ -92,22 +92,15 @@
                                 <input type="text" class="form-control" v-model="newuser.adress" placeholder="adresse">
                             </div>
                         </div>
-                        
-                    </div>
-                    <div class="row">
                         <div class="col-sm-4">
                             <div class="form-group">
-                                <label for="exampleFormControlFile1">Photo</label>
-                                <input type="file" class="form-control-file">
-                            </div>
-                        </div>
-                        <div class="col-sm-4"></div>
-                        <div class="col-sm-4">
-                            <div class="form-check">
-                                <label class="form-check-label">
-                                    <input class="form-check-input" type="checkbox" v-model="newuser.active">
-                                    <span class="form-check-sign">Actif</span>
-                                </label>
+                                <label>Company</label>
+                                <select class="form-control" v-model="newuser.company_id">
+                                        
+                                        <option v-for="company in companies" :value="company.id">
+                                            {{ company.title }}
+                                        </option>
+                                </select>
                             </div>
                         </div>
                     </div>
@@ -132,6 +125,14 @@
                                 <p class="text-danger">Votre mot de passe doit dépasser 6 caractères</p>
                             </template>
                         </div>
+                        <div class="col-sm-4">
+                            <div class="form-check">
+                                <label class="form-check-label">
+                                    <input class="form-check-input" type="checkbox" v-model="newuser.active">
+                                    <span class="form-check-sign">Actif</span>
+                                </label>
+                            </div>
+                        </div>
                     </div>
                     <button type="submit"  @click.prevent.stop="add" class="btn btn-primary">Ajouter</button>
                 </form>
@@ -150,6 +151,7 @@ export default {
     // components : {Datetime},
     data(){
         return {
+            companies : [],
             roles : [],
             newuser : {
                 nom:'',
@@ -199,6 +201,7 @@ export default {
             .then(data => {
                 if (data.status){
                     this.roles = data.roles
+                    this.companies = data.companies
                     this.$store.dispatch('setLoader', false)
                     
                 }else{

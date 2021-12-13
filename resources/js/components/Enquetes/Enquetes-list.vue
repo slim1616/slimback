@@ -18,16 +18,27 @@
         <div class="card">
             <div class="card-header">
                 <div class="header-btns">
-                    <template v-if="['admin'].includes(user.role)">
-                        <div class="card-title">Liste de enquetes ({{enquetes.length}}/{{user.currentFormule.nbsurvey}})</div>
-                        <template v-if="user.currentFormule.nbsurvey>enquetes.length">
+                    <template v-if="['superadmin'].includes(user.role)">
+                            <div class="card-title">Liste de enquetes ({{enquetes.length}})</div>
                             <router-link to="/createenquetes" class="btn btn-border btn-round btn-secondary">
                                 <i class="fas fa-plus"></i> Ajouter
                             </router-link>
-                        </template>
-                        <template v-if="user.currentFormule.nbsurvey==enquetes.length">
-                            <p>Vous avez atteind le max d'enquetes</p>
-                        </template>
+                    </template>
+                    <template v-if="['admin'].includes(user.role)">
+                        <template v-if="user.currentFormule">
+                            <div class="card-title">Liste de enquetes ({{enquetes.length}}/{{user.currentFormule.nbsurvey}})</div>
+                            <template v-if="user.currentFormule.nbsurvey>enquetes.length">
+                                <router-link to="/createenquetes" class="btn btn-border btn-round btn-secondary">
+                                    <i class="fas fa-plus"></i> Ajouter
+                                </router-link>
+                            </template>
+                            <template v-if="user.currentFormule.nbsurvey==enquetes.length">
+                                <p>Vous avez atteind le max d'enquetes</p>
+                            </template>
+                            </template>
+                            <template v-else>
+                                <p class="card-title">Abonnement expiré</p>
+                            </template>
                     </template>
                 </div>
             </div>

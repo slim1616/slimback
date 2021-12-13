@@ -9,6 +9,7 @@ use App\Http\Resources\UserResourceSec;
 use Illuminate\Support\Facades\Validator;
 use App\User;
 use App\Role;
+use App\Company;
 
 
 class UserController extends Controller
@@ -27,6 +28,16 @@ class UserController extends Controller
         return back();
     }
 
+
+    public function UsersByCompany(Request $request, $company_id){
+        $company = Company::find($company_id);
+        $users = $company->Users;
+        if ($users){
+            return response(['status' => true, 'users'=> UserResourceSec::collection($users)]);
+            return response(['status' => true, 'users'=> []]);
+        }
+
+    }
     public function UsersCompany(Request $request){
         $user = $request->user();
         if ($user->Role->slug=='admin'){
@@ -38,8 +49,10 @@ class UserController extends Controller
     
     public function getSingleUser(Request $request, $id){
         $user= User::find($id);
+        $companies = Company::all();
         if ($user){
-            return response(['status' => true, 'user' => new UserResourceSec($user)]);
+            return response(['status' => true, 'user' => new UserResourceSec($user),
+                                        'companies' => $companies]);
         }else{
             return response(['status' => false, 'msg' => 'utilisateur non trouvé']);
         }
@@ -89,6 +102,7 @@ class UserController extends Controller
                 $user->sexe = $request->sexe;
                 $user->fonction = $request->fonction;
                 $user->role_id = $request->role_id;
+                $user->company_id = $request->company_id;
                 // $user->birthday = $request->birthday;
                 // $user->postal_code = $request->postal_code;
                 if (!is_null($request->active)){
@@ -255,12 +269,14 @@ class UserController extends Controller
             $user = new  User();
             $user->nom = $request->nom;
             $user->prenom = $request->prenom;
+            $user->name = $request->nom . ' ' . $request->prenom;
             $user->phone = $request->phone;
             $user->email = $request->email;
             $user->adress = $request->adress;
             $user->sexe = $request->sexe;
             $user->fonction = $request->fonction;
             $user->role_id = $request->role_id;
+            $user->company_id = $request->company_id;
             if (!is_null($request->active)){
                 $user->active = $request->active==true? true : false;
                 // dd($employe->active);
@@ -375,8 +391,9 @@ class UserController extends Controller
     public function rolesList(Request $request)
     {
         $roles = Role::all();
+        $companies = Company::all();
         if ($roles){
-            return response(["status" => true, "roles" => $roles]);
+            return response(["status" => true, "roles" => $roles, 'companies' => $companies]);
         }else{
             return response(["status" => false, "roles" => [] ]);
         }

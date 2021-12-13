@@ -19,6 +19,7 @@
         <div class="card">
             <div class="card-header d-flex justify-content-between">
                 <div class="card-title">Modifier enquete</div>
+                <template v-if="user.currentFormule">
                 <a :href="'/enquete/' + form.id">
                     <i class="flaticon-chain"></i>
                 </a>
@@ -29,6 +30,7 @@
                     <i class="fab fa-facebook-f"></i>
                 </a>
                 <input type="text" style="opacity:0" :value="'/enquete/' + form.id" id="cplink"/> 
+                </template>
             </div>
             <div class="card-body">
                 
@@ -185,8 +187,19 @@
                             </div>
                             <template v-if="['superadmin', 'admin'].includes(user.role)">
                             <div class="card-action">
-                                <button class="btn btn-success" type="submit" :disabled="form.busy" name="button">{{ (form.busy) ? 'Please wait...' : 'Enregistrer'}}</button>
-                                <button class="btn btn-danger" @click.prevent="deleteEnquete">{{ (form.busy) ? 'Please wait...' : 'Effacer'}}</button>
+                                <template v-if="['superadmin'].includes(user.role)">
+                                    <button class="btn btn-success" type="submit" :disabled="form.busy" name="button">{{ (form.busy) ? 'Please wait...' : 'Enregistrer'}}</button>
+                                    <button class="btn btn-danger" @click.prevent="deleteEnquete">{{ (form.busy) ? 'Please wait...' : 'Effacer'}}</button> 
+                                </template>
+                                <template v-else>
+                                    <template v-if="user.currentFormule">
+                                        <button class="btn btn-success" type="submit" :disabled="form.busy" name="button">{{ (form.busy) ? 'Please wait...' : 'Enregistrer'}}</button>
+                                        <button class="btn btn-danger" @click.prevent="deleteEnquete">{{ (form.busy) ? 'Please wait...' : 'Effacer'}}</button>
+                                    </template>
+                                    <template v-else>
+                                        <p>Abonnement Expiré</p>
+                                    </template>
+                                </template>
                             </div>
                             </template>
                             
@@ -367,11 +380,16 @@
             getEnquete: function(Enquete){
                 var that = this;
                 this.form.get('/api/enquetes/'+this.$route.params.id).then(function(response){
-                    that.form.fill(response.data.enquete);
-                    that.emplacements =  response.data.emplacements;
-                    that.companies =  response.data.companies;
-                    that.users =  response.data.users;
-                    that.loaded = true;
+                    if (response.data.status==true){
+                        that.form.fill(response.data.enquete);
+                        that.emplacements =  response.data.emplacements;
+                        that.companies =  response.data.companies;
+                        that.users =  response.data.users;
+                    }else{
+                        alert(response.data.msg)
+                        that.$router.go(-1)
+                    }
+                    that.loaded = true;     
                 }).catch(function(e){
                     if (e.response && e.response.status == 404) {
                         that.$router.push('/404');

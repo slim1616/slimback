@@ -93,7 +93,7 @@
                                 <datetime v-model="form.start_at"
                                 value-zone="Africa/Tunis"
                                 type="date"
-                                format="yyyy-MM-dd"
+                                format="dd/MM/yyyy"
                                 input-class="form-control"/>
                                 </template>
                                 <template v-else>
@@ -110,7 +110,7 @@
                                 <datetime v-model="form.end_at"
                                 value-zone="Africa/Tunis"
                                 type="date"
-                                format="yyyy-MM-dd"
+                                format="dd/MM/yyyy"
                                 input-class="form-control"/>
                                 </template>
                                 <template v-else>
@@ -200,8 +200,6 @@
                 var that = this;
                 this.form.get('/api/abonnements/'+this.$route.params.id).then(function(response){
                     that.form.fill(response.data.abonnement);
-                    
-                    
                     
                     that.formules =  response.data.formules;
                     

@@ -5,6 +5,7 @@ import VueNotification from "@kugatsu/vuenotification";
 import JsonExcel from "vue-json-excel";
 import {mapGetters} from 'vuex';
 import VueToastify from "vue-toastify";
+import moment from 'moment'
 Vue.use(VueToastify);
 Vue.component("downloadExcel", JsonExcel);
 
@@ -15,7 +16,17 @@ Vue.use(VueRouter)
 Vue.use(Vuex);
 import {store} from './store.js';
 require('./bootstrap');
-
+Vue.mixin({
+    methods:{
+        formatDate(val){
+            if (val){
+                return moment(val).format('DD/MM/YYYY');
+            }else{
+                return ""
+            }
+        }
+    }
+})
 // window.Vue = require('vue');
 
 import routes from './routes'

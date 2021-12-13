@@ -21,7 +21,8 @@ Route::group(['middleware' => 'auth:api'], function(){
     Route::post('user/adduc','UserController@adduserCompany');
     Route::post('user/cedit','UserController@editSingleComanyUser');
     Route::delete('user/{id}', 'UserController@destroy');
-
+    Route::get('user/companyusers/{id}','UserController@UsersByCompany');
+    
     Route::get('user/all','UserController@all');
     Route::get('getuser','UserController@getUser');
     Route::post('user/update','UserController@update');
@@ -76,6 +77,7 @@ Route::group(['middleware' => 'auth:api'], function(){
     
     Route::get('bornes', 'BorneController@list');
 
+    Route::get('bornes/statshomebornes', 'BorneController@HomeStats');
     Route::get('databornes', 'BorneController@data');
     Route::get('bornes/{id}', 'BorneController@get');
     Route::post('bornes', 'BorneController@create');
@@ -92,6 +94,9 @@ Route::group(['middleware' => 'auth:api'], function(){
     Route::put('compagnes/{id}', 'CompagneController@update');
     Route::delete('compagnes/{id}', 'CompagneController@delete');
     Route::get('compagnes', 'CompagneController@list');
+
+
+    Route::get('emplacements', 'EmplacementController@list');
     
 });
 
@@ -127,7 +132,7 @@ Route::delete('formules/{id}', 'FormuleController@delete');
 
 // get emplacement by code
 Route::post('emplacements/newpass', 'EmplacementController@newpass'); 
-Route::get('emplacements', 'EmplacementController@list');
+
 // qr code
 Route::post("generateqrcode", "QRcodeController@generate");
 

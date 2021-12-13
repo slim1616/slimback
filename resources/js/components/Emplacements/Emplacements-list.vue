@@ -18,7 +18,12 @@
         <div class="card">
             <div class="card-header">
                 <div class="header-btns">
-                    <div class="card-title">Liste de emplacements</div>
+                    <div class="card-title">Liste des emplacements</div>
+                    <template v-if="['superadmin'].includes(user.role)">
+                        <router-link to="/createemplacements" class="btn btn-border btn-round btn-secondary">
+                            <i class="fas fa-plus"></i> Ajouter
+                        </router-link>
+                    </template>
                     <template v-if="['admin'].includes(user.role)">
                         <template v-if="user.currentFormule">
                             <template v-if="user.currentFormule.nbsemplacements<emplacements.length">

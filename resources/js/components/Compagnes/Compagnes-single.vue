@@ -88,9 +88,12 @@
                         
                             </div>
                             <div class="card-action">
-                                <button class="btn btn-success" type="submit" :disabled="form.busy" name="button">{{ (form.busy) ? 'Please wait...' : 'Enregistrer'}}</button>
+                                <template v-if="user.currentFormule">
+                                    <button class="btn btn-success" type="submit" :disabled="form.busy" name="button">{{ (form.busy) ? 'Please wait...' : 'Enregistrer'}}</button>
+                                </template>
                                 <template v-if="user.role=='superadmin'">
                                     <button class="btn btn-danger" @click.prevent="deleteCompagne">{{ (form.busy) ? 'Please wait...' : 'Effacer'}}</button>
+                                    <button class="btn btn-success" type="submit" :disabled="form.busy" name="button">{{ (form.busy) ? 'Please wait...' : 'Enregistrer'}}</button>
                                 </template>
                             </div>
                     <ul class="nav nav-pills nav-secondary  nav-pills-no-bd nav-pills-icons" id="pills-tab-with-icon" role="tablist">
@@ -289,26 +292,31 @@ export default {
         
             var that = this;
             this.form.get('/api/compagnes/'+this.$route.params.id).then(function(response){
-                that.form.fill(response.data.compagne);         
-                that.companies =  response.data.companies;
-                that.bornes =  response.data.bornes;
-                that.actifbornes = response.data.actifbornes
-                if (response.data.compagne.emploie){
-                        let tab = JSON.parse(response.data.compagne.emploie)
-                        const obj = {...tab};
-                        try{
-                            setTimeout(() => {
-                                if (obj){
-                                    $("#weekly-schedule").data('artsy.dayScheduleSelector').deserialize(obj);
-                                }
-                                that.loaded = true;
+                if (response.data.status==true){
+                    that.form.fill(response.data.compagne);         
+                    that.companies =  response.data.companies;
+                    that.bornes =  response.data.bornes;
+                    that.actifbornes = response.data.actifbornes
+                    if (response.data.compagne.emploie){
+                            let tab = JSON.parse(response.data.compagne.emploie)
+                            const obj = {...tab};
+                            try{
+                                setTimeout(() => {
+                                    if (obj){
+                                        $("#weekly-schedule").data('artsy.dayScheduleSelector').deserialize(obj);
+                                    }
+                                    that.loaded = true;
 
-                            },1000)
-                        }catch(error){
-                            console.log(error)
-                        }
-                    
+                                },1000)
+                            }catch(error){
+                                console.log(error)
+                            }
+                        
                     }
+                }else{
+                    alert(response.data.msg)
+                    that.$router.go(-1)
+                }
                 that.loaded = true;
             }).catch(function(e){
                 console.log(e)

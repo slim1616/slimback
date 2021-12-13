@@ -29,13 +29,23 @@
 										<li v-if="user.company_id!=null">
 											<template v-if="user.currentAbonnement!=null">
 												<router-link :to="{name : 'Abonnementssingle', params:{id : user.currentAbonnement.id}}">
-													<span class="link-collapse">{{user.currentFormule.title}}</span>
+													<template v-if="user.currentFormule">
+														<span class="link-collapse">{{user.currentFormule.title}}</span>
+													</template>
+													<template v-else>
+														Abonnement expiré
+													</template>
 												</router-link>
 											</template>
 											<template v-else>
-												<router-link to="#">
-													<span class="link-collapse">{{user.currentFormule.title}}</span>
-												</router-link>
+													<template v-if="user.currentFormule">
+														<router-link to="#">
+															<span class="link-collapse">{{user.currentFormule.title}}</span>
+														</router-link>
+													</template>
+													<template v-else>
+														<p class="text-black-50">Abonnement expiré</p>
+													</template>
 											</template>
 										</li>
 									</template>
@@ -60,8 +70,8 @@
 						<template v-if="['superadmin', 'admin', 'user'].includes(user.role)">
 							<li class="nav-item" :class="{active: $route.meta.route=='menu'}">
 								<a data-toggle="collapse" href="#base">
-									<i class="fas fa-building"></i>
-									<p>Mon Compte</p>
+									<i class="fas fa-desktop"></i>
+									<p>Mes enquêtes</p>
 									<span class="caret"></span>
 								</a>
 								<div class="collapse" id="base" :class="{show: $route.meta.route=='menu'}">
@@ -76,14 +86,28 @@
 												<span class="sub-item">Emplacements</span>
 											</router-link>
 										</li>
-										<li>
-											<router-link :to="{name : 'Compagneslist'}">
-												<span class="sub-item">Compagnes</span>
-											</router-link>
-										</li>
+										
+									</ul>
+								</div>
+							</li>
+						</template>
+						<template v-if="['superadmin', 'admin', 'user'].includes(user.role)">
+							<li class="nav-item" :class="{active: $route.meta.route=='bornes'}">
+								<a data-toggle="collapse" href="#bornes">
+									<i class="fas fa-map-marker-alt"></i>
+									<p>Mes Bornes</p>
+									<span class="caret"></span>
+								</a>
+								<div class="collapse" id="bornes" :class="{show: $route.meta.route=='bornes'}">
+									<ul class="nav nav-collapse">
 										<li>
 											<router-link :to="{name : 'Borneslist'}">
 												<span class="sub-item">Bornes</span>
+											</router-link>
+										</li>
+										<li>
+											<router-link :to="{name : 'Compagneslist'}">
+												<span class="sub-item">Compagnes</span>
 											</router-link>
 										</li>
 										
@@ -91,33 +115,35 @@
 								</div>
 							</li>
 						</template>
+
+						
 			
 						
 						<!-- superadmin -->
 						<template v-if="['superadmin'].includes(user.role)">
 							<li class="nav-item" :class="{active: $route.meta.route=='parametres'}">
-								<a data-toggle="collapse" href="#params" :aria-expanded="$route.meta.route=='parametres'">
-									<i class="fas fa-user-lock"></i>
-									<p>Paramètres de l'app</p>
+								<a data-toggle="collapse" href="#gestion" :aria-expanded="$route.meta.route=='parametres'">
+									<i class="fas fa-tachometer-alt"></i>
+									<p>Gestion</p>
 									<span class="caret"></span>
 								</a>
-								<div class="collapse" id="params" :class="{show: $route.meta.route=='parametres'}">
+								<div class="collapse" id="gestion" :class="{show: $route.meta.route=='parametres'}">
 									<ul class="nav nav-collapse">
 										<li>
 											<router-link :to="{name:'Companieslist'}" >
-												<i class="fas fa-building"></i>
-												<p>Liste Companies</p>
+												<i class="fas fa-user-check"></i>
+												<p>Liste Clients</p>
 											</router-link>
 										</li>
 										<li>
 											<router-link :to="{name : 'Formuleslist'}" >
-												<i class="fas fa-calendar-alt"></i>
-												<p>Plans</p>
+												<i class="fas fa-dollar-sign"></i>
+												<p>Formules</p>
 											</router-link>
 										</li>
 										<li>
 											<router-link :to="{name:'Abonnementslist'}">
-												<i class="fas fa-sitemap"></i>
+												<i class="fas fa-hand-holding-usd"></i>
 												<p>Abonnements</p>
 											</router-link>
 										</li>
@@ -136,12 +162,14 @@
 									<ul class="nav nav-collapse">
 										<li>
 											<router-link :to="{name : 'usersList'}">
-												<span class="sub-item">Liste</span>
+												<i class="fas fa-user-friends"></i>
+												<p>Liste</p>
 											</router-link>
 										</li>
 										<li>
 											<router-link :to="{name : 'addUser'}">
-												<span class="sub-item">Ajouter</span>
+												<i class="fas fa-user-plus"></i>
+												<p>Ajouter</p>
 											</router-link>
 										</li>
 									</ul>
@@ -162,12 +190,12 @@
 						<!-- admin -->
 						<template v-if="user.role=='admin'">
 							<li class="nav-item" :class="{active: $route.meta.route=='user'}">
-								<a data-toggle="collapse" href="#params">
+								<a data-toggle="collapse" href="#users">
 									<i class="fas fa-user-lock"></i>
 									<p>Utisateurs</p>
 									<span class="caret"></span>
 								</a>
-								<div class="collapse" id="params" :class="{show: $route.meta.route=='user'}">
+								<div class="collapse" id="users" :class="{show: $route.meta.route=='user'}">
 									<ul class="nav nav-collapse">
 										<li>
 											<router-link :to="{name : 'CompanyUsersList'}">

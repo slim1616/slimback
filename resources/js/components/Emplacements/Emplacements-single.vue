@@ -89,8 +89,14 @@
                     </div>
                     <template v-if="['superadmin', 'admin'].includes(user.role)">
                         <div class="card-action">
-                            <button class="btn btn-success" type="submit" :disabled="form.busy" name="button">{{ (form.busy) ? 'Please wait...' : 'Enregistrer'}}</button>
-                            <button class="btn btn-danger" @click.prevent="deleteEmplacement">{{ (form.busy) ? 'Please wait...' : 'Effacer'}}</button>
+                            <template v-if="['superadmin'].includes(user.role)">
+                                <button class="btn btn-success" type="submit" :disabled="form.busy" name="button">{{ (form.busy) ? 'Please wait...' : 'Enregistrer'}}</button>
+                                <button class="btn btn-danger" @click.prevent="deleteEmplacement">{{ (form.busy) ? 'Please wait...' : 'Effacer'}}</button>
+                            </template>
+                            <template v-if="user.currentFormule">
+                                <button class="btn btn-success" type="submit" :disabled="form.busy" name="button">{{ (form.busy) ? 'Please wait...' : 'Enregistrer'}}</button>
+                                <button class="btn btn-danger" @click.prevent="deleteEmplacement">{{ (form.busy) ? 'Please wait...' : 'Effacer'}}</button>
+                            </template>
                         </div>
                     </template>
                     

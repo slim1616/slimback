@@ -18,28 +18,60 @@ use Carbon\Carbon;
 class EnqueteController extends Controller
 {
     public function get(Request $request, $id){
+        $user = $request->user();
         $response = [];
-        $enquete = Enquete::findOrFail($id);
-        $response['enquete'] = new EnqueteResource($enquete);
-        $response['companies'] = \App\Company::all();
-        // $response['emplacements'] = EmplacementResource::collection($enquete->Company->Emplacements);
-        $emps = $enquete->Company->Emplacements;//->where('borne',0);
+        $response['status'] = true;
+        if (in_array($user->Role->slug,['superadmin'])){
+            $enquete = Enquete::findOrFail($id);
+            $response['enquete'] = new EnqueteResource($enquete);
+            $response['companies'] = \App\Company::all();
+            // $response['emplacements'] = EmplacementResource::collection($enquete->Company->Emplacements);
+            $emps = $enquete->Company->Emplacements;//->where('borne',0);
 
-        // dd($enquete->Enqueteemplacements->pluck('id')->toArray());
-        $ems = [];
-        foreach ($emps as $emp) {
-          if (in_array($emp->id,$enquete->Enqueteemplacements->pluck('emplacement_id')->toArray())){
-            foreach (json_decode(EnqEmplacementResource::collection($emp->Enqueteemplacements)->toJson()) as $e) {
-              $ems[] = $e;
+            // dd($enquete->Enqueteemplacements->pluck('id')->toArray());
+            $ems = [];
+            foreach ($emps as $emp) {
+              if (in_array($emp->id,$enquete->Enqueteemplacements->pluck('emplacement_id')->toArray())){
+                foreach (json_decode(EnqEmplacementResource::collection($emp->Enqueteemplacements)->toJson()) as $e) {
+                  $ems[] = $e;
+                }
+              }else{
+                $ems[] = array('emplacement_id' => $emp->id, 'enquete_id' => $enquete->id, 'password'=>null, 'title' => $emp->title);
+              }
             }
-          }else{
-            $ems[] = array('emplacement_id' => $emp->id, 'enquete_id' => $enquete->id, 'password'=>null, 'title' => $emp->title);
-          }
-        }
-        $response['emplacements'] = $ems;
-        $response['users'] = \App\User::all();       
-        
-        return response($response);
+            $response['emplacements'] = $ems;
+            $response['users'] = \App\User::all();       
+            
+            return response($response);
+            }else if (in_array($user->Role->slug,['admin'])){
+                $enquete = Enquete::findOrFail($id);
+                if ($enquete->company_id==$user->company_id){
+                      $response['enquete'] = new EnqueteResource($enquete);
+                      $response['companies'] = \App\Company::all();
+                      // $response['emplacements'] = EmplacementResource::collection($enquete->Company->Emplacements);
+                      $emps = $enquete->Company->Emplacements;//->where('borne',0);
+          
+                      // dd($enquete->Enqueteemplacements->pluck('id')->toArray());
+                      $ems = [];
+                      foreach ($emps as $emp) {
+                        if (in_array($emp->id,$enquete->Enqueteemplacements->pluck('emplacement_id')->toArray())){
+                          foreach (json_decode(EnqEmplacementResource::collection($emp->Enqueteemplacements)->toJson()) as $e) {
+                            $ems[] = $e;
+                          }
+                        }else{
+                          $ems[] = array('emplacement_id' => $emp->id, 'enquete_id' => $enquete->id, 'password'=>null, 'title' => $emp->title);
+                        }
+                      }
+                      $response['emplacements'] = $ems;
+                      $response['users'] = \App\User::all();       
+                      return response($response);
+                }else{
+                    $response['status'] = false;
+                    $response['emplacements'] = [];
+                    $response['msg'] = "Not allowed";
+                    return response($response);
+                }
+            }
     }
     public function getFront(Request $request, $id){
       $response = [];
@@ -124,7 +156,7 @@ class EnqueteController extends Controller
         'title.max' => 'title doit avoir aux max 255 characters.',
       ]);
       $user = $request->user();
-      if ($user->Role->slug=='admin'){
+      if (in_array($user->Role->slug,['admin','superadmin'])){
         request()->merge(['company_id' => $user->Company->id, 'user_id' => $user->id]);
         $enquetes = Enquete::create($request->all());    
         return $enquetes;

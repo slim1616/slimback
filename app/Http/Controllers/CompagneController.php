@@ -9,15 +9,28 @@ use App\Compagneborne;
 class CompagneController extends Controller
 {
     public function get(Request $request, $id){
+        $user = $request->user();
         $response = [];
+        $response['status'] = true;
         $compagne = Compagne::findOrFail($id);
         $company = \App\Company::findOrFail($compagne->company_id);
-
-        $response['compagne'] = new CompagneResource($compagne);
-        $response['bornes'] = \App\Borne::where('company_id',$compagne->company_id)->get();
-        $response['actifbornes'] = $company->ActifBornes()->where('compagne_id','<>', $id)->pluck('borne_id');
-        $response['companies'] = \App\Company::all();
-        return response($response);
+        if ($user->Role->slug=='superadmin'){
+          $response['compagne'] = new CompagneResource($compagne);
+          $response['bornes'] = \App\Borne::where('company_id',$compagne->company_id)->get();
+          $response['actifbornes'] = $company->ActifBornes()->where('compagne_id','<>', $id)->pluck('borne_id');
+          $response['companies'] = \App\Company::all();
+          return response($response);
+        }else if ($user->company_id==$company->id){
+          $response['compagne'] = new CompagneResource($compagne);
+          $response['bornes'] = \App\Borne::where('company_id',$compagne->company_id)->get();
+          $response['actifbornes'] = $company->ActifBornes()->where('compagne_id','<>', $id)->pluck('borne_id');
+          $response['companies'] = [];
+          return response($response);
+        }else{
+          $response['status'] = false;
+          $response['msg'] = "Not allowed";
+          return response($response);
+        }
     }
 
      public function data(Request $request){

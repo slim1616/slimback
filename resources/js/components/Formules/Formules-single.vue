@@ -43,18 +43,14 @@
                         
                                 </div>
                             </div>
-                                                                        
                             <div class="col-sm-4">
-                                <div class="form-group">
-                        
-                                                                  <label>Online</label>
-                                          <input class="form-control" type="number" v-model="form.online"/>
-                        
-                                          <has-error :form="form" field="online"></has-error>
-                                                
-                        
+                            <div class="form-check">
+                                    <label class="form-check-label">
+                                        <input class="form-check-input" type="checkbox" v-model="form.online">
+                                        <span class="form-check-sign">Actif</span>
+                                    </label>
                                 </div>
-                            </div>
+                            </div>                                      
                                                                         
                             <div class="col-sm-4">
                                 <div class="form-group">
@@ -80,13 +76,6 @@
                                 </div>
                             </div>
                                                                         
-                            <div class="col-sm-4">
-                                <div class="form-group">
-                                        <label>Nbsemplacements</label>
-                                        <input class="form-control" type="number" v-model="form.nbsemplacements"/>
-                                        <has-error :form="form" field="nbsemplacements"></has-error>
-                                </div>
-                            </div>
                             <div class="col-sm-4">
                                 <div class="form-group">
                                         <label>Nbsemplacements</label>
@@ -154,6 +143,7 @@ export default {
                                 online : "",
                                 price : "",
                                 nbsurvey : "",
+                                type : "",
                                 nbsemplacements : "",
                                 created_at : "",
                                 updated_at : "",
