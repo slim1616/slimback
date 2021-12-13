@@ -33,6 +33,15 @@ class Borne extends Model
             public function Bornesreponses(){
                 return $this->hasMany('App\Bornesreponse');
             }
+            /**
+             * Get all of the Comapagnes for the Borne
+             *
+             * @return \Illuminate\Database\Eloquent\Relations\HasMany
+             */
+            public function Comapagnes()
+            {
+                return $this->hasMany(Compagneborne::class, 'borne_id');
+            }
         
     
     } ?>

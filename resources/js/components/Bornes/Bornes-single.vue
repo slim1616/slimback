@@ -248,8 +248,19 @@ export default {
                   this.$store.dispatch('setLoader', true)
                   this.form.delete('/api/bornes/'+this.$route.params.id).then(function(response){
                     that.$store.dispatch('setLoader', false)
-                      that.form.fill(response.data);
-                      that.$router.push('/bornes');
+                      if (response.data.status){
+                          that.$router.push('/bornes');
+                      }else{
+                            swal("Erreur", response.data.msg, {
+                                icon : "warning",
+                                buttons: {
+                                    confirm: {
+                                        className : 'btn btn-warning'
+                                    }
+                                },
+                            });
+                      }
+                      
                     })
                 } else {
                     swal.close();

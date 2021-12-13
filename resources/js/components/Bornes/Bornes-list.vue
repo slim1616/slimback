@@ -196,7 +196,18 @@ export default {
             }).then((Delete) => {
                 if (Delete) {
                   this.form.delete('/api/bornes/'+borne.id).then(function(response){
-                    that.bornes.splice(index,1);
+                      if (response.data.status){
+                          that.bornes.splice(index,1);
+                      }else{
+                            swal("Erreur", response.data.msg, {
+                                icon : "warning",
+                                buttons: {
+                                    confirm: {
+                                        className : 'btn btn-warning'
+                                    }
+                                },
+                            });
+                      }
                   })
                 } else {
                     swal.close();

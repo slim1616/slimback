@@ -191,7 +191,18 @@ export default {
             }).then((Delete) => {
                 if (Delete) {
                   this.form.delete('/api/compagnes/'+compagne.id).then(function(response){
-                    that.compagnes.splice(index,1);
+                    if (response.data.status){
+                          that.compagnes.splice(index,1);
+                      }else{
+                            swal("Erreur", response.data.msg, {
+                                icon : "warning",
+                                buttons: {
+                                    confirm: {
+                                        className : 'btn btn-warning'
+                                    }
+                                },
+                            });
+                      }
                   })
                 } else {
                     swal.close();

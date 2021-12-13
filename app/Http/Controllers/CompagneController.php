@@ -97,8 +97,14 @@ class CompagneController extends Controller
     }
     
     public function delete(Request $request, $id){
-        $compagnes = Compagne::findOrFail($id);
-        $compagnes->delete();
+        $compagne = Compagne::findOrFail($id);
+        if ($compagne->SelectedBornes->count()>0){
+          return response(['status' => false, 'msg' => 'Cette Compagne possède des bornes actives']);
+        }else{
+          $compagne->delete();
+          return response(['status' => true ]);
+
+        }
     }
 }
  ?>

@@ -392,7 +392,19 @@ export default {
                             this.form.delete('/api/compagnes/'+this.$route.params.id).then(function(response){
                                 that.$store.dispatch('setLoader', false)
                                 that.form.fill(response.data);
-                                that.$router.push('/compagnes');
+                                if (response.data.status){
+                                    that.$router.push('/compagnes');
+                                }else{
+                                        swal("Erreur", response.data.msg, {
+                                            icon : "warning",
+                                            buttons: {
+                                                confirm: {
+                                                    className : 'btn btn-warning'
+                                                }
+                                            },
+                                        });
+                                }
+                                
                                 })
                             } else {
                                 swal.close();

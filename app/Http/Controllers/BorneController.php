@@ -6,6 +6,7 @@ use App\Borne;
 use App\Http\Resources\BorneResource;
 use Carbon\Carbon;
 use App\Bornesreponse;
+use App\Compagneborne;
 
 class BorneController extends Controller
 {
@@ -82,14 +83,33 @@ class BorneController extends Controller
       ]);
 
         $bornes = Borne::findOrFail($id);
-        $input = $request->all();
-        $bornes->fill($input)->save();
-        return $bornes;
+        if ($bornes->company_id==$request->company_id){
+          $input = $request->all();
+          $bornes->fill($input)->save();
+          return $bornes;
+        }else{
+          $input = $request->all();
+          
+          $Compagneborne = Compagneborne::where('borne_id',$request->id)
+                                        ->where('company_id',$bornes->company_id)
+                                        ->delete();
+          $bornes->fill($input)->save();
+          return $bornes;
+        }
     }
     
     public function delete(Request $request, $id){
-        $bornes = Borne::findOrFail($id);
-        $bornes->delete();
+        $borne = Borne::findOrFail($id);
+        if ($borne->Bornesreponses->count()){
+          return response(['status' => false, 'msg' => 'Cette borne possède déjà des réponses']);
+        }else{
+          if ($borne->Comapagnes->count()>0){
+            return response(['status' => false, 'msg' => 'Cette borne est déjà affecté à un client']);
+          }else{
+            $borne->delete();
+            return response(['status' => true]);
+          }
+        }
     }
 
     public function HomeStats(Request $request){
