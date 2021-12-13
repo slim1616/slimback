@@ -115,13 +115,15 @@ class BorneController extends Controller
       $counts = $data->pluck('resp')->countBy();
       
       $resps = [];
+      $totals = [];
       $total = $data->count();
       for ($i=1; $i <=4 ; $i++) { 
         // dd($counts[$i]);
         if (isset($counts[$i])){
           $resps[$i] = round($counts[$i]/$total*100,0);
+          $totals[$i] = round($counts[$i]);
         }else{
-          $resps[$i] = 0;
+          $totals[$i] = 0;
         }
       }
       // return response(['status' => true, 'resps' => $resps]);
@@ -160,6 +162,7 @@ class BorneController extends Controller
 
         return response(['status' => true, 
                          'resps' => $resps,
+                         'totals' => $totals,
                          'semaine' => $alljours
                       ]);
      

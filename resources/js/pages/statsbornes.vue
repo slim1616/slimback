@@ -31,14 +31,14 @@
                 <div class="card-body">
                     <div class="card-title">Réponses de la semaine</div>
                     <div class="row py-3">
-                        <div class="col-md-4 d-flex flex-column justify-content-around">
+                        <div class="col-md-4 d-flex flex-column justify-content-around" v-if="data">
                             <div>
                                 <h6 class="fw-bold text-uppercase text-success op-8">Total good</h6>
-                                <h3 class="fw-bold">82</h3>
+                                <h3 class="fw-bold">{{data.totals[1] + data.totals[2]}}</h3>
                             </div>
                             <div>
                                 <h6 class="fw-bold text-uppercase text-danger op-8">Total bad</h6>
-                                <h3 class="fw-bold">8</h3>
+                                <h3 class="fw-bold">{{data.totals[3] + data.totals[4]}}</h3>
                             </div>
                         </div>
                         <div class="col-md-8">
@@ -58,7 +58,8 @@ export default {
     data(){
         return {
             stats : [],
-            loaded : false
+            loaded : false,
+            data : null
         }
     },
     methods :{
@@ -83,6 +84,7 @@ export default {
                 this.loader = false
                 console.log(data)
                 if (data.status){
+                    this.data = data
                     this.loaded = true
                     setTimeout(function() {
                         Circles.create({
