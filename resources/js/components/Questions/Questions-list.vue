@@ -198,7 +198,7 @@ export default {
     },
     deleteQuestion: function(question, index){
           var that = this;
-          swal({
+          swal.fire({
                 title: 'Vous êtes sure?',
                 text: "Vous allez effacer Question!",
                 type: 'warning',

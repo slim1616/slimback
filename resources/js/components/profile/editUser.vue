@@ -105,11 +105,13 @@
                                     <div class="form-group">
                                         <label>Company</label>
                                         <select class="form-control" v-model="newuser.company_id">
-                                                
                                                 <option v-for="company in companies" :value="company.id">
                                                     {{ company.title }}
                                                 </option>
                                         </select>
+                                        <template v-if="errors['company_id']">
+                                            <p class="text-danger">{{errors['company_id'][0]}}</p>
+                                        </template> 
                                     </div>
                                 </div>
                                 

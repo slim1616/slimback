@@ -148,7 +148,7 @@ export default {
                 .then(data => {
                     this.loader = false
                     if (data.status){
-                        swal({
+                        swal.fire({
                             icon: 'success',
                             title: 'Votre reponse à été envoyé ',
                             text: "Merci pour votre attention",
@@ -165,9 +165,71 @@ export default {
                     this.loader = false
                 })
             },
-            async getEnquete(){
+            async getEnqueteInit(){
                 this.loading = true;
-                let res = await fetch(window.location.origin + '/api/enquetes/front/' + this.enquete_id, {
+                let res = await fetch(window.location.origin + '/api/enquetes/frontstart/' + this.enquete_id, {
+                    headers : {
+                        'Content-type' : 'Application/json',
+                        'X-Requested-With' : 'XMLHttpRequest',
+                        'X-CSRF-TOKEN' : document.head.querySelector('meta[name="csrf-token"]').content
+                    }
+                })
+                .then((response) => {
+                    
+                    if (response.status==200) {
+                        return response.json();
+                    }else if (response.status==401) {
+                        //window.location.replace(window.location.href);
+                        
+                    }
+                    this.loading = false
+                    this.loader = false
+                })
+                .then(data => {
+                    this.loading = false
+                    this.loader = false
+                    if (data.status){
+                        if (data.enquete.confidentiality=='public'){
+                            this.questionParPage = data.enquete.questionParPage
+                            this.enquete = data.enquete
+                            this.questions = data.questions
+                            this.uniqid = data.uniqid
+                        }else{
+                            (async () => {
+                                const { value: password } = await swal.fire({
+                                    title: 'Entrer le mot de passe',
+                                    input: 'password',
+                                    inputLabel: 'Mot de passe',
+                                    inputPlaceholder: 'Entre le mot de passe',
+                                    inputAttributes: {
+                                        maxlength: 10,
+                                        autocapitalize: 'off',
+                                        autocorrect: 'off'
+                                    }
+                                })
+                                if (password) {
+                                    this.getEnquete(password, this.enquete_id)
+                                }
+                                })()
+
+                        }
+                    }else{
+                        alert('Enquete n\'existe pas');
+                    }
+                })
+                .catch(err => {
+                    console.log(err)
+                    this.loading = false
+                    this.loader = false
+                })
+                
+            },
+            async getEnquete(password, enqueste_id){
+                console.log(password, enqueste_id)
+                 this.loading = true;
+                let res = await fetch(window.location.origin + '/api/enquetes/privatefront/' + this.enquete_id, {
+                    method : 'post',
+                    body : JSON.stringify({'password' : password}),
                     headers : {
                         'Content-type' : 'Application/json',
                         'X-Requested-With' : 'XMLHttpRequest',
@@ -194,7 +256,20 @@ export default {
                         this.questions = data.questions
                         this.uniqid = data.uniqid
                     }else{
-                        alert('Enquete n\'existe pas');
+                        Swal.fire({
+                            title: 'Error',
+                            text: data.msg,
+                            icon: 'warning',
+                            showCancelButton: true,
+                            confirmButtonColor: '#3085d6',
+                            cancelButtonColor: '#d33',
+                            cancelButtonText: 'Annuler',
+                            confirmButtonText: 'ressayer'
+                            }).then((result) => {
+                            if (result.isConfirmed) {
+                                this.getEnqueteInit()
+                            }
+                        })
                     }
                 })
                 .catch(err => {
@@ -202,8 +277,7 @@ export default {
                     this.loading = false
                     this.loader = false
                 })
-                
-            },
+            }
     },
     computed:{
         currentQuestions(){
@@ -238,7 +312,7 @@ export default {
         }
     },
     mounted(){
-        this.getEnquete()
+        this.getEnqueteInit()
     }
 }
 </script>

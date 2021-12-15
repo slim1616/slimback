@@ -23,7 +23,7 @@ class CreateEnquetesTable extends Migration
             $table->date('end_at')->nullable();
             $table->integer('objectif')->nullable()->default(100);
             $table->integer('questionParPage')->default(1);
-            $table->enum('confidentiality', ['public','privé'])->default('public');
+            $table->enum('confidentiality', ['public','private'])->default('public');
             $table->boolean('online')->default(true);
             $table->foreign('user_id')->references('id')->on('users');
             $table->foreign('company_id')->references('id')->on('companies');

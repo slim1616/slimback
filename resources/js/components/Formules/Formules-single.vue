@@ -213,7 +213,7 @@ export default {
     deleteFormule: function(){
       
       var that = this;
-      swal({
+      swal.fire({
                 title: 'Vous êtes sure?',
                 text: "Vous allez effacer Formule!",
                 type: 'warning',

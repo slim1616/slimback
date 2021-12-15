@@ -15,18 +15,24 @@
                 </li>
             </ul>
         </div>
-
+    
         <div class="card">
             <div class="card-header d-flex justify-content-between">
                 <div class="card-title">Modifier enquete</div>
                 <template v-if="user.currentFormule">
-                <a :href="'/enquete/' + form.id">
-                    <i class="flaticon-chain"></i>
+                <div>
+                    <a :href="'/enquete/' + form.id" target="_blank" title="Commencer l'enquête">
+                        <i class="flaticon-chain"></i>
+                    </a>
+                    <span style="margin-left: 7px;background: #f2f2f2;padding: 4px;border-radius: 5px;"><i class="fa fa-lock"></i> <b>{{form.password}}</b> </span>
+                </div>
+                <a href="#" @click.prevent.stop="sendMail" title="Envoyer lien de l'enquête par email">
+                    <i class="far fa-envelope"></i>
                 </a>
-                <a href="#" @click.prevent.stop="copiedUrl">
+                <a href="#" @click.prevent.stop="copiedUrl" title="Copier le lien de l'enquête">
                     <i class="far fa-copy"></i>
                 </a>
-                <a href="#" @click.prevent.stop="copiedUrl">
+                <a href="#" @click.prevent.stop="copiedUrl" title="Partager sur facebook">
                     <i class="fab fa-facebook-f"></i>
                 </a>
                 <input type="text" style="opacity:0" :value="'/enquete/' + form.id" id="cplink"/> 
@@ -85,10 +91,17 @@
                                         <label>Confidentiality</label>
                                         <select class="form-control" v-model="form.confidentiality">
                                             <option value="public">public</option>
-                                            <option value="privé">privé</option>
+                                            <option value="private">privé</option>
                                         </select>
                                     </div>
                                 </div>
+                                <template v-if="form.confidentiality=='private'">
+                                    <div class="form-group">
+                                        <label>Mot de passe</label>
+                                        <input class="form-control" type="password" v-model="form.password" />                                
+                                        <has-error :form="form" field="password"></has-error>
+                                    </div>
+                                </template>
                                 <div class="col-sm-3">
                                     <div class="form-group">
                                         <label>Objectif</label>
@@ -119,7 +132,7 @@
                                         <datetime v-model="form.start_at"
                                         value-zone="Africa/Tunis"
                                         type="date"
-                                        format="yyyy-MM-dd"
+                                        format="dd/MM/yyyy"
                                         input-class="form-control"/>
                                         
                                         
@@ -132,7 +145,7 @@
                                         <datetime v-model="form.end_at"
                                         value-zone="Africa/Tunis"
                                         type="date"
-                                        format="yyyy-MM-dd"
+                                        format="dd/MM/yyyy"
                                         input-class="form-control"/>
                                         
                                         
@@ -236,7 +249,7 @@
     import Survey from '../survey/Single'
     import historiqueReponses from './historiqueReponses'
     import VueQrcode from 'vue-qrcode'
-
+    
     export default {
         name: 'Enquete',
         components: {HasError, Datetime, Survey, historiqueReponses, VueQrcode},
@@ -251,6 +264,7 @@
                 form: new Form({
                     selectedEmplacements : [],
                     confidentiality : "",
+                    password : "",
                     id : "",
                     title : "",
                     online : 0,
@@ -269,8 +283,60 @@
         created: function(){
             this.getEnquete();
             
+            
         },
         methods: {
+            ValidateEmail(mail) 
+                {
+                if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(mail))
+                {
+                    return (true)
+                }
+                    return (false)
+                },
+            sendMail(){
+                (async () => {
+                    const { value: text } = await swal.fire({
+                    input: 'textarea',
+                    inputLabel: 'Envoie de mail (1 email par ligne)',
+                    inputPlaceholder: 'Ajouter les adresses emails des destinataires 1 par ligne',
+                    inputAttributes: {
+                        'aria-label': 'Ajouter vos adresses emails'
+                    },
+                    showCancelButton: true,
+                    confirmButtonText : 'Envoyer',
+                    cancelButtonText : 'Annuler',
+                    reverseButtons : true
+                    })
+                    if (text) {
+                        console.log(text.split('\n'))
+                        let emails = text.split('\n')
+                        let bcc = '&bcc=';
+                        if (emails.length>0){
+                            emails.forEach(email => {
+                                if (this.ValidateEmail(email)){
+                                    bcc+= email +','
+                                }else{
+                                    alert(email + ' est invalide')
+                                }
+                            })
+                        }
+                        console.log(bcc)
+
+                        var formattedBody = `Bonjour, cher client,\n`;
+                                formattedBody += `Dans le but d'améliorer notre service et mieux connaitre les besoins et les soucis de nos client.\nJe vous invite à repondre à cette enquete de satisfaction client.\n`;
+                                var copyText = document.getElementById("cplink");
+                                copyText.value = window.location.origin + '/enquete/' + this.form.id
+                                formattedBody += copyText.value + `\n`
+                                if (this.form.confidentiality=='private'){
+                                    formattedBody += `Mot de passse : ${this.form.password} \n`
+                                }
+                                formattedBody += `Merci pour votre attention`
+                        var mailToLink = "mailto:"+this.user.email+"?Subject=enquête de Satisfaction"+bcc+"&body=" + encodeURIComponent(formattedBody);
+                        window.location.href = mailToLink;
+                    }
+                })()
+            },
             async regenerateQrCode(emplacement_id){
                 console.log(emplacement_id)
                 let res = await fetch(window.location.origin + '/api/generateqrcode', {
@@ -296,7 +362,7 @@
                     console.log(data)
                     if (data.status){
 
-                        swal({
+                        swal.fire({
                             icon: 'success',
                             title: 'Success',
                             text: "Mot de passe généré avec succès",
@@ -340,7 +406,7 @@
                                                     return emp;
                         }) 
                         console.log(this.emplacements)
-                        swal({
+                        swal.fire({
                             icon: 'success',
                             title: 'Success',
                             text: "Mot de passe généré avec succès",
@@ -435,7 +501,7 @@
             deleteEnquete: function(){
                 
                 var that = this;
-                swal({
+                swal.fire({
                     title: 'Vous êtes sure?',
                     text: "Vous allez effacer Enquete!",
                     type: 'warning',

@@ -446,7 +446,7 @@ var isBetween = function isBetween(num1, num2, value) {
                   _this.loader = false;
 
                   if (data.status) {
-                    swal({
+                    swal.fire({
                       icon: 'success',
                       title: 'Votre reponse à été envoyé ',
                       text: "Merci pour votre attention",
@@ -471,18 +471,18 @@ var isBetween = function isBetween(num1, num2, value) {
         }, _callee);
       }))();
     },
-    getEnquete: function getEnquete() {
+    getEnqueteInit: function getEnqueteInit() {
       var _this2 = this;
 
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
         var res;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
           while (1) {
-            switch (_context2.prev = _context2.next) {
+            switch (_context3.prev = _context3.next) {
               case 0:
                 _this2.loading = true;
-                _context2.next = 3;
-                return fetch(window.location.origin + '/api/enquetes/front/' + _this2.enquete_id, {
+                _context3.next = 3;
+                return fetch(window.location.origin + '/api/enquetes/frontstart/' + _this2.enquete_id, {
                   headers: {
                     'Content-type': 'Application/json',
                     'X-Requested-With': 'XMLHttpRequest',
@@ -501,10 +501,48 @@ var isBetween = function isBetween(num1, num2, value) {
                   _this2.loader = false;
 
                   if (data.status) {
-                    _this2.questionParPage = data.enquete.questionParPage;
-                    _this2.enquete = data.enquete;
-                    _this2.questions = data.questions;
-                    _this2.uniqid = data.uniqid;
+                    if (data.enquete.confidentiality == 'public') {
+                      _this2.questionParPage = data.enquete.questionParPage;
+                      _this2.enquete = data.enquete;
+                      _this2.questions = data.questions;
+                      _this2.uniqid = data.uniqid;
+                    } else {
+                      _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
+                        var _yield$swal$fire, password;
+
+                        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+                          while (1) {
+                            switch (_context2.prev = _context2.next) {
+                              case 0:
+                                _context2.next = 2;
+                                return swal.fire({
+                                  title: 'Entrer le mot de passe',
+                                  input: 'password',
+                                  inputLabel: 'Mot de passe',
+                                  inputPlaceholder: 'Entre le mot de passe',
+                                  inputAttributes: {
+                                    maxlength: 10,
+                                    autocapitalize: 'off',
+                                    autocorrect: 'off'
+                                  }
+                                });
+
+                              case 2:
+                                _yield$swal$fire = _context2.sent;
+                                password = _yield$swal$fire.value;
+
+                                if (password) {
+                                  _this2.getEnquete(password, _this2.enquete_id);
+                                }
+
+                              case 5:
+                              case "end":
+                                return _context2.stop();
+                            }
+                          }
+                        }, _callee2);
+                      }))();
+                    }
                   } else {
                     alert('Enquete n\'existe pas');
                   }
@@ -515,23 +553,95 @@ var isBetween = function isBetween(num1, num2, value) {
                 });
 
               case 3:
-                res = _context2.sent;
+                res = _context3.sent;
 
               case 4:
               case "end":
-                return _context2.stop();
+                return _context3.stop();
             }
           }
-        }, _callee2);
+        }, _callee3);
+      }))();
+    },
+    getEnquete: function getEnquete(password, enqueste_id) {
+      var _this3 = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
+        var res;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
+          while (1) {
+            switch (_context4.prev = _context4.next) {
+              case 0:
+                console.log(password, enqueste_id);
+                _this3.loading = true;
+                _context4.next = 4;
+                return fetch(window.location.origin + '/api/enquetes/privatefront/' + _this3.enquete_id, {
+                  method: 'post',
+                  body: JSON.stringify({
+                    'password': password
+                  }),
+                  headers: {
+                    'Content-type': 'Application/json',
+                    'X-Requested-With': 'XMLHttpRequest',
+                    'X-CSRF-TOKEN': document.head.querySelector('meta[name="csrf-token"]').content
+                  }
+                }).then(function (response) {
+                  if (response.status == 200) {
+                    return response.json();
+                  } else if (response.status == 401) {//window.location.replace(window.location.href);
+                  }
+
+                  _this3.loading = false;
+                  _this3.loader = false;
+                }).then(function (data) {
+                  _this3.loading = false;
+                  _this3.loader = false;
+
+                  if (data.status) {
+                    _this3.questionParPage = data.enquete.questionParPage;
+                    _this3.enquete = data.enquete;
+                    _this3.questions = data.questions;
+                    _this3.uniqid = data.uniqid;
+                  } else {
+                    Swal.fire({
+                      title: 'Error',
+                      text: data.msg,
+                      icon: 'warning',
+                      showCancelButton: true,
+                      confirmButtonColor: '#3085d6',
+                      cancelButtonColor: '#d33',
+                      cancelButtonText: 'Annuler',
+                      confirmButtonText: 'ressayer'
+                    }).then(function (result) {
+                      if (result.isConfirmed) {
+                        _this3.getEnqueteInit();
+                      }
+                    });
+                  }
+                })["catch"](function (err) {
+                  console.log(err);
+                  _this3.loading = false;
+                  _this3.loader = false;
+                });
+
+              case 4:
+                res = _context4.sent;
+
+              case 5:
+              case "end":
+                return _context4.stop();
+            }
+          }
+        }, _callee4);
       }))();
     }
   },
   computed: {
     currentQuestions: function currentQuestions() {
-      var _this3 = this;
+      var _this4 = this;
 
       return this.questions.map(function (question, i) {
-        if (isBetween(_this3.current * _this3.questionParPage, (_this3.current + 1) * _this3.questionParPage - 1, i)) {
+        if (isBetween(_this4.current * _this4.questionParPage, (_this4.current + 1) * _this4.questionParPage - 1, i)) {
           return question.id;
         }
       });
@@ -568,7 +678,7 @@ var isBetween = function isBetween(num1, num2, value) {
     }
   },
   mounted: function mounted() {
-    this.getEnquete();
+    this.getEnqueteInit();
   }
 });
 

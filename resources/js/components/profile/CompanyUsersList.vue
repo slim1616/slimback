@@ -109,7 +109,7 @@ export default {
     },
     methods :{
         effaceUser(user_id){
-             swal({
+             swal.fire({
                     title: 'Vous êtes sure?',
                     text: "Vous allez effacer un utilisateur!",
                     type: 'warning',

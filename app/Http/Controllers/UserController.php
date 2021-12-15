@@ -86,6 +86,7 @@ class UserController extends Controller
                 'nom' => 'required|min:3',
                 'prenom' => 'required',
                 'email' => 'required|email',
+                'company_id' => 'required',
                 ]);
             
             if ($validator->fails()){
@@ -260,6 +261,7 @@ class UserController extends Controller
             $validator = Validator::make($request->all(), [
                 'nom' => 'required|min:3',
                 'prenom' => 'required',
+                'company_id' => 'required',
                 'email' => 'required|email|unique:users',
                 ]);
             

@@ -9,6 +9,7 @@ use App\Reponse;
 use App\Singlereponse;
 use App\Emplacement;
 use App\Http\Resources\EnqueteResource;
+use App\Http\Resources\EnqueteResourceFront;
 use App\Http\Resources\EmplacementResource;
 use App\Http\Resources\EnqEmplacementResource;
 use App\Http\Resources\QuestionResource;
@@ -32,9 +33,10 @@ class EnqueteController extends Controller
             $ems = [];
             foreach ($emps as $emp) {
               if (in_array($emp->id,$enquete->Enqueteemplacements->pluck('emplacement_id')->toArray())){
-                foreach (json_decode(EnqEmplacementResource::collection($emp->Enqueteemplacements)->toJson()) as $e) {
-                  $ems[] = $e;
-                }
+                $ems[] = new EnqEmplacementResource($emp->Enqueteemplacements->where('enquete_id',$enquete->id)->first());
+                // foreach (json_decode(EnqEmplacementResource::collection($emp->Enqueteemplacements)->toJson()) as $e) {
+                  // $ems[] = $e;
+                // }
               }else{
                 $ems[] = array('emplacement_id' => $emp->id, 'enquete_id' => $enquete->id, 'password'=>null, 'title' => $emp->title);
               }
@@ -55,9 +57,10 @@ class EnqueteController extends Controller
                       $ems = [];
                       foreach ($emps as $emp) {
                         if (in_array($emp->id,$enquete->Enqueteemplacements->pluck('emplacement_id')->toArray())){
-                          foreach (json_decode(EnqEmplacementResource::collection($emp->Enqueteemplacements)->toJson()) as $e) {
-                            $ems[] = $e;
-                          }
+                          // dd(new EnqEmplacementResource($emp->Enqueteemplacements->where('enquete_id',$enquete->id)->first()));
+                          $ems[] = new EnqEmplacementResource($emp->Enqueteemplacements->where('enquete_id',$enquete->id)->first());
+                          // foreach (json_decode(EnqEmplacementResource::collection($emp->Enqueteemplacements)->toJson()) as $e) {
+                          // }
                         }else{
                           $ems[] = array('emplacement_id' => $emp->id, 'enquete_id' => $enquete->id, 'password'=>null, 'title' => $emp->title);
                         }
@@ -73,15 +76,43 @@ class EnqueteController extends Controller
                 }
             }
     }
-    public function getFront(Request $request, $id){
+    public function getFrontWithPassword(Request $request, $id){
       $response = [];
       $enquete = Enquete::find($id);
       if ($enquete){
           if ($enquete->where('online')){
-            $response['questions'] = QuestionResource::collection(Section::where('enquete_id', $id)
-            ->orderBy('order')
-            ->get());
-            $response['enquete'] = new EnqueteResource($enquete);
+            if ($request->password==$enquete->password){
+              $response['questions'] = QuestionResource::collection(Section::where('enquete_id', $id)
+              ->orderBy('order')
+              ->get());
+              $response['enquete'] = new EnqueteResourceFront($enquete);
+              $response['uniqid'] = uniqid($id);
+              $response['status'] = true;
+            }else{
+              $response['msg'] = 'Mot de passe invalide';
+              $response['status'] = false;
+            }
+          }else{
+            $response['msg'] = 'Enquete hors ligne';
+            $response['status'] = false;
+          }
+      }else{
+        $response['msg'] = 'Enquete est expiré';
+        $response['status'] = false;
+      }
+      return response($response);
+    }
+    public function getFrontInit(Request $request, $id){
+      $response = [];
+      $enquete = Enquete::find($id);
+      if ($enquete){
+          if ($enquete->where('online')){
+            if ($enquete->confidentiality=='public'){
+              $response['questions'] = QuestionResource::collection(Section::where('enquete_id', $id)
+              ->orderBy('order')
+              ->get());
+            }
+            $response['enquete'] = new EnqueteResourceFront($enquete);
             $response['uniqid'] = uniqid($id);
             $response['status'] = true;
           }else{
@@ -91,7 +122,7 @@ class EnqueteController extends Controller
         $response['status'] = false;
       }
       return response($response);
-  }
+    }
   public function getFrontMobile(Request $request, $id){
     // return response($id);
 

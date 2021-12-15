@@ -370,7 +370,7 @@ export default {
         deleteCompagne: function(){
         
                 var that = this;
-                swal({
+                swal.fire({
                             title: 'Vous êtes sure?',
                             text: "Vous allez effacer Compagne!",
                             type: 'warning',

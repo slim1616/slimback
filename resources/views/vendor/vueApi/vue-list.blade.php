@@ -150,7 +150,7 @@ export default {
     },
     delete{{$data['singular']}}: function({{ $data['singular_lower'] }}, index){
           var that = this;
-          swal({
+          swal.fire({
                 title: 'Vous êtes sure?',
                 text: "Vous allez effacer {{ $data['singular'] }}!",
                 type: 'warning',

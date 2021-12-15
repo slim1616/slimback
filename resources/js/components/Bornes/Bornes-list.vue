@@ -177,7 +177,7 @@ export default {
     },
     deleteBorne: function(borne, index){
           var that = this;
-          swal({
+          swal.fire({
                 title: 'Vous êtes sure?',
                 text: "Vous allez effacer Borne!",
                 type: 'warning',

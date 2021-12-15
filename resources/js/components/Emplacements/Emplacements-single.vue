@@ -204,7 +204,7 @@
             deleteEmplacement: function(){
                 
                 var that = this;
-                swal({
+                swal.fire({
                     title: 'Vous êtes sure?',
                     text: "Vous allez effacer Emplacement!",
                     type: 'warning',

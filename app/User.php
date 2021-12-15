@@ -40,22 +40,26 @@ class User extends Authenticatable
         return $this->hasMany('App\Abonnement');
     }
     public function getLastAbonnementsAttribute(){
-        $abonnement = $this->Company->Abonnements->last();
-        if ($abonnement->Formule->id==1){
-            return $abonnement->Formule->title;
-        }else{
-            if ($abonnement->start_at&&$abonnement->end_at){
-                $start = Carbon::createFromFormat('Y-m-d', $abonnement->start_at);
-                $end = Carbon::createFromFormat('Y-m-d', $abonnement->end_at);
-                if (Carbon::now()->between($start,$end)){
-                    return $abonnement->Formule->title;
-                }else{
-                    $currentFormule = Formule::find(1);
-                    return $currentFormule->title;
-                }
-            }else{
+        if ($this->Company){
+            $abonnement = $this->Company->Abonnements->last();
+            if ($abonnement->Formule->id==1){
                 return $abonnement->Formule->title;
+            }else{
+                if ($abonnement->start_at&&$abonnement->end_at){
+                    $start = Carbon::createFromFormat('Y-m-d', $abonnement->start_at);
+                    $end = Carbon::createFromFormat('Y-m-d', $abonnement->end_at);
+                    if (Carbon::now()->between($start,$end)){
+                        return $abonnement->Formule->title;
+                    }else{
+                        $currentFormule = Formule::find(1);
+                        return $currentFormule->title;
+                    }
+                }else{
+                    return $abonnement->Formule->title;
+                }
             }
+        }else{
+            return '';
         }
     }
     /**

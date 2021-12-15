@@ -90,13 +90,6 @@
       0 => 'Laravel\\Ui\\UiServiceProvider',
     ),
   ),
-  'lummy/laravel-vue-api-crud-generator' => 
-  array (
-    'providers' => 
-    array (
-      0 => 'lummy\\vueApi\\vueApiServiceProvider',
-    ),
-  ),
   'nesbot/carbon' => 
   array (
     'providers' => 

@@ -162,7 +162,7 @@ export default {
     },
     deleteBornesreponse: function(bornesreponse, index){
           var that = this;
-          swal({
+          swal.fire({
                 title: 'Vous êtes sure?',
                 text: "Vous allez effacer Bornesreponse!",
                 type: 'warning',

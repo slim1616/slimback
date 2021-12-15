@@ -57,9 +57,8 @@
                                     <label for="exampleFormControlSelect1">Role</label>
                                     <select class="form-control" v-model="newuser.role_id">
                                         <option v-for="role in roles" :value="role.id">{{role.name}}</option>
-                                        
                                     </select>
-                                </div>
+                            </div>
                         </div>
                         <div class="col-sm-4">
                             <div class="form-group">
@@ -96,11 +95,13 @@
                             <div class="form-group">
                                 <label>Company</label>
                                 <select class="form-control" v-model="newuser.company_id">
-                                        
                                         <option v-for="company in companies" :value="company.id">
                                             {{ company.title }}
                                         </option>
                                 </select>
+                                 <template v-if="errors['company_id']">
+                                        <p class="text-danger">{{errors['company_id'][0]}}</p>
+                                </template> 
                             </div>
                         </div>
                     </div>

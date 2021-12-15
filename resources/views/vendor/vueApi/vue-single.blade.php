@@ -193,7 +193,7 @@ export default {
     delete{{$data['singular']}}: function(){
       
       var that = this;
-      swal({
+      swal.fire({
                 title: 'Vous êtes sure?',
                 text: "Vous allez effacer {{ $data['singular'] }}!",
                 type: 'warning',
