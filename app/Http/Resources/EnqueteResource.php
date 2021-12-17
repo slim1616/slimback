@@ -35,7 +35,8 @@ class EnqueteResource extends JsonResource
                     'start_at' => $this->start_at,
                     'objectif' => $this->objectif,
                     'reponses' => $this->Reponses->count(),
-                                        
+                    
+                    'layout' => $this->layout,
                     'end_at' => $this->end_at,
                     'online' => $this->online,
                     'confidentiality' => $this->confidentiality,

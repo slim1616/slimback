@@ -28,7 +28,7 @@ class EnqueteResourceFront extends JsonResource
             'company' => $this->Company->title,
                                 
             'user_id' => $this->user_id,
-                    
+            'layout' => $this->layout,
             'user' => $this->User->name,
             'online' => $this->online,
             'questionParPage' => $this->questionParPage,

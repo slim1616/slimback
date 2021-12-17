@@ -1,65 +1,133 @@
 <template>
-    <div style="width:80%">   
+    <div style="width:100%" id="demo">   
         <div>
             <h1 class="title-enquete">{{enquete.title}}</h1>
         </div>
         
-        <template v-for="(question,i) in questions">
-                <div class="question-front" v-show="currentQuestions.includes(question.id)">
-                    <span class="align-items-center d-flex justify-content-center num-question">{{ i+1  }}</span>
-                    <div>
-                        <h2 class="txt-question">{{question.textquestion}}
-                            <template v-if="question.obligatoire">
-                                <span class="red">*</span>
-                            </template>
-                        </h2>
-                    </div>
-                    <template v-if="question.question_type=='icons'">
-                        <ul class="align-items-center d-flex justify-content-around">
-                            <li v-for="quest in question.questions">
-                                <div class="align-items-center d-flex flex-column justify-content-center" :class="{'selected-option':selectedQuestion(question.id, quest.id)}" @click.prevent.stop="addResponse(question.id, quest)">
-                                    <i class="fa-2x mb-2" :class="quest.icon" :style="{color: quest.color}"></i>
-                                    <p>{{quest.text}}</p>
+
+        <template v-if="enquete.layout=='slides'">  
+            <div class="modal-swiper" :class="{isfinish : isFinished}">
+                <div>
+                    <h2 class="title-enquete">{{enquete.title}}</h2>
+                </div>
+                <div>
+                    <swiper
+                        :space-between="50"
+                        ref="mySwiper" 
+                        :auto-update="true"
+                        :auto-destroy="true"
+                        :options="swiperOptions"
+                        @swiper="onSwiper"
+                        @slideChange="onSlideChange">   
+                        <template v-for="(question,i) in questions">
+                            <swiper-slide>
+                                <div class="question-front" >
+                                    <span class="align-items-center d-flex justify-content-center num-question">{{ i+1  }}</span>
+                                    <div>
+                                        <h2 class="txt-question">{{question.textquestion}}
+                                            <template v-if="question.obligatoire">
+                                                <span class="red">*</span>
+                                            </template>
+                                        </h2>
+                                    </div>
+                                    <template v-if="question.question_type=='icons'">
+                                        <ul class="align-items-center d-flex justify-content-around">
+                                            <li v-for="quest in question.questions">
+                                                <div class="align-items-center d-flex flex-column justify-content-center" :class="{'selected-option':selectedQuestion(question.id, quest.id)}" @click.prevent.stop="addResponse(question.id, quest)">
+                                                    <i class="fa-2x mb-2" :class="quest.icon" :style="{color: quest.color}"></i>
+                                                    <p>{{quest.text}}</p>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </template>
+                                    <template v-if="question.question_type=='choix'">
+                                        <div style="display: flex;justify-content: center;">
+                                        <ul class="">
+                                            <li v-for="quest in question.questions" class="align-items-center d-flex">
+                                                    <label :class="[question.typeinput=='checkbox' ? '': 'form-radio-input']" >
+                                                        <input :type="question.typeinput" name="question" :class="[question.typeinput=='checkbox' ? 'form-check-label': 'form-radio-label']" @change="addResponse(question.id, quest, question.typeinput)"/>
+                                                        <span :class="[question.typeinput=='checkbox' ? 'form-check-sign': 'form-radio-sign']">{{quest.text}}</span>
+                                                    </label>
+                                            </li>
+                                        </ul>
+                                        </div>
+                                    </template>
                                 </div>
-                            </li>
-                        </ul>
-                    </template>
-                    <template v-if="question.question_type=='choix'">
-                        <ul class="">
-                            <li v-for="quest in question.questions" class="align-items-center d-flex">
-                                    <label :class="[question.typeinput=='checkbox' ? '': 'form-radio-input']" >
-                                        <input :type="question.typeinput" name="question" :class="[question.typeinput=='checkbox' ? 'form-check-label': 'form-radio-label']" @change="addResponse(question.id, quest, question.typeinput)"/>
-                                        <span :class="[question.typeinput=='checkbox' ? 'form-check-sign': 'form-radio-sign']">{{quest.text}}</span>
-                                    </label>
-                            </li>
-                        </ul>
-                    </template>
-                </div>
-        </template>
-        <template v-if="questions.length>0">
-            <div class="justify-content-between d-flex question-front">
-                <div class="d-flex align-items-center">
-
-                    <button @click.prevent.stop="pred" class="mx-2 btn btn-sm btn-light" v-if="current>0"><i class="fa fa-chevron-left"></i> precedent</button>
-                    <button @click.prevent.stop="next" class="mx-2 btn btn-sm btn-light" v-if="current<nbpages-1">suivant <i class="fa fa-chevron-right"></i></button>
-                    <div class="mx-2">
-                        <div class="d-flex progresss-bg">
-                            <div class="progression" :style="{width: (current+1)/nbpages*100 + '%'}">
-
-                            </div>
-                        </div>
-                    </div>
-                    page {{current+1}} / {{nbpages}}
-                </div>
-                <div v-if="canSubmit">
-                    <button class="btn btn-secondary btn-send" @click.prevent.stop="sendResponses">
-                        Envoyer
-                        <span class="btn-label" style="margin-left:7px">
-                            <i class="la flaticon-message"></i>
-                        </span>
-                    </button>
+                            </swiper-slide>
+                        </template>
+                            <swiper-slide>
+                                <div class="question-front finish">
+                                        <i class="fa fa-check-circle fa-4x"></i>
+                                        <h3 style="margin-top: 30px;">Merci pour votre attention</h3>
+                                        <a :href="url">Accueil</a>
+                                </div>
+                            </swiper-slide>
+                    </swiper>
                 </div>
             </div>
+        </template>
+        
+        
+        <!-- ------ -->
+        <template v-if="enquete.layout=='form'">
+            <template v-for="(question,i) in questions">
+                    <div class="question-front" v-show="currentQuestions.includes(question.id)">
+                        <span class="align-items-center d-flex justify-content-center num-question">{{ i+1  }}</span>
+                        <div>
+                            <h2 class="txt-question">{{question.textquestion}}
+                                <template v-if="question.obligatoire">
+                                    <span class="red">*</span>
+                                </template>
+                            </h2>
+                        </div>
+                        <template v-if="question.question_type=='icons'">
+                            <ul class="align-items-center d-flex justify-content-around">
+                                <li v-for="quest in question.questions">
+                                    <div class="align-items-center d-flex flex-column justify-content-center" :class="{'selected-option':selectedQuestion(question.id, quest.id)}" @click.prevent.stop="addResponse(question.id, quest)">
+                                        <i class="fa-2x mb-2" :class="quest.icon" :style="{color: quest.color}"></i>
+                                        <p>{{quest.text}}</p>
+                                    </div>
+                                </li>
+                            </ul>
+                        </template>
+                        <template v-if="question.question_type=='choix'">
+                            <div style="display: flex;justify-content: center;">
+                                <ul class="">
+                                    <li v-for="quest in question.questions" class="align-items-center d-flex">
+                                            <label :class="[question.typeinput=='checkbox' ? '': 'form-radio-input']" >
+                                                <input :type="question.typeinput" name="question" :class="[question.typeinput=='checkbox' ? 'form-check-label': 'form-radio-label']" @change="addResponse(question.id, quest, question.typeinput)"/>
+                                                <span :class="[question.typeinput=='checkbox' ? 'form-check-sign': 'form-radio-sign']">{{quest.text}}</span>
+                                            </label>
+                                    </li>
+                                </ul>
+                            </div>
+                        </template>
+                    </div>
+            </template>
+            <template v-if="questions.length>0">
+                <div class="justify-content-between d-flex question-front">
+                    <div class="d-flex align-items-center">
+                        <button @click.prevent.stop="pred" class="mx-2 btn btn-sm btn-light" v-if="current>0"><i class="fa fa-chevron-left"></i> precedent</button>
+                        <button @click.prevent.stop="suivant" class="mx-2 btn btn-sm btn-light" v-if="current<nbpages-1">suivant <i class="fa fa-chevron-right"></i></button>
+                        <div class="mx-2">
+                            <div class="d-flex progresss-bg">
+                                <div class="progression" :style="{width: (responsesIndex.length)/questions.length*100 + '%'}">
+
+                                </div>
+                            </div>
+                        </div>
+                        page {{current+1}} / {{nbpages}}
+                    </div>
+                    <div v-if="canSubmit" class="align-items-center d-flex">
+                        <button class="btn btn-secondary btn-send btn-sm" @click.prevent.stop="sendResponses">
+                            Envoyer
+                            <span class="btn-label" style="margin-left:7px">
+                                <i class="la flaticon-message"></i>
+                            </span>
+                        </button>
+                    </div>
+                </div>
+            </template>
         </template>
         
     </div>
@@ -67,13 +135,28 @@
 
 <script>
     const isBetween = (num1,num2,value) => value >= num1 && value <= num2 
+    import { Swiper, SwiperSlide, directive } from 'vue-awesome-swiper'
 
+    // Import Swiper styles
+    import 'swiper/swiper-bundle.css'
+import { setTimeout } from 'timers';
 export default {
+    components: {
+      Swiper,
+      SwiperSlide,
+    },
     props:{
         enquete_id : Number,
     },
     data(){
         return {
+            url : window.location.origin,
+            isFinished : false,
+            swiperOptions: {
+                allowTouchMove: false
+            },
+            back: false,
+            currentIndex: 0,
             enquete : {},
             questions : [],
             loading : false,
@@ -85,12 +168,28 @@ export default {
         }
     },
     methods: {
+
+            onSwiper(event){
+                console.log('onSwiper')
+                
+            },
+            onSlideChange(event){
+                console.log('onSlideChange')
+                console.log(event.activeIndex)
+                if (event.activeIndex==this.questions.length){
+                        this.isFinished = true
+                        this.sendResponses()
+                        event.allowTouchMove = false
+                }
+                
+            },
+            //******************* */
             pred(){
                 if (this.current>0){
                     this.current -= 1
                 }
             },
-            next(){
+            suivant(){
                 if (this.current+1<this.nbpages){
                     this.current += 1
                 }
@@ -123,6 +222,9 @@ export default {
                 }else{
                     this.responses.push({enquete_id : this.enquete.id, reponse : reponse, uniqid : this.uniqid, section_id : section_id})
                 }
+                setTimeout(()=> {
+                    this.swiper.slideNext()
+                },1500)
             },
             async sendResponses(){
                 this.loader = true
@@ -154,7 +256,10 @@ export default {
                             text: "Merci pour votre attention",
                             type: 'success'
                         }).then((result) => {
-                            window.location.replace(window.location.origin);   
+                            if (this.enquete.layout=='form'){
+                                window.location.replace(window.location.origin);   
+                            }
+                            this.isFinished = false
                         })
                         
                     }
@@ -280,6 +385,9 @@ export default {
             }
     },
     computed:{
+        swiper() {
+            return this.$refs.mySwiper.$swiper
+        },
         currentQuestions(){
             return this.questions.map((question,i) => {
                 if (isBetween(this.current*this.questionParPage, ((this.current+1)*this.questionParPage)-1, i)){
@@ -313,6 +421,31 @@ export default {
     },
     mounted(){
         this.getEnqueteInit()
+        console.log('Current Swiper instance object', this.swiper)
+        
+
     }
 }
 </script>
+
+<style scoped>
+    .modal-swiper{
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: #eee;
+        z-index: 999;
+    }
+    .isfinish{
+        filter: blur(3px);
+    }
+    .finish{
+        color: #1572e8;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+    }
+</style>

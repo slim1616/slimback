@@ -20,22 +20,24 @@
             <div class="card-header d-flex justify-content-between">
                 <div class="card-title">Modifier enquete</div>
                 <template v-if="user.currentFormule">
-                <div>
-                    <a :href="'/enquete/' + form.id" target="_blank" title="Commencer l'enquête">
-                        <i class="flaticon-chain"></i>
+                <div class="align-items-center d-flex flex-1 justify-content-around">
+                    <div>
+                        <a :href="'/enquete/' + form.id" target="_blank" title="Commencer l'enquête">
+                            <i class="flaticon-chain"></i>
+                        </a>
+                        <span v-if="form.confidentiality=='private'" style="margin-left: 7px;background: #f2f2f2;padding: 4px;border-radius: 5px;"><i class="fa fa-lock"></i> <b>{{form.password}}</b> </span>
+                    </div>
+                    <a href="#" @click.prevent.stop="sendMail" title="Envoyer lien de l'enquête par email">
+                        <i class="far fa-envelope"></i>
                     </a>
-                    <span style="margin-left: 7px;background: #f2f2f2;padding: 4px;border-radius: 5px;"><i class="fa fa-lock"></i> <b>{{form.password}}</b> </span>
+                    <a href="#" @click.prevent.stop="copiedUrl" title="Copier le lien de l'enquête">
+                        <i class="far fa-copy"></i>
+                    </a>
+                    <a href="#" @click.prevent.stop="copiedUrl" title="Partager sur facebook">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <input type="text" style="opacity:0;position:absolute" :value="'/enquete/' + form.id" id="cplink"/> 
                 </div>
-                <a href="#" @click.prevent.stop="sendMail" title="Envoyer lien de l'enquête par email">
-                    <i class="far fa-envelope"></i>
-                </a>
-                <a href="#" @click.prevent.stop="copiedUrl" title="Copier le lien de l'enquête">
-                    <i class="far fa-copy"></i>
-                </a>
-                <a href="#" @click.prevent.stop="copiedUrl" title="Partager sur facebook">
-                    <i class="fab fa-facebook-f"></i>
-                </a>
-                <input type="text" style="opacity:0" :value="'/enquete/' + form.id" id="cplink"/> 
                 </template>
             </div>
             <div class="card-body">
@@ -77,7 +79,7 @@
                                     <div class="form-group">
                                         <label>Description</label>
                                         <div>
-                                        <textarea v-model="form.description" ></textarea>
+                                        <textarea v-model="form.description" class="form-control" ></textarea>
                                         </div>
                                         
                                         <has-error :form="form" field="description"></has-error>
@@ -147,8 +149,6 @@
                                         type="date"
                                         format="dd/MM/yyyy"
                                         input-class="form-control"/>
-                                        
-                                        
                                     </div>
                                 </div>
                                 <div class="col-sm-5">
@@ -194,6 +194,21 @@
                                                 </div>
                                             </li>
                                         </ul>
+                                    </div>
+                                </div>
+                                <div class="col-sm-3">
+                                    <div class="form-group">
+                                        <label class="form-label">Disposition</label>
+                                        <div class="selectgroup w-100">
+                                            <label class="selectgroup-item">
+                                                <input type="radio" name="layout" value="form" v-model="form.layout" class="selectgroup-input" :checked="form.layout=='form'">
+                                                <span class="selectgroup-button selectgroup-button-icon"><i class="fab fa-wpforms"></i></span>
+                                            </label>
+                                            <label class="selectgroup-item">
+                                                <input type="radio" name="layout" value="slides" v-model="form.layout" class="selectgroup-input" :checked="form.layout=='slides'">
+                                                <span class="selectgroup-button selectgroup-button-icon"><i class="fas fa-tv"></i></span>
+                                            </label>
+                                        </div>
                                     </div>
                                 </div>
                                 
@@ -264,6 +279,7 @@
                 form: new Form({
                     selectedEmplacements : [],
                     confidentiality : "",
+                    layout : "",
                     password : "",
                     id : "",
                     title : "",

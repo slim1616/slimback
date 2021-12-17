@@ -269,7 +269,7 @@
                             <div @click.away="open = false" class="relative flex items-center h-full ml-3" x-data="{ open: false }">
                                 <div>
                                     <button @click="open = !open" class="flex text-sm transition duration-150 ease-in-out border-2 border-transparent rounded-full focus:outline-none focus:border-gray-300" id="user-menu" aria-label="User menu" aria-haspopup="true" x-bind:aria-expanded="open">
-                                        <img class="w-8 h-8 rounded-full" src="" alt="{{Auth::user()->name}}">
+                                        <i class="fa fa-user" style="color: #9ca3af;font-size: 1.3em;"></i>
                                     </button>
                                 </div>
 
@@ -292,7 +292,7 @@
                                                 <span class="inline-block px-2 my-1 -ml-1 text-xs font-medium leading-5 text-gray-600 bg-gray-200 rounded">{{Auth::user()->lastAbonnements}}</span>
                                             </div>
                                             <a href="{{ route('companie', Auth::user()->Company->id)}}" class="block px-4 py-2 text-sm leading-5 text-gray-700 hover:bg-gray-100 hover:text-gray-900 focus:outline-none focus:bg-gray-100 focus:text-gray-900">{{ Auth::user()->Company->title}}</a>
-                                            <a href="https://wave.devdojo.com/settings" class="block px-4 py-2 text-sm leading-5 text-gray-700 hover:bg-gray-100 hover:text-gray-900 focus:outline-none focus:bg-gray-100 focus:text-gray-900">Settings</a>
+                                            <a href="{{ route('companie', Auth::user()->Company->id)}}" class="block px-4 py-2 text-sm leading-5 text-gray-700 hover:bg-gray-100 hover:text-gray-900 focus:outline-none focus:bg-gray-100 focus:text-gray-900">Settings</a>
 
                                         </div>
                                         <div class="border-t border-gray-100"></div>

@@ -75,6 +75,7 @@ ul {
   color: #6b7280;
   margin: 10px;
   text-transform: capitalize;
+  text-align: center;
 }
 
 .num-question {
@@ -101,7 +102,8 @@ ul {
 
 .progresss-bg {
   background: #eee;
-  width: 150px;
+  max-width: 150px;
+  min-width: 70px;
   border-radius: 10px;
   align-items: center;
   padding: 1px;
@@ -120,5 +122,9 @@ ul {
 
 .logo-home {
   width: 80px;
+}
+
+a:hover {
+  text-decoration: none !important;
 }
 

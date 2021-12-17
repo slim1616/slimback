@@ -198,24 +198,31 @@ export default {
           var that = this;
           swal.fire({
                 title: 'Vous êtes sure?',
-                text: "Vous allez effacer Emplacement!",
-                type: 'warning',
-                buttons:{
-                    
-                    cancel: {
-                        text : 'Annuler',
-                        visible: true,
-                        className: 'btn btn-danger'
-                    },
-                    confirm: {
-                        text : 'Oui',
-                        className : 'btn btn-success'
-                    }
-                }
+                text: "Vous allez effacer un Emplacement!",
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'oui',
+                cancelButtonText: 'annuler',
+                customClass: {
+                    confirmButton: 'btn btn-success',
+                    cancelButton: 'btn btn-danger'
+                },
             }).then((Delete) => {
                 if (Delete) {
-                  this.form.delete('/api/emplacements/'+emplacement.id).then(function(response){
+                  this.form.delete('/api/emplacements/'+emplacement.id).
+                  then(function(response){
                     that.emplacements.splice(index,1);
+                  })
+                  .catch(error => {
+                      swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'Erreur!',
+                        customClass: {
+                        confirmButton: 'btn btn-danger',
+                    },
+                        })
                   })
                 } else {
                     swal.close();

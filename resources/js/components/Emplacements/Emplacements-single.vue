@@ -206,19 +206,15 @@
                 var that = this;
                 swal.fire({
                     title: 'Vous êtes sure?',
-                    text: "Vous allez effacer Emplacement!",
-                    type: 'warning',
-                    buttons:{
-                        
-                        cancel: {
-                            text : 'Annuler',
-                            visible: true,
-                            className: 'btn btn-danger'
-                        },
-                        confirm: {
-                            text : 'Oui',
-                            className : 'btn btn-success'
-                        }
+                    text: "Vous allez effacer un Emplacement!",
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'oui',
+                    cancelButtonText: 'annuler',
+                    customClass: {
+                        confirmButton: 'btn btn-success',
+                        cancelButton: 'btn btn-danger'
                     }
                 }).then((Delete) => {
                     if (Delete) {
@@ -227,6 +223,16 @@
                             that.$store.dispatch('setLoader', false)
                             that.form.fill(response.data);
                             that.$router.push('/emplacements');
+                        })
+                        .catch(error => {
+                            swal.fire({
+                                icon: 'error',
+                                title: 'Oops...',
+                                text: 'Erreur!',
+                                customClass: {
+                                confirmButton: 'btn btn-danger',
+                                }
+                            })
                         })
                     } else {
                         swal.close();
