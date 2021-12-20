@@ -31,6 +31,7 @@ class CreateSinglereponsesTable extends Migration
             $table->foreign('company_id')->references('id')->on('companies');
             $table->foreign('enquete_id')->references('id')->on('enquetes')->onDelete('cascade');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

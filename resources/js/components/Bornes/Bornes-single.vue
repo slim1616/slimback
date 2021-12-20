@@ -225,47 +225,60 @@ export default {
             });
     },
     deleteBorne: function(){
-      
-      var that = this;
-      swal.fire({
-                title: 'Vous êtes sure?',
-                text: "Vous allez effacer Borne!",
-                type: 'warning',
-                buttons:{
-                    
-                    cancel: {
-                        text : 'Annuler',
-                        visible: true,
-                        className: 'btn btn-danger'
-                    },
-                    confirm: {
-                        text : 'Oui',
-                        className : 'btn btn-success'
+        var that = this;
+        swal.fire({
+            title: 'Vous êtes sure?',
+            text: "Vous allez effacer une Borne!",
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'oui',
+            cancelButtonText: 'annuler',
+            customClass: {
+                confirmButton: 'btn btn-success',
+                cancelButton: 'btn btn-danger'
+            }
+        }).then((Delete) => {
+            if (Delete.isConfirmed) {
+                this.$store.dispatch('setLoader', true)
+                this.form.delete('/api/bornes/'+this.$route.params.id).then(function(response){
+                that.$store.dispatch('setLoader', false)
+                    if (response.data.status){
+                        that.$router.push('/bornes');
+                    }else{
+                        swal.fire({
+                            title: 'Erreur',
+                            text: response.data.msg,
+                            icon : "warning",
+                            confirmButtonColor: '#d33',
+                            confirmButtonText: 'Ok',
+                            buttons: {
+                                confirm: {
+                                    className : 'btn btn-warning'
+                                }
+                            },
+                        });
                     }
-                }
-            }).then((Delete) => {
-                if (Delete) {
-                  this.$store.dispatch('setLoader', true)
-                  this.form.delete('/api/bornes/'+this.$route.params.id).then(function(response){
-                    that.$store.dispatch('setLoader', false)
-                      if (response.data.status){
-                          that.$router.push('/bornes');
-                      }else{
-                            swal("Erreur", response.data.msg, {
-                                icon : "warning",
-                                buttons: {
-                                    confirm: {
-                                        className : 'btn btn-warning'
-                                    }
-                                },
-                            });
-                      }
-                      
-                    })
-                } else {
-                    swal.close();
-                }
-            }); 
+                })
+                .catch(error => {
+                    swal.fire({
+                        title: 'Erreur',
+                        text: 'Une erreur c\'est produite',
+                        icon : "warning",
+                        confirmButtonColor: '#d33',
+                        confirmButtonText: 'Ok',
+                        buttons: {
+                            confirm: {
+                                className : 'btn btn-warning'
+                            }
+                        },
+                    });
+                })
+            } else {
+                swal.close();
+            }
+        }); 
+      
     }
   },
   computed:{

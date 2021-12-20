@@ -20,9 +20,10 @@ class CreateBornesreponsesTable extends Migration
             $table->string('code_borne')->nullable();
             $table->Integer('resp')->unsigned();
             $table->dateTime('datetime');
-            $table->timestamps();
             $table->foreign('company_id')->references('id')->on('companies');
             $table->foreign('borne_id')->references('id')->on('bornes');
+            $table->timestamps();
+            $table->softDeletes();
         });
     }
 

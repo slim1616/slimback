@@ -109,29 +109,26 @@ export default {
     },
     methods :{
         effaceUser(user_id){
-             swal.fire({
-                    title: 'Vous êtes sure?',
-                    text: "Vous allez effacer un utilisateur!",
-                    type: 'warning',
-                    buttons:{
-                        
-                        cancel: {
-                            text : 'Annuler',
-                            visible: true,
-                            className: 'btn btn-danger'
-                        },
-                        confirm: {
-                            text : 'Oui',
-                            className : 'btn btn-success'
-                        }
-                    }
-                }).then((Delete) => {
-                    if (Delete) {
-                       this.deleteUser(user_id)
-                    } else {
-                        swal.close();
-                    }
-                });
+            var that = this;
+            swal.fire({
+                title: 'Vous êtes sure?',
+                text: "Vous allez effacer un utilisateur!",
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'oui',
+                cancelButtonText: 'annuler',
+                customClass: {
+                    confirmButton: 'btn btn-success',
+                    cancelButton: 'btn btn-danger'
+                }
+            }).then((Delete) => {
+                if (Delete.isConfirmed) {
+                    this.deleteUser(user_id)
+                } else {
+                    swal.close();
+                }
+            });
         },
         deleteUser(user_id){
              let res = fetch(window.location.origin + '/api/user/' + user_id,{
@@ -147,14 +144,14 @@ export default {
                     return response.json();
                     }else{
                         this.$store.dispatch('setLoader', false)
-                        swal("Erreur", "Une erreur c'est produite", {
-                            icon : "error",
-                            buttons: {
-                                confirm: {
-                                    className : 'btn btn-danger'
-                                }
-                            },
-                        });
+                        swal.fire({
+                            icon: 'error',
+                            title: 'Oops...',
+                            text: 'Erreur!',
+                            customClass: {
+                            confirmButton: 'btn btn-danger',
+                            }
+                        })
                     }
                 })
                 .then(data => {

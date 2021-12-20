@@ -24,6 +24,7 @@ class CreateCompaniesTable extends Migration
             $table->bigInteger('user_id')->unsigned()->default(1);
             $table->foreign('user_id')->references('id')->on('users');
             $table->timestamps();
+            $table->softDeletes();
         });
         
         Schema::table('users', function (Blueprint $table) {

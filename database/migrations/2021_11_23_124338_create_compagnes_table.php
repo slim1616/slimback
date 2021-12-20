@@ -20,8 +20,9 @@ class CreateCompagnesTable extends Migration
             $table->date('start_at')->nullable();
             $table->date('end_at')->nullable();
             $table->json('emploie')->nullable();
-            $table->timestamps();
             $table->foreign('company_id')->references('id')->on('companies');
+            $table->timestamps();
+            $table->softDeletes();
 
         });
     }

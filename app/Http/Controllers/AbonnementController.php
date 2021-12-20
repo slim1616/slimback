@@ -98,8 +98,9 @@ class AbonnementController extends Controller
     }
     
     public function delete(Request $request, $id){
-        $abonnements = Abonnement::findOrFail($id);
-        $abonnements->delete();
+        $abonnement = Abonnement::findOrFail($id);
+        $abonnement->delete();
+        return response(['status' => true]);
     }
 }
  ?>

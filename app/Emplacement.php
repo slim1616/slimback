@@ -3,9 +3,11 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
+use Illuminate\Database\Eloquent\SoftDeletes;
+
 class Emplacement extends Model
 {
-
+    use SoftDeletes;
     /**
      * The attributes that should be hidden for arrays.
      *

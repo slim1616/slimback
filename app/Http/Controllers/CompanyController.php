@@ -106,6 +106,7 @@ class CompanyController extends Controller
       public function delete(Request $request, $id){
         $companies = Company::findOrFail($id);
         $companies->delete();
+        return response(['status' => true]);
       }
     }
     ?>

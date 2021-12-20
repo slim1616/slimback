@@ -170,35 +170,58 @@ export default {
       
     },
     deleteAbonnement: function(abonnement, index){
-          var that = this;
-          swal.fire({
+            var that = this;
+            swal.fire({
                 title: 'Vous êtes sure?',
-                text: "Vous allez effacer Abonnement!",
-                type: 'warning',
-                buttons:{
-                    
-                    cancel: {
-                        text : 'Annuler',
-                        visible: true,
-                        className: 'btn btn-danger'
-                    },
-                    confirm: {
-                        text : 'Oui',
-                        className : 'btn btn-success'
-                    }
+                text: "Vous allez effacer un Abonnement!",
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                confirmButtonText: 'oui',
+                cancelButtonColor: '#d33',
+                cancelButtonText: 'annuler',
+                customClass: {
+                    confirmButton: 'btn btn-success',
+                    cancelButton: 'btn btn-danger'
                 }
             }).then((Delete) => {
-                if (Delete) {
-                  this.form.delete('/api/abonnements/'+abonnement.id).then(function(response){
-                    that.abonnements.splice(index,1);
-                  })
+                if (Delete.isConfirmed) {
+                    this.form.delete('/api/abonnements/'+abonnement.id).then(function(response){
+                        if (response.data.status){
+                            that.abonnements.splice(index,1);
+                        }else{
+                                swal.fire({
+                                    title: 'Erreur',
+                                    text: response.data.msg,
+                                    icon : "warning",
+                                    confirmButtonColor: '#d33',
+                                    confirmButtonText: 'Ok',
+                                    buttons: {
+                                        confirm: {
+                                            className : 'btn btn-warning'
+                                        }
+                                    },
+                                });
+                        }
+                    })
+                    .catch(error => {
+                        console.log(error)
+                        swal.fire({
+                                title: 'Erreur',
+                                text: 'Une erreur c\'est produite',
+                                icon : "warning",
+                                confirmButtonColor: '#d33',
+                                confirmButtonText: 'Ok',
+                                buttons: {
+                                    confirm: {
+                                        className : 'btn btn-warning'
+                                    }
+                                },
+                            });
+                    })
                 } else {
                     swal.close();
                 }
-            });
-      
-      
-      
+            }); 
     }
   }
 }

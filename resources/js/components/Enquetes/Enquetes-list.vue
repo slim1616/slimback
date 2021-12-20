@@ -205,31 +205,34 @@
                 swal.fire({
                     title: 'Vous êtes sure?',
                     text: "Vous allez effacer Enquete!",
-                    type: 'warning',
-                    buttons:{
-                        
-                        cancel: {
-                            text : 'Annuler',
-                            visible: true,
-                            className: 'btn btn-danger'
-                        },
-                        confirm: {
-                            text : 'Oui',
-                            className : 'btn btn-success'
-                        }
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'oui',
+                    cancelButtonText: 'annuler',
+                    customClass: {
+                        confirmButton: 'btn btn-success',
+                        cancelButton: 'btn btn-danger'
                     }
                 }).then((Delete) => {
-                    if (Delete) {
+                    if (Delete.isConfirmed) {
                         this.form.delete('/api/enquetes/'+enquete.id).then(function(response){
                             that.enquetes.splice(index,1);
+                        })
+                        .catch(error => {
+                            swal.fire({
+                                icon: 'error',
+                                title: 'Oops...',
+                                text: 'Erreur!',
+                                customClass: {
+                                confirmButton: 'btn btn-danger',
+                                }
+                            })
                         })
                     } else {
                         swal.close();
                     }
-                });
-                
-                
-                
+                }); 
             }
         },
         computed:{

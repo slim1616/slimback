@@ -162,7 +162,7 @@ export default {
                   that.emplacements = response.data.emplacements;
               }else{
                 that.$store.dispatch('setLoader', false)
-                swal("Erreur", "Erreur de requete", {
+                swal.fire("Erreur", "Erreur de requete", {
                     icon : "error",
                     buttons: {
                         confirm: {
@@ -175,7 +175,7 @@ export default {
           })
           .catch((response) => {
               that.$store.dispatch('setLoader', false)
-              swal("Erreur", "Une erreur c'est produite", {
+              swal.fire("Erreur", "Une erreur c'est produite", {
                       icon : "error",
                       buttons: {
                           confirm: {
@@ -209,7 +209,7 @@ export default {
                     cancelButton: 'btn btn-danger'
                 },
             }).then((Delete) => {
-                if (Delete) {
+                if (Delete.isConfirmed) {
                   this.form.delete('/api/emplacements/'+emplacement.id).
                   then(function(response){
                     that.emplacements.splice(index,1);

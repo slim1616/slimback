@@ -18,10 +18,11 @@ class CreateCompagnebornesTable extends Migration
             $table->BigInteger('compagne_id')->unsigned();
             $table->BigInteger('borne_id')->unsigned();
             $table->BigInteger('company_id')->unsigned();
-            $table->timestamps();
             $table->foreign('compagne_id')->references('id')->on('compagnes');
             $table->foreign('borne_id')->references('id')->on('bornes');
             $table->foreign('company_id')->references('id')->on('companies');
+            $table->timestamps();
+            $table->softDeletes();
         });
     }
 

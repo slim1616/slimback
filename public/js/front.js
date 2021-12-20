@@ -254,10 +254,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var vue_awesome_swiper__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue-awesome-swiper */ "./node_modules/vue-awesome-swiper/dist/vue-awesome-swiper.js");
 /* harmony import */ var vue_awesome_swiper__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vue_awesome_swiper__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var swiper_swiper_bundle_css__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! swiper/swiper-bundle.css */ "./node_modules/swiper/swiper-bundle.css");
-/* harmony import */ var swiper_swiper_bundle_css__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(swiper_swiper_bundle_css__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var timers__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! timers */ "./node_modules/timers-browserify/main.js");
-/* harmony import */ var timers__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(timers__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var vue_fullscreen__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vue-fullscreen */ "./node_modules/vue-fullscreen/dist/vue-fullscreen.min.js");
+/* harmony import */ var vue_fullscreen__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(vue_fullscreen__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var swiper_swiper_bundle_css__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! swiper/swiper-bundle.css */ "./node_modules/swiper/swiper-bundle.css");
+/* harmony import */ var swiper_swiper_bundle_css__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(swiper_swiper_bundle_css__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var timers__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! timers */ "./node_modules/timers-browserify/main.js");
+/* harmony import */ var timers__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(timers__WEBPACK_IMPORTED_MODULE_4__);
 
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
@@ -399,9 +401,22 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 var isBetween = function isBetween(num1, num2, value) {
   return value >= num1 && value <= num2;
 };
+
 
  // Import Swiper styles
 
@@ -417,6 +432,8 @@ var isBetween = function isBetween(num1, num2, value) {
   },
   data: function data() {
     return {
+      fullscreen: false,
+      teleport: false,
       url: window.location.origin,
       isFinished: false,
       swiperOptions: {
@@ -435,6 +452,36 @@ var isBetween = function isBetween(num1, num2, value) {
     };
   },
   methods: {
+    restart: function restart() {
+      location.reload();
+    },
+    toggle: function toggle() {
+      var _this = this;
+
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                _context.next = 2;
+                return vue_fullscreen__WEBPACK_IMPORTED_MODULE_2__["api"].toggle(_this.$el.querySelector('.fullscreen-wrapper'), {
+                  teleport: _this.teleport,
+                  callback: function callback(isFullscreen) {
+                    _this.fullscreen = isFullscreen;
+                  }
+                });
+
+              case 2:
+                _this.fullscreen = vue_fullscreen__WEBPACK_IMPORTED_MODULE_2__["api"].isFullscreen;
+
+              case 3:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee);
+      }))();
+    },
     onSwiper: function onSwiper(event) {
       console.log('onSwiper');
     },
@@ -469,7 +516,7 @@ var isBetween = function isBetween(num1, num2, value) {
       return exist;
     },
     addResponse: function addResponse(section_id, reponse, type) {
-      var _this = this;
+      var _this2 = this;
 
       var index = this.responses.findIndex(function (response) {
         return response.section_id == section_id;
@@ -514,28 +561,28 @@ var isBetween = function isBetween(num1, num2, value) {
         });
       }
 
-      Object(timers__WEBPACK_IMPORTED_MODULE_3__["setTimeout"])(function () {
-        _this.swiper.slideNext();
-      }, 1500);
+      Object(timers__WEBPACK_IMPORTED_MODULE_4__["setTimeout"])(function () {
+        _this2.swiper.slideNext();
+      }, 900);
     },
     sendResponses: function sendResponses() {
-      var _this2 = this;
+      var _this3 = this;
 
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
         var res;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
           while (1) {
-            switch (_context.prev = _context.next) {
+            switch (_context2.prev = _context2.next) {
               case 0:
-                _this2.loader = true;
-                _this2.loading = true;
-                _context.next = 4;
+                _this3.loader = true;
+                _this3.loading = true;
+                _context2.next = 4;
                 return fetch(window.location.origin + '/api/enquetes/addresponse', {
                   method: 'post',
                   body: JSON.stringify({
-                    responses: _this2.responses,
-                    enquete_id: _this2.enquete.id,
-                    uniqid: _this2.uniqid,
+                    responses: _this3.responses,
+                    enquete_id: _this3.enquete.id,
+                    uniqid: _this3.uniqid,
                     emplacement_id: 0,
                     source: 'web'
                   }),
@@ -550,9 +597,9 @@ var isBetween = function isBetween(num1, num2, value) {
                   } else if (response.status == 401) {//window.location.replace(window.location.href);   
                   }
 
-                  _this2.loader = false;
+                  _this3.loader = false;
                 }).then(function (data) {
-                  _this2.loader = false;
+                  _this3.loader = false;
 
                   if (data.status) {
                     swal.fire({
@@ -561,41 +608,41 @@ var isBetween = function isBetween(num1, num2, value) {
                       text: "Merci pour votre attention",
                       type: 'success'
                     }).then(function (result) {
-                      if (_this2.enquete.layout == 'form') {
+                      if (_this3.enquete.layout == 'form') {
                         window.location.replace(window.location.origin);
                       }
 
-                      _this2.isFinished = false;
+                      _this3.isFinished = false;
                     });
                   }
                 })["catch"](function (err) {
                   console.log(err);
-                  _this2.loader = false;
+                  _this3.loader = false;
                 });
 
               case 4:
-                res = _context.sent;
+                res = _context2.sent;
 
               case 5:
               case "end":
-                return _context.stop();
+                return _context2.stop();
             }
           }
-        }, _callee);
+        }, _callee2);
       }))();
     },
     getEnqueteInit: function getEnqueteInit() {
-      var _this3 = this;
+      var _this4 = this;
 
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
         var res;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
           while (1) {
-            switch (_context3.prev = _context3.next) {
+            switch (_context4.prev = _context4.next) {
               case 0:
-                _this3.loading = true;
-                _context3.next = 3;
-                return fetch(window.location.origin + '/api/enquetes/frontstart/' + _this3.enquete_id, {
+                _this4.loading = true;
+                _context4.next = 3;
+                return fetch(window.location.origin + '/api/enquetes/frontstart/' + _this4.enquete_id, {
                   headers: {
                     'Content-type': 'Application/json',
                     'X-Requested-With': 'XMLHttpRequest',
@@ -607,27 +654,27 @@ var isBetween = function isBetween(num1, num2, value) {
                   } else if (response.status == 401) {//window.location.replace(window.location.href);
                   }
 
-                  _this3.loading = false;
-                  _this3.loader = false;
+                  _this4.loading = false;
+                  _this4.loader = false;
                 }).then(function (data) {
-                  _this3.loading = false;
-                  _this3.loader = false;
+                  _this4.loading = false;
+                  _this4.loader = false;
 
                   if (data.status) {
                     if (data.enquete.confidentiality == 'public') {
-                      _this3.questionParPage = data.enquete.questionParPage;
-                      _this3.enquete = data.enquete;
-                      _this3.questions = data.questions;
-                      _this3.uniqid = data.uniqid;
+                      _this4.questionParPage = data.enquete.questionParPage;
+                      _this4.enquete = data.enquete;
+                      _this4.questions = data.questions;
+                      _this4.uniqid = data.uniqid;
                     } else {
-                      _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
+                      _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
                         var _yield$swal$fire, password;
 
-                        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+                        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
                           while (1) {
-                            switch (_context2.prev = _context2.next) {
+                            switch (_context3.prev = _context3.next) {
                               case 0:
-                                _context2.next = 2;
+                                _context3.next = 2;
                                 return swal.fire({
                                   title: 'Entrer le mot de passe',
                                   input: 'password',
@@ -641,19 +688,19 @@ var isBetween = function isBetween(num1, num2, value) {
                                 });
 
                               case 2:
-                                _yield$swal$fire = _context2.sent;
+                                _yield$swal$fire = _context3.sent;
                                 password = _yield$swal$fire.value;
 
                                 if (password) {
-                                  _this3.getEnquete(password, _this3.enquete_id);
+                                  _this4.getEnquete(password, _this4.enquete_id);
                                 }
 
                               case 5:
                               case "end":
-                                return _context2.stop();
+                                return _context3.stop();
                             }
                           }
-                        }, _callee2);
+                        }, _callee3);
                       }))();
                     }
                   } else {
@@ -661,34 +708,34 @@ var isBetween = function isBetween(num1, num2, value) {
                   }
                 })["catch"](function (err) {
                   console.log(err);
-                  _this3.loading = false;
-                  _this3.loader = false;
+                  _this4.loading = false;
+                  _this4.loader = false;
                 });
 
               case 3:
-                res = _context3.sent;
+                res = _context4.sent;
 
               case 4:
               case "end":
-                return _context3.stop();
+                return _context4.stop();
             }
           }
-        }, _callee3);
+        }, _callee4);
       }))();
     },
     getEnquete: function getEnquete(password, enqueste_id) {
-      var _this4 = this;
+      var _this5 = this;
 
-      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
+      return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5() {
         var res;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee5$(_context5) {
           while (1) {
-            switch (_context4.prev = _context4.next) {
+            switch (_context5.prev = _context5.next) {
               case 0:
                 console.log(password, enqueste_id);
-                _this4.loading = true;
-                _context4.next = 4;
-                return fetch(window.location.origin + '/api/enquetes/privatefront/' + _this4.enquete_id, {
+                _this5.loading = true;
+                _context5.next = 4;
+                return fetch(window.location.origin + '/api/enquetes/privatefront/' + _this5.enquete_id, {
                   method: 'post',
                   body: JSON.stringify({
                     'password': password
@@ -704,17 +751,17 @@ var isBetween = function isBetween(num1, num2, value) {
                   } else if (response.status == 401) {//window.location.replace(window.location.href);
                   }
 
-                  _this4.loading = false;
-                  _this4.loader = false;
+                  _this5.loading = false;
+                  _this5.loader = false;
                 }).then(function (data) {
-                  _this4.loading = false;
-                  _this4.loader = false;
+                  _this5.loading = false;
+                  _this5.loader = false;
 
                   if (data.status) {
-                    _this4.questionParPage = data.enquete.questionParPage;
-                    _this4.enquete = data.enquete;
-                    _this4.questions = data.questions;
-                    _this4.uniqid = data.uniqid;
+                    _this5.questionParPage = data.enquete.questionParPage;
+                    _this5.enquete = data.enquete;
+                    _this5.questions = data.questions;
+                    _this5.uniqid = data.uniqid;
                   } else {
                     Swal.fire({
                       title: 'Error',
@@ -727,37 +774,39 @@ var isBetween = function isBetween(num1, num2, value) {
                       confirmButtonText: 'ressayer'
                     }).then(function (result) {
                       if (result.isConfirmed) {
-                        _this4.getEnqueteInit();
+                        _this5.getEnqueteInit();
                       }
                     });
                   }
                 })["catch"](function (err) {
                   console.log(err);
-                  _this4.loading = false;
-                  _this4.loader = false;
+                  _this5.loading = false;
+                  _this5.loader = false;
                 });
 
               case 4:
-                res = _context4.sent;
+                res = _context5.sent;
 
               case 5:
               case "end":
-                return _context4.stop();
+                return _context5.stop();
             }
           }
-        }, _callee4);
+        }, _callee5);
       }))();
     }
   },
   computed: {
     swiper: function swiper() {
-      return this.$refs.mySwiper.$swiper;
+      if (this.$refs.mySwiper) {
+        return this.$refs.mySwiper.$swiper;
+      }
     },
     currentQuestions: function currentQuestions() {
-      var _this5 = this;
+      var _this6 = this;
 
       return this.questions.map(function (question, i) {
-        if (isBetween(_this5.current * _this5.questionParPage, (_this5.current + 1) * _this5.questionParPage - 1, i)) {
+        if (isBetween(_this6.current * _this6.questionParPage, (_this6.current + 1) * _this6.questionParPage - 1, i)) {
           return question.id;
         }
       });
@@ -795,7 +844,7 @@ var isBetween = function isBetween(num1, num2, value) {
   },
   mounted: function mounted() {
     this.getEnqueteInit();
-    console.log('Current Swiper instance object', this.swiper);
+    this.toggle();
   }
 });
 
@@ -15688,6 +15737,17 @@ var SwiperSlide = VueAwesomeSwiper.SwiperSlide;exports.Swiper=Swiper;exports.Swi
 
 /***/ }),
 
+/***/ "./node_modules/vue-fullscreen/dist/vue-fullscreen.min.js":
+/*!****************************************************************!*\
+  !*** ./node_modules/vue-fullscreen/dist/vue-fullscreen.min.js ***!
+  \****************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+!function(e,t){ true?module.exports=t():undefined}(this,function(){return function(e){function t(i){if(n[i])return n[i].exports;var r=n[i]={i:i,l:!1,exports:{}};return e[i].call(r.exports,r,r.exports,t),r.l=!0,r.exports}var n={};return t.m=e,t.c=n,t.i=function(e){return e},t.d=function(e,n,i){t.o(e,n)||Object.defineProperty(e,n,{configurable:!1,enumerable:!0,get:i})},t.n=function(e){var n=e&&e.__esModule?function(){return e.default}:function(){return e};return t.d(n,"a",n),n},t.o=function(e,t){return Object.prototype.hasOwnProperty.call(e,t)},t.p="",t(t.s=5)}([function(e,t,n){"use strict";function i(){var e={},t=!1,n=0,r=arguments.length;for("[object Boolean]"===Object.prototype.toString.call(arguments[0])&&(t=arguments[0],n++);n<r;n++){var l=arguments[n];!function(n){for(var r in n)Object.prototype.hasOwnProperty.call(n,r)&&(t&&"[object Object]"===Object.prototype.toString.call(n[r])?e[r]=i(!0,e[r],n[r]):e[r]=n[r])}(l)}return e}t.a=i},function(e,t){!function(){"use strict";var t="undefined"!=typeof window&&void 0!==window.document?window.document:{},n=void 0!==e&&e.exports,i=function(){for(var e,n=[["requestFullscreen","exitFullscreen","fullscreenElement","fullscreenEnabled","fullscreenchange","fullscreenerror"],["webkitRequestFullscreen","webkitExitFullscreen","webkitFullscreenElement","webkitFullscreenEnabled","webkitfullscreenchange","webkitfullscreenerror"],["webkitRequestFullScreen","webkitCancelFullScreen","webkitCurrentFullScreenElement","webkitCancelFullScreen","webkitfullscreenchange","webkitfullscreenerror"],["mozRequestFullScreen","mozCancelFullScreen","mozFullScreenElement","mozFullScreenEnabled","mozfullscreenchange","mozfullscreenerror"],["msRequestFullscreen","msExitFullscreen","msFullscreenElement","msFullscreenEnabled","MSFullscreenChange","MSFullscreenError"]],i=0,r=n.length,l={};i<r;i++)if((e=n[i])&&e[1]in t){for(i=0;i<e.length;i++)l[n[0][i]]=e[i];return l}return!1}(),r={change:i.fullscreenchange,error:i.fullscreenerror},l={request:function(e,n){return new Promise(function(r,l){var s=function(){this.off("change",s),r()}.bind(this);this.on("change",s),e=e||t.documentElement;var o=e[i.requestFullscreen](n);o instanceof Promise&&o.then(s).catch(l)}.bind(this))},exit:function(){return new Promise(function(e,n){if(!this.isFullscreen)return void e();var r=function(){this.off("change",r),e()}.bind(this);this.on("change",r);var l=t[i.exitFullscreen]();l instanceof Promise&&l.then(r).catch(n)}.bind(this))},toggle:function(e,t){return this.isFullscreen?this.exit():this.request(e,t)},onchange:function(e){this.on("change",e)},onerror:function(e){this.on("error",e)},on:function(e,n){var i=r[e];i&&t.addEventListener(i,n,!1)},off:function(e,n){var i=r[e];i&&t.removeEventListener(i,n,!1)},raw:i};if(!i)return void(n?e.exports={isEnabled:!1}:window.screenfull={isEnabled:!1});Object.defineProperties(l,{isFullscreen:{get:function(){return Boolean(t[i.fullscreenElement])}},element:{enumerable:!0,get:function(){return t[i.fullscreenElement]}},isEnabled:{enumerable:!0,get:function(){return Boolean(t[i.fullscreenEnabled])}}}),n?e.exports=l:window.screenfull=l}()},function(e,t,n){"use strict";function i(e,t){e.style.position=t.position,e.style.left=t.left,e.style.top=t.top,e.style.width=t.width,e.style.height=t.height}function r(e){var t=e.element;t&&(t.classList.remove(e.options.fullscreenClass),(e.options.teleport||e.options.pageOnly)&&(e.options.teleport&&a&&(a.insertBefore(t,u),a.removeChild(u)),t.__styleCache&&i(t,t.__styleCache)))}var l=n(1),s=n.n(l),o=n(0),c={callback:function(){},fullscreenClass:"fullscreen",pageOnly:!1,teleport:!1},u=void 0,a=void 0,f={options:null,element:null,isFullscreen:!1,isEnabled:s.a.isEnabled,toggle:function(e,t,n){return void 0===n?this.isFullscreen?this.exit():this.request(e,t):n?this.request(e,t):this.exit()},request:function(e,t){var l=this;if(this.isFullscreen)return Promise.resolve();if(e||(e=document.body),this.options=n.i(o.a)({},c,t),e===document.body&&(this.options.teleport=!1),s.a.isEnabled||(this.options.pageOnly=!0),e.classList.add(this.options.fullscreenClass),this.options.teleport||this.options.pageOnly){var f=e.style,h=f.position,p=f.left,d=f.top,m=f.width,v=f.height;e.__styleCache={position:h,left:p,top:d,width:m,height:v},i(e,{position:"fixed",left:"0",top:"0",width:"100%",height:"100%"})}if(this.options.teleport&&(a=e.parentNode)&&(u=document.createComment("fullscreen-token"),a.insertBefore(u,e),document.body.appendChild(e)),this.options.pageOnly){var b=function e(t){"Escape"===t.key&&(document.removeEventListener("keyup",e),l.exit())};return this.isFullscreen=!0,this.element=e,document.removeEventListener("keyup",b),document.addEventListener("keyup",b),this.options.callback&&this.options.callback(this.isFullscreen),Promise.resolve()}var y=function t(){s.a.isFullscreen||(s.a.off("change",t),r(l)),l.isFullscreen=s.a.isFullscreen,l.options.teleport?l.element=e||null:l.element=s.a.element,l.options.callback&&l.options.callback(s.a.isFullscreen)};return s.a.on("change",y),s.a.request(this.options.teleport?document.body:e)},exit:function(){return this.isFullscreen?this.options.pageOnly?(r(this),this.isFullscreen=!1,this.element=null,this.options.callback&&this.options.callback(this.isFullscreen),Promise.resolve()):s.a.exit():Promise.resolve()}};f.support=f.isEnabled,f.getState=function(){return f.isFullscreen},f.enter=f.request,t.a=f},function(e,t,n){"use strict";function i(e,t){var n={};for(var i in e)t.indexOf(i)>=0||Object.prototype.hasOwnProperty.call(e,i)&&(n[i]=e[i]);return n}var r=n(2),l=n(0),s=function(e,t){var s=function(){var e=void 0,s={teleport:t.modifiers.teleport,pageOnly:t.modifiers.pageOnly};if(t.value)if("string"==typeof t.value)e=t.value;else{var o=t.value,c=o.target,u=i(o,["target"]);e=c,s=n.i(l.a)(s,u)}"string"==typeof e&&(e=document.querySelector(e)),r.a.toggle(e,s)};e._onClickFullScreen&&e.removeEventListener("click",e._onClickFullScreen),e.addEventListener("click",s),e._onClickFullScreen=s};t.a=s},function(e,t,n){var i=n(7)(n(6),n(8),null,null);e.exports=i.exports},function(e,t,n){"use strict";Object.defineProperty(t,"__esModule",{value:!0});var i=n(4),r=n.n(i),l=n(2),s=n(3),o=n(1),c=n.n(o),u=n(0);n.d(t,"screenfull",function(){return c.a}),n.d(t,"api",function(){return l.a}),n.d(t,"directive",function(){return s.a}),n.d(t,"component",function(){return r.a}),t.default={install:function(e){var t=arguments.length>1&&void 0!==arguments[1]?arguments[1]:{},i=t.name||"fullscreen";e.component(i,n.i(u.a)(r.a,{name:i})),e.prototype["$"+i]=l.a,e.directive(i,s.a)}}},function(e,t,n){"use strict";Object.defineProperty(t,"__esModule",{value:!0});var i=n(1),r=n.n(i);t.default={props:{value:{type:Boolean,default:!1},fullscreen:{type:Boolean,default:!1},exitOnClickWrapper:{type:Boolean,default:!0},fullscreenClass:{type:String,default:"fullscreen"},pageOnly:{type:Boolean,default:!1},teleport:{type:Boolean,default:!1}},data:function(){return{isFullscreen:!1,isEnabled:!1}},computed:{support:function(){return this.isEnabled},isPageOnly:function(){return this.pageOnly||!r.a.isEnabled},wrapperStyle:function(){return(this.isPageOnly||this.teleport)&&this.isFullscreen?{position:"fixed",left:"0",top:"0",width:"100%",height:"100%"}:void 0}},methods:{toggle:function(e){void 0===e?this.isFullscreen?this.exit():this.request():e?this.request():this.exit()},request:function(){if(this.isPageOnly?(this.isFullscreen=!0,this.onChangeFullScreen(),document.removeEventListener("keyup",this.keypressCallback),document.addEventListener("keyup",this.keypressCallback)):(r.a.off("change",this.fullScreenCallback),r.a.on("change",this.fullScreenCallback),r.a.request(this.teleport?document.body:this.$el)),this.teleport){if(this.$el.parentNode===document.body)return;this.__parentNode=this.$el.parentNode,this.__token=document.createComment("fullscreen-token"),this.__parentNode.insertBefore(this.__token,this.$el),document.body.appendChild(this.$el)}},exit:function(){this.isFullscreen&&(this.isPageOnly?(this.isFullscreen=!1,this.onChangeFullScreen(),document.removeEventListener("keyup",this.keypressCallback)):r.a.exit())},shadeClick:function(e){e.target===this.$el&&this.exitOnClickWrapper&&this.exit()},fullScreenCallback:function(){r.a.isFullscreen||r.a.off("change",this.fullScreenCallback),this.isFullscreen=r.a.isFullscreen,this.onChangeFullScreen()},keypressCallback:function(e){"Escape"===e.key&&this.exit()},onChangeFullScreen:function(){this.isFullscreen||this.teleport&&this.__parentNode&&(this.__parentNode.insertBefore(this.$el,this.__token),this.__parentNode.removeChild(this.__token)),this.$emit("change",this.isFullscreen),this.$emit("update:fullscreen",this.isFullscreen),this.$emit("input",this.isFullscreen)},enter:function(){this.request()},getState:function(){return this.isFullscreen}},watch:{value:function(e){e!==this.isFullscreen&&(e?this.request():this.exit())},fullscreen:function(e){e!==this.isFullscreen&&(e?this.request():this.exit())}},created:function(){this.isEnabled=r.a.isEnabled}}},function(e,t){e.exports=function(e,t,n,i){var r,l=e=e||{},s=typeof e.default;"object"!==s&&"function"!==s||(r=e,l=e.default);var o="function"==typeof l?l.options:l;if(t&&(o.render=t.render,o.staticRenderFns=t.staticRenderFns),n&&(o._scopeId=n),i){var c=Object.create(o.computed||null);Object.keys(i).forEach(function(e){var t=i[e];c[e]=function(){return t}}),o.computed=c}return{esModule:r,exports:l,options:o}}},function(e,t){e.exports={render:function(){var e,t=this,n=t.$createElement;return(t._self._c||n)("div",t._b({ref:"wrapper",class:(e={},e[t.fullscreenClass]=t.isFullscreen,e),style:t.wrapperStyle,on:{click:function(e){return t.shadeClick(e)}}},"div",t.$attrs,!1),[t._t("default")],2)},staticRenderFns:[]}}])});
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Enquetes/afterresponse.vue?vue&type=template&id=5b562ca3&":
 /*!*************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Enquetes/afterresponse.vue?vue&type=template&id=5b562ca3& ***!
@@ -15882,254 +15942,326 @@ var render = function() {
       _vm._v(" "),
       _vm.enquete.layout == "slides"
         ? [
-            _c(
-              "div",
-              {
-                staticClass: "modal-swiper",
-                class: { isfinish: _vm.isFinished }
-              },
-              [
-                _c("div", [
-                  _c("h2", { staticClass: "title-enquete" }, [
-                    _vm._v(_vm._s(_vm.enquete.title))
-                  ])
-                ]),
-                _vm._v(" "),
-                _c(
-                  "div",
-                  [
-                    _c(
-                      "swiper",
-                      {
-                        ref: "mySwiper",
-                        attrs: {
-                          "space-between": 50,
-                          "auto-update": true,
-                          "auto-destroy": true,
-                          options: _vm.swiperOptions
-                        },
-                        on: {
-                          swiper: _vm.onSwiper,
-                          slideChange: _vm.onSlideChange
-                        }
-                      },
-                      [
-                        _vm._l(_vm.questions, function(question, i) {
-                          return [
-                            _c("swiper-slide", [
-                              _c(
-                                "div",
-                                { staticClass: "question-front" },
-                                [
-                                  _c(
-                                    "span",
-                                    {
-                                      staticClass:
-                                        "align-items-center d-flex justify-content-center num-question"
-                                    },
-                                    [_vm._v(_vm._s(i + 1))]
-                                  ),
-                                  _vm._v(" "),
-                                  _c("div", [
-                                    _c(
-                                      "h2",
-                                      { staticClass: "txt-question" },
-                                      [
-                                        _vm._v(
-                                          _vm._s(question.textquestion) +
-                                            "\n                                        "
-                                        ),
-                                        question.obligatoire
-                                          ? [
-                                              _c(
-                                                "span",
-                                                { staticClass: "red" },
-                                                [_vm._v("*")]
-                                              )
-                                            ]
-                                          : _vm._e()
-                                      ],
-                                      2
-                                    )
-                                  ]),
-                                  _vm._v(" "),
-                                  question.question_type == "icons"
-                                    ? [
-                                        _c(
-                                          "ul",
-                                          {
-                                            staticClass:
-                                              "align-items-center d-flex justify-content-around"
-                                          },
-                                          _vm._l(question.questions, function(
-                                            quest
-                                          ) {
-                                            return _c("li", [
-                                              _c(
-                                                "div",
-                                                {
-                                                  staticClass:
-                                                    "align-items-center d-flex flex-column justify-content-center",
-                                                  class: {
-                                                    "selected-option": _vm.selectedQuestion(
-                                                      question.id,
-                                                      quest.id
-                                                    )
-                                                  },
-                                                  on: {
-                                                    click: function($event) {
-                                                      $event.preventDefault()
-                                                      $event.stopPropagation()
-                                                      return _vm.addResponse(
-                                                        question.id,
-                                                        quest
-                                                      )
-                                                    }
-                                                  }
-                                                },
-                                                [
-                                                  _c("i", {
-                                                    staticClass: "fa-2x mb-2",
-                                                    class: quest.icon,
-                                                    style: {
-                                                      color: quest.color
-                                                    }
-                                                  }),
-                                                  _vm._v(" "),
-                                                  _c("p", [
-                                                    _vm._v(_vm._s(quest.text))
-                                                  ])
-                                                ]
-                                              )
-                                            ])
-                                          }),
-                                          0
-                                        )
-                                      ]
-                                    : _vm._e(),
-                                  _vm._v(" "),
-                                  question.question_type == "choix"
-                                    ? [
-                                        _c(
-                                          "div",
-                                          {
-                                            staticStyle: {
-                                              display: "flex",
-                                              "justify-content": "center"
-                                            }
-                                          },
-                                          [
+            _c("div", { staticClass: "fullscreen-wrapper" }, [
+              _c(
+                "div",
+                {
+                  staticClass: "modal-swiper",
+                  class: { isfinish: _vm.isFinished && !_vm.fullscreen }
+                },
+                [
+                  _c("div", [
+                    _c("h2", { staticClass: "title-enquete" }, [
+                      _vm._v(_vm._s(_vm.enquete.title))
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  !_vm.fullscreen
+                    ? [
+                        _c(
+                          "div",
+                          {
+                            staticStyle: {
+                              display: "flex",
+                              "justify-content": "center",
+                              "align-items": "center",
+                              width: "100%",
+                              height: "100%"
+                            }
+                          },
+                          [
+                            _c(
+                              "button",
+                              {
+                                staticClass: "btn btn-outline-primary",
+                                attrs: { type: "button" },
+                                on: { click: _vm.toggle }
+                              },
+                              [_vm._v("Commencer")]
+                            )
+                          ]
+                        )
+                      ]
+                    : _vm._e(),
+                  _vm._v(" "),
+                  _vm.fullscreen
+                    ? [
+                        _c(
+                          "div",
+                          [
+                            _c(
+                              "swiper",
+                              {
+                                ref: "mySwiper",
+                                attrs: {
+                                  "space-between": 50,
+                                  "auto-update": true,
+                                  "auto-destroy": true,
+                                  options: _vm.swiperOptions
+                                },
+                                on: {
+                                  swiper: _vm.onSwiper,
+                                  slideChange: _vm.onSlideChange
+                                }
+                              },
+                              [
+                                _vm._l(_vm.questions, function(question, i) {
+                                  return [
+                                    _c("swiper-slide", [
+                                      _c(
+                                        "div",
+                                        { staticClass: "question-front" },
+                                        [
+                                          _c(
+                                            "span",
+                                            {
+                                              staticClass:
+                                                "align-items-center d-flex justify-content-center num-question"
+                                            },
+                                            [_vm._v(_vm._s(i + 1))]
+                                          ),
+                                          _vm._v(" "),
+                                          _c("div", [
                                             _c(
-                                              "ul",
-                                              {},
-                                              _vm._l(
-                                                question.questions,
-                                                function(quest) {
-                                                  return _c(
-                                                    "li",
-                                                    {
-                                                      staticClass:
-                                                        "align-items-center d-flex"
-                                                    },
-                                                    [
+                                              "h2",
+                                              { staticClass: "txt-question" },
+                                              [
+                                                _vm._v(
+                                                  _vm._s(
+                                                    question.textquestion
+                                                  ) +
+                                                    "\n                                                "
+                                                ),
+                                                question.obligatoire
+                                                  ? [
                                                       _c(
-                                                        "label",
-                                                        {
-                                                          class: [
-                                                            question.typeinput ==
-                                                            "checkbox"
-                                                              ? ""
-                                                              : "form-radio-input"
-                                                          ]
-                                                        },
-                                                        [
-                                                          _c("input", {
-                                                            class: [
-                                                              question.typeinput ==
-                                                              "checkbox"
-                                                                ? "form-check-label"
-                                                                : "form-radio-label"
-                                                            ],
-                                                            attrs: {
-                                                              type:
-                                                                question.typeinput,
-                                                              name: "question"
+                                                        "span",
+                                                        { staticClass: "red" },
+                                                        [_vm._v("*")]
+                                                      )
+                                                    ]
+                                                  : _vm._e()
+                                              ],
+                                              2
+                                            )
+                                          ]),
+                                          _vm._v(" "),
+                                          question.question_type == "icons"
+                                            ? [
+                                                _c(
+                                                  "ul",
+                                                  {
+                                                    staticClass:
+                                                      "align-items-center d-flex justify-content-around"
+                                                  },
+                                                  _vm._l(
+                                                    question.questions,
+                                                    function(quest) {
+                                                      return _c("li", [
+                                                        _c(
+                                                          "div",
+                                                          {
+                                                            staticClass:
+                                                              "align-items-center d-flex flex-column justify-content-center",
+                                                            class: {
+                                                              "selected-option": _vm.selectedQuestion(
+                                                                question.id,
+                                                                quest.id
+                                                              )
                                                             },
                                                             on: {
-                                                              change: function(
+                                                              click: function(
                                                                 $event
                                                               ) {
+                                                                $event.preventDefault()
+                                                                $event.stopPropagation()
                                                                 return _vm.addResponse(
                                                                   question.id,
-                                                                  quest,
-                                                                  question.typeinput
+                                                                  quest
                                                                 )
                                                               }
                                                             }
-                                                          }),
-                                                          _vm._v(" "),
-                                                          _c(
-                                                            "span",
-                                                            {
-                                                              class: [
-                                                                question.typeinput ==
-                                                                "checkbox"
-                                                                  ? "form-check-sign"
-                                                                  : "form-radio-sign"
-                                                              ]
-                                                            },
-                                                            [
+                                                          },
+                                                          [
+                                                            _c("i", {
+                                                              staticClass:
+                                                                "fa-2x mb-2",
+                                                              class: quest.icon,
+                                                              style: {
+                                                                color:
+                                                                  quest.color
+                                                              }
+                                                            }),
+                                                            _vm._v(" "),
+                                                            _c("p", [
                                                               _vm._v(
                                                                 _vm._s(
                                                                   quest.text
                                                                 )
                                                               )
+                                                            ])
+                                                          ]
+                                                        )
+                                                      ])
+                                                    }
+                                                  ),
+                                                  0
+                                                )
+                                              ]
+                                            : _vm._e(),
+                                          _vm._v(" "),
+                                          question.question_type == "choix"
+                                            ? [
+                                                _c(
+                                                  "div",
+                                                  {
+                                                    staticStyle: {
+                                                      display: "flex",
+                                                      "justify-content":
+                                                        "center"
+                                                    }
+                                                  },
+                                                  [
+                                                    _c(
+                                                      "ul",
+                                                      {},
+                                                      _vm._l(
+                                                        question.questions,
+                                                        function(quest) {
+                                                          return _c(
+                                                            "li",
+                                                            {
+                                                              staticClass:
+                                                                "align-items-center d-flex"
+                                                            },
+                                                            [
+                                                              _c(
+                                                                "label",
+                                                                {
+                                                                  class: [
+                                                                    question.typeinput ==
+                                                                    "checkbox"
+                                                                      ? ""
+                                                                      : "form-radio-input"
+                                                                  ]
+                                                                },
+                                                                [
+                                                                  _c("input", {
+                                                                    class: [
+                                                                      question.typeinput ==
+                                                                      "checkbox"
+                                                                        ? "form-check-label"
+                                                                        : "form-radio-label"
+                                                                    ],
+                                                                    attrs: {
+                                                                      type:
+                                                                        question.typeinput,
+                                                                      name:
+                                                                        "question"
+                                                                    },
+                                                                    on: {
+                                                                      change: function(
+                                                                        $event
+                                                                      ) {
+                                                                        return _vm.addResponse(
+                                                                          question.id,
+                                                                          quest,
+                                                                          question.typeinput
+                                                                        )
+                                                                      }
+                                                                    }
+                                                                  }),
+                                                                  _vm._v(" "),
+                                                                  _c(
+                                                                    "span",
+                                                                    {
+                                                                      class: [
+                                                                        question.typeinput ==
+                                                                        "checkbox"
+                                                                          ? "form-check-sign"
+                                                                          : "form-radio-sign"
+                                                                      ]
+                                                                    },
+                                                                    [
+                                                                      _vm._v(
+                                                                        _vm._s(
+                                                                          quest.text
+                                                                        )
+                                                                      )
+                                                                    ]
+                                                                  )
+                                                                ]
+                                                              )
                                                             ]
                                                           )
-                                                        ]
-                                                      )
-                                                    ]
-                                                  )
-                                                }
-                                              ),
-                                              0
-                                            )
-                                          ]
-                                        )
-                                      ]
-                                    : _vm._e()
-                                ],
-                                2
-                              )
-                            ])
-                          ]
-                        }),
-                        _vm._v(" "),
-                        _c("swiper-slide", [
-                          _c("div", { staticClass: "question-front finish" }, [
-                            _c("i", {
-                              staticClass: "fa fa-check-circle fa-4x"
-                            }),
-                            _vm._v(" "),
-                            _c(
-                              "h3",
-                              { staticStyle: { "margin-top": "30px" } },
-                              [_vm._v("Merci pour votre attention")]
-                            ),
-                            _vm._v(" "),
-                            _c("a", { attrs: { href: _vm.url } }, [
-                              _vm._v("Accueil")
-                            ])
-                          ])
-                        ])
-                      ],
-                      2
-                    )
-                  ],
-                  1
-                )
-              ]
-            )
+                                                        }
+                                                      ),
+                                                      0
+                                                    )
+                                                  ]
+                                                )
+                                              ]
+                                            : _vm._e()
+                                        ],
+                                        2
+                                      )
+                                    ])
+                                  ]
+                                }),
+                                _vm._v(" "),
+                                _c("swiper-slide", [
+                                  _c(
+                                    "div",
+                                    { staticClass: "question-front finish" },
+                                    [
+                                      _c("i", {
+                                        staticClass: "fa fa-check-circle fa-4x"
+                                      }),
+                                      _vm._v(" "),
+                                      _c(
+                                        "h3",
+                                        {
+                                          staticStyle: {
+                                            "margin-top": "30px",
+                                            "text-align": "center"
+                                          }
+                                        },
+                                        [_vm._v("Merci pour votre attention")]
+                                      ),
+                                      _vm._v(" "),
+                                      _c("a", { attrs: { href: _vm.url } }, [
+                                        _vm._v("Accueil")
+                                      ]),
+                                      _vm._v(" "),
+                                      _c(
+                                        "a",
+                                        {
+                                          attrs: { href: "#" },
+                                          on: {
+                                            click: function($event) {
+                                              $event.preventDefault()
+                                              $event.stopPropagation()
+                                              return _vm.restart($event)
+                                            }
+                                          }
+                                        },
+                                        [_vm._v("Recommencer")]
+                                      )
+                                    ]
+                                  )
+                                ])
+                              ],
+                              2
+                            )
+                          ],
+                          1
+                        )
+                      ]
+                    : _vm._e()
+                ],
+                2
+              )
+            ])
           ]
         : _vm._e(),
       _vm._v(" "),

@@ -517,7 +517,6 @@ class BornesreponseController extends Controller
       }
       // $pdf = PDF::loadHTML("<p>Mon contenu HTML ici</p>");
       return view('pdf.day', compact('grouped','compagne','company','data','locations','horaires','start', 'end', 'type','jours','wks'));
-      dd($data);
       $pdf = PDF::setOption('enable-local-file-access', true)
                 ->loadView('pdf.day', compact('grouped','compagne','company','data','locations'));
       // $pdf = PDF::loadView('pdf.day', compact('grouped','compagne','company','data'));
@@ -537,10 +536,19 @@ class BornesreponseController extends Controller
   }
     
     public function MassAdd(Request $request){
-
-        $bornesreponses = Bornesreponse::insert($request->data);    
+        // dd($request->data[0]['borne_id']);
+        $data = [];
+        $borne = Borne::find($request->data[0]['borne_id']);
+        if ($borne){
+          foreach ($request->data as $reponse) {
+            $reponse['company_id'] = $borne->Company->id;
+            $data[] = $reponse;
+          }
+          
+        }
+        $bornesreponses = Bornesreponse::insert($data);    
         if ($bornesreponses){
-          return response(['status' => true]);
+          return response(['status' => true, 'data' => $data]);
         }else{
           return response(['status' => false]);
         }

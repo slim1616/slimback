@@ -24,6 +24,7 @@ class CreateIconquestionsTable extends Migration
             $table->enum('question_type', ['icons', 'choix'])->default('icons');
             $table->json('questions');
             $table->timestamps();
+            $table->softDeletes();
 
             $table->foreign('company_id')->references('id')->on('companies');
             $table->foreign('user_id')->references('id')->on('users');

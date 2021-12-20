@@ -22,6 +22,7 @@ class CreateBornesTable extends Migration
             $table->double('lng')->nullable();
             $table->BigInteger('company_id')->unsigned();
             $table->timestamps();
+            $table->softDeletes();
             $table->foreign('company_id')->references('id')->on('companies');
         });
     }

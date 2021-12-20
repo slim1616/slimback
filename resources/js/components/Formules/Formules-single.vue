@@ -211,36 +211,42 @@ export default {
             });
     },
     deleteFormule: function(){
-      
-      var that = this;
-      swal.fire({
+        var that = this;
+        swal.fire({
                 title: 'Vous êtes sure?',
-                text: "Vous allez effacer Formule!",
-                type: 'warning',
-                buttons:{
-                    
-                    cancel: {
-                        text : 'Annuler',
-                        visible: true,
-                        className: 'btn btn-danger'
-                    },
-                    confirm: {
-                        text : 'Oui',
-                        className : 'btn btn-success'
-                    }
-                }
+                text: "Vous allez effacer une formule!",
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'oui',
+                cancelButtonText: 'annuler',
+                customClass: {
+                    confirmButton: 'btn btn-success',
+                    cancelButton: 'btn btn-danger'
+                },
             }).then((Delete) => {
-                if (Delete) {
-                  this.$store.dispatch('setLoader', true)
-                  this.form.delete('/api/formules/'+this.$route.params.id).then(function(response){
+                if (Delete.isConfirmed) {
+                    this.$store.dispatch('setLoader', true)
+                    this.form.delete('/api/formules/'+this.$route.params.id).then(function(response){
+                        that.$store.dispatch('setLoader', false)
+                        that.form.fill(response.data);
+                        that.$router.push('/formules');
+                        })
+                .catch(error => {
                     that.$store.dispatch('setLoader', false)
-                      that.form.fill(response.data);
-                      that.$router.push('/formules');
-                    })
+                    swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: 'Erreur!',
+                        customClass: {
+                        confirmButton: 'btn btn-danger',
+                    },
+                        })
+                })
                 } else {
                     swal.close();
                 }
-            }); 
+            });
     }
   }
 }

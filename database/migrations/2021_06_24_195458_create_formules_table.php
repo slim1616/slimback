@@ -22,6 +22,7 @@ class CreateFormulesTable extends Migration
             $table->integer('nbmois')->default(1);
             $table->integer('nbsemplacements')->default(1);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

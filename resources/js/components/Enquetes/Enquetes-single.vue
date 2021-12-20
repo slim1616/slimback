@@ -36,7 +36,7 @@
                     <a href="#" @click.prevent.stop="copiedUrl" title="Partager sur facebook">
                         <i class="fab fa-facebook-f"></i>
                     </a>
-                    <input type="text" style="opacity:0;position:absolute" :value="'/enquete/' + form.id" id="cplink"/> 
+                    <input type="text" style="opacity:0;position:absolute;width: 0;" :value="'/enquete/' + form.id" id="cplink"/> 
                 </div>
                 </template>
             </div>
@@ -515,36 +515,40 @@
                 });
             },
             deleteEnquete: function(){
-                
                 var that = this;
                 swal.fire({
                     title: 'Vous êtes sure?',
                     text: "Vous allez effacer Enquete!",
-                    type: 'warning',
-                    buttons:{
-                        
-                        cancel: {
-                            text : 'Annuler',
-                            visible: true,
-                            className: 'btn btn-danger'
-                        },
-                        confirm: {
-                            text : 'Oui',
-                            className : 'btn btn-success'
-                        }
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'oui',
+                    cancelButtonText: 'annuler',
+                    customClass: {
+                        confirmButton: 'btn btn-success',
+                        cancelButton: 'btn btn-danger'
                     }
                 }).then((Delete) => {
-                    if (Delete) {
-                        this.$store.dispatch('setLoader', true)
+                    if (Delete.isConfirmed) {
                         this.form.delete('/api/enquetes/'+this.$route.params.id).then(function(response){
                             that.$store.dispatch('setLoader', false)
                             that.form.fill(response.data);
                             that.$router.push('/enquetes');
                         })
+                        .catch(error => {
+                            swal.fire({
+                                icon: 'error',
+                                title: 'Oops...',
+                                text: 'Erreur!',
+                                customClass: {
+                                confirmButton: 'btn btn-danger',
+                                }
+                            })
+                        })
                     } else {
                         swal.close();
                     }
-                }); 
+                });
             }
         },
         computed:{

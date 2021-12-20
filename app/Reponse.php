@@ -3,9 +3,11 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Reponse extends Model
 {
+    use SoftDeletes;
     /**
      * Get all of the Reponses for the Reponse
      *

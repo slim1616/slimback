@@ -368,35 +368,33 @@ export default {
                 });
         },
         deleteCompagne: function(){
-        
                 var that = this;
                 swal.fire({
-                            title: 'Vous êtes sure?',
-                            text: "Vous allez effacer Compagne!",
-                            type: 'warning',
-                            buttons:{
-                                
-                                cancel: {
-                                    text : 'Annuler',
-                                    visible: true,
-                                    className: 'btn btn-danger'
-                                },
-                                confirm: {
-                                    text : 'Oui',
-                                    className : 'btn btn-success'
-                                }
-                            }
-                        }).then((Delete) => {
-                            if (Delete) {
-                            this.$store.dispatch('setLoader', true)
-                            this.form.delete('/api/compagnes/'+this.$route.params.id).then(function(response){
-                                that.$store.dispatch('setLoader', false)
-                                that.form.fill(response.data);
-                                if (response.data.status){
+                    title: 'Vous êtes sure?',
+                    text: "Vous allez effacer une Compagne!",
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'oui',
+                    cancelButtonText: 'annuler',
+                    customClass: {
+                        confirmButton: 'btn btn-success',
+                        cancelButton: 'btn btn-danger'
+                    }
+                }).then((Delete) => {
+                    if (Delete.isConfirmed) {
+                        this.$store.dispatch('setLoader', true)
+                        this.form.delete('/api/compagnes/'+ that.$route.params.id).then(function(response){
+                            that.$store.dispatch('setLoader', false)
+                            if (response.data.status){
                                     that.$router.push('/compagnes');
                                 }else{
-                                        swal("Erreur", response.data.msg, {
+                                        swal.fire({
+                                            title: 'Erreur',
+                                            text: response.data.msg,
                                             icon : "warning",
+                                            confirmButtonColor: '#d33',
+                                            confirmButtonText: 'Ok',
                                             buttons: {
                                                 confirm: {
                                                     className : 'btn btn-warning'
@@ -404,12 +402,27 @@ export default {
                                             },
                                         });
                                 }
-                                
-                                })
-                            } else {
-                                swal.close();
-                            }
-                        }); 
+                        })
+                        .catch(error => {
+                            console.log(error)
+                            swal.fire({
+                                title: 'Erreur',
+                                text: 'Une erreur c\'est produite',
+                                icon : "warning",
+                                confirmButtonColor: '#d33',
+                                confirmButtonText: 'Ok',
+                                buttons: {
+                                    confirm: {
+                                        className : 'btn btn-warning'
+                                    }
+                                },
+                            });
+                        })
+                    } else {
+                        swal.close();
+                    }
+                }); 
+                
         },
         drawTab(){
                 console.log('drawTab')

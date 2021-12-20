@@ -189,20 +189,21 @@
             deleteEmplacement: function(emplacement, index){
                 var that = this;
                 swal.fire({
-                    title: 'Vous êtes sure?',
-                    text: "Vous allez effacer un Emplacement!",
-                    showCancelButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
-                    confirmButtonText: 'oui',
-                    cancelButtonText: 'annuler',
-                    customClass: {
-                        confirmButton: 'btn btn-success',
-                        cancelButton: 'btn btn-danger'
-                    }
-                }).then((Delete) => {
-                    if (Delete.isConfirmed) {
-                        this.form.delete('/api/emplacements/'+emplacement.id).then(function(response){
+                        title: 'Vous êtes sure?',
+                        text: "Vous allez effacer un Emplacement!",
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'oui',
+                        cancelButtonText: 'annuler',
+                        customClass: {
+                            confirmButton: 'btn btn-success',
+                            cancelButton: 'btn btn-danger'
+                        },
+                    }).then((Delete) => {
+                        if (Delete.isConfirmed) {
+                        this.form.delete('/api/emplacements/'+emplacement.id).
+                        then(function(response){
                             that.emplacements.splice(index,1);
                         })
                         .catch(error => {
@@ -212,13 +213,13 @@
                                 text: 'Erreur!',
                                 customClass: {
                                 confirmButton: 'btn btn-danger',
-                                }
-                            })
+                            },
+                                })
                         })
-                    } else {
-                        swal.close();
-                    }
-                });
+                        } else {
+                            swal.close();
+                        }
+                    });
                 
                 
                 
