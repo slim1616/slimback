@@ -1,24 +1,28 @@
 <template>
     <div style="width:100%" id="demo">   
         
-        <div>
-            <h1 class="title-enquete">{{enquete.title}}</h1>
-        </div>
-        
-
         <template v-if="enquete.layout=='slides'">
             <div class="fullscreen-wrapper">
-                <div class="modal-swiper" :class="{isfinish : isFinished&&!fullscreen}">
-                    <div>
-                        <h2 class="title-enquete">{{enquete.title}}</h2>
-                    </div>
+                <div class="d-flex flex-column justify-content-center modal-swiper" :class="{isfinish : isFinished&&!fullscreen}">
                     <template v-if="!fullscreen">
-                        <div style="    display: flex;justify-content: center;align-items: center;width: 100%;height: 100%;">
+                        <div style="display: flex;justify-content: center;align-items: center;width: 100%;height: 100%;flex-direction:column">
+                            <div>
+                                <h2 class="title-enquete" style="    margin: 10px;">{{enquete.title}}</h2>
+                            </div>
                             <button class="btn btn-outline-primary" type="button" @click="toggle" >Commencer</button>
+                            <div>
+                                <img :src="url + '/img/startenquete.png'" style="width:50%;margin: 10px auto;"/>
+                            </div>
+                            <div>
+                                <img :src="url + '/img/logo.png'" style="width: 100px;position: absolute;bottom: 0;left: calc(50% - 50px);"/>
+                            </div>
                         </div>
                     </template>
                     <template v-if="fullscreen">
                         <div>
+                            <div>
+                                <h2 class="title-enquete">{{enquete.title}}</h2>
+                            </div>
                             <swiper
                                 :space-between="50"
                                 ref="mySwiper" 
@@ -32,17 +36,18 @@
                                         <div class="question-front" >
                                             <span class="align-items-center d-flex justify-content-center num-question">{{ i+1  }}</span>
                                             <div>
-                                                <h2 class="txt-question">{{question.textquestion}}
-                                                    <template v-if="question.obligatoire">
-                                                        <span class="red">*</span>
-                                                    </template>
-                                                </h2>
+                                                <h2 class="txt-question">{{question.textquestion}}</h2>
                                             </div>
                                             <template v-if="question.question_type=='icons'">
                                                 <ul class="align-items-center d-flex justify-content-around">
                                                     <li v-for="quest in question.questions">
                                                         <div class="align-items-center d-flex flex-column justify-content-center" :class="{'selected-option':selectedQuestion(question.id, quest.id)}" @click.prevent.stop="addResponse(question.id, quest)">
-                                                            <i class="fa-2x mb-2" :class="quest.icon" :style="{color: quest.color}"></i>
+                                                            <template v-if="question.typeIcon=='face'">
+                                                                <i class="fa-3x mb-2" :class="quest.icon" style="padding:10px;border-radius:50%" :style="{backgroundColor: quest.color}"></i>
+                                                            </template>
+                                                            <template v-else>
+                                                                <i class="fa-3x mb-2" :class="quest.icon" :style="{color: quest.color}"></i>
+                                                            </template>
                                                             <p>{{quest.text}}</p>
                                                         </div>
                                                     </li>
@@ -50,30 +55,40 @@
                                             </template>
                                             <template v-if="question.question_type=='choix'">
                                                 <div style="display: flex;justify-content: center;">
-                                                <ul class="">
-                                                    <li v-for="quest in question.questions" class="align-items-center d-flex">
-                                                            <label :class="[question.typeinput=='checkbox' ? '': 'form-radio-input']" >
-                                                                <input :type="question.typeinput" name="question" :class="[question.typeinput=='checkbox' ? 'form-check-label': 'form-radio-label']" @change="addResponse(question.id, quest, question.typeinput)"/>
-                                                                <span :class="[question.typeinput=='checkbox' ? 'form-check-sign': 'form-radio-sign']">{{quest.text}}</span>
-                                                            </label>
-                                                    </li>
-                                                </ul>
+                                                    <ul class="">
+                                                        <li v-for="quest in question.questions" class="align-items-center d-flex">
+                                                                <label :class="[question.typeinput=='checkbox' ? '': 'form-radio-input']" >
+                                                                    <input :type="question.typeinput" name="question" :class="[question.typeinput=='checkbox' ? 'form-check-label': 'form-radio-label']" @change="addResponse(question.id, quest, question.typeinput)"/>
+                                                                    <span :class="[question.typeinput=='checkbox' ? 'form-check-sign': 'form-radio-sign']">{{quest.text}}</span>
+                                                                </label>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                                <div class="d-flex justify-content-end">
+                                                    <button v-if="question.typeinput=='checkbox'" class="btn btn-link" @click.prevent.stop="swiper.slideNext()">Continuer <i class="fa fa-chevron-right"></i></button>
                                                 </div>
                                             </template>
                                         </div>
                                     </swiper-slide>
                                 </template>
                                     <swiper-slide>
-                                        <div class="question-front finish">
-                                                <i class="fa fa-check-circle fa-4x"></i>
+                                        <div class="finish">
                                                 <h3 style="margin-top: 30px;text-align:center">Merci pour votre attention</h3>
-                                                <a :href="url">Accueil</a>
-                                                <a href="#" @click.prevent.stop="restart">Recommencer</a>
+                                                <div>
+                                                    <img :src="url + '/img/finish.png'" style="width: 95%;margin: 5px auto;"/>
+                                                </div>
+                                                <div>
+                                                    <a :href="url" style="margin-right:10px">Accueil</a>
+                                                    <a href="#" @click.prevent.stop="restart">Recommencer</a>
+                                                </div>
                                         </div>
                                     </swiper-slide>
                             </swiper>
                         </div>
                     </template>
+                        <div class="d-flex justify-content-center">
+                            <img :src="url + '/img/logo.png'" style="width:100px;position: absolute;"/>
+                        </div>
                 </div>
             </div>
         </template>
@@ -82,8 +97,11 @@
         
         <!-- ------ -->
         <template v-if="enquete.layout=='form'">
+            <div>
+                <h2 class="title-enquete">{{enquete.title}}</h2>
+            </div>
             <template v-for="(question,i) in questions">
-                    <div class="question-front" v-show="currentQuestions.includes(question.id)">
+                    <div class="question-front" v-show="currentQuestions.includes(question.id)" :key="i">
                         <span class="align-items-center d-flex justify-content-center num-question">{{ i+1  }}</span>
                         <div>
                             <h2 class="txt-question">{{question.textquestion}}
@@ -94,9 +112,15 @@
                         </div>
                         <template v-if="question.question_type=='icons'">
                             <ul class="align-items-center d-flex justify-content-around">
-                                <li v-for="quest in question.questions">
+                                <li v-for="quest in question.questions" :key="quest.id">
                                     <div class="align-items-center d-flex flex-column justify-content-center" :class="{'selected-option':selectedQuestion(question.id, quest.id)}" @click.prevent.stop="addResponse(question.id, quest)">
-                                        <i class="fa-2x mb-2" :class="quest.icon" :style="{color: quest.color}"></i>
+                                        <template v-if="question.typeIcon=='face'">
+                                            <i class="fa-3x mb-2" :class="quest.icon" style="padding:10px;border-radius:50%" :style="{backgroundColor: quest.color}"></i>
+                                        </template>
+                                        <template v-else>
+                                            <i class="fa-3x mb-2" :class="quest.icon" :style="{color: quest.color}"></i>
+                                        </template>
+
                                         <p>{{quest.text}}</p>
                                     </div>
                                 </li>
@@ -105,9 +129,9 @@
                         <template v-if="question.question_type=='choix'">
                             <div style="display: flex;justify-content: center;">
                                 <ul class="">
-                                    <li v-for="quest in question.questions" class="align-items-center d-flex">
+                                    <li v-for="quest in question.questions" class="align-items-center d-flex" :key="quest.id">
                                             <label :class="[question.typeinput=='checkbox' ? '': 'form-radio-input']" >
-                                                <input :type="question.typeinput" name="question" :class="[question.typeinput=='checkbox' ? 'form-check-label': 'form-radio-label']" @change="addResponse(question.id, quest, question.typeinput)"/>
+                                                <input :type="question.typeinput" name="question" :checked="isChecked(question, quest)" :class="[question.typeinput=='checkbox' ? 'form-check-label': 'form-radio-label']" @change="addResponse(question.id, quest, question.typeinput)"/>
                                                 <span :class="[question.typeinput=='checkbox' ? 'form-check-sign': 'form-radio-sign']">{{quest.text}}</span>
                                             </label>
                                     </li>
@@ -123,7 +147,7 @@
                         <button @click.prevent.stop="suivant" class="mx-2 btn btn-sm btn-light" v-if="current<nbpages-1">suivant <i class="fa fa-chevron-right"></i></button>
                         <div class="mx-2">
                             <div class="d-flex progresss-bg">
-                                <div class="progression" :style="{width: (responsesIndex.length)/questions.length*100 + '%'}">
+                                <div class="progression" :style="{width: (uniqueReponses.length)/questions.length*100 + '%'}">
 
                                 </div>
                             </div>
@@ -146,6 +170,7 @@
 </template>
 
 <script>
+    import {mapGetters} from 'vuex'
     const isBetween = (num1,num2,value) => value >= num1 && value <= num2 
     import { Swiper, SwiperSlide, directive } from 'vue-awesome-swiper'
     import { api as fullscreen } from 'vue-fullscreen'
@@ -183,17 +208,22 @@ export default {
         }
     },
     methods: {
+            isChecked(question, quest){
+                return this.responses.find(resp => resp.section_id==question.id&&resp.reponse.id==quest.id)
+            },
             restart(){
                 location.reload();
             },
             async toggle () {
-                await fullscreen.toggle(this.$el.querySelector('.fullscreen-wrapper'), {
-                    teleport: this.teleport,
-                    callback: (isFullscreen) => {
-                    this.fullscreen = isFullscreen
-                    },
-                })
-                this.fullscreen = fullscreen.isFullscreen
+                if (this.enquete.layout=='slides'){
+                    await fullscreen.toggle(this.$el.querySelector('.fullscreen-wrapper'), {
+                        teleport: this.teleport,
+                        callback: (isFullscreen) => {
+                        this.fullscreen = isFullscreen
+                        },
+                    })
+                    this.fullscreen = fullscreen.isFullscreen
+                }
             },
             onSwiper(event){
                 console.log('onSwiper')
@@ -230,12 +260,23 @@ export default {
                 return exist;
             },
              addResponse(section_id, reponse, type){
+                 console.log(type)
                 let index = this.responses.findIndex(response => response.section_id==section_id)
                 if (index!=-1){
                     if(type=='checkbox'){
-                        let f = this.responses.find(r => r.reponse.id==reponse.id)
+                        let f = this.responses.find(r => r.reponse.id==reponse.id&&r.section_id==section_id)
                         if (f){
-                            this.responses = this.responses.filter(r => r.reponse.id!=reponse.id)
+                            this.responses = this.responses.filter(r => {
+                                if (r.section_id!=section_id){
+                                    return true
+                                }else{
+                                    if (r.reponse.id!=reponse.id){
+                                        return true
+                                    }else{
+                                        return false
+                                    }
+                                }
+                            })
                         }else{
                             this.responses.push({enquete_id : this.enquete.id, reponse : reponse, uniqid : this.uniqid, section_id : section_id})   
                         }
@@ -248,9 +289,13 @@ export default {
                 }else{
                     this.responses.push({enquete_id : this.enquete.id, reponse : reponse, uniqid : this.uniqid, section_id : section_id})
                 }
-                setTimeout(()=> {
-                    this.swiper.slideNext()
-                },900)
+                if (this.swiper){
+                    setTimeout(()=> {
+                        if(type!='checkbox'){
+                            this.swiper.slideNext()
+                        }
+                    },900)
+                }
             },
             async sendResponses(){
                 this.loader = true
@@ -411,6 +456,18 @@ export default {
             }
     },
     computed:{
+        ...mapGetters({
+            // url : 'getUrl' 
+        }),
+        uniqueReponses(){
+            let tab = [];
+            this.responsesIndex.forEach(resp => {
+                if (!tab.includes(resp.section_id)){
+                    tab.push(resp.section_id)
+                }
+            })
+            return tab;
+        },
         swiper() {
             if (this.$refs.mySwiper){
                 return this.$refs.mySwiper.$swiper
@@ -424,7 +481,7 @@ export default {
             })
         },
         nbpages(){
-            return Math.round(this.questions.length/this.questionParPage);
+            return Math.ceil(this.questions.length/this.questionParPage);
         },
         responsesIndex(){
             return this.responses.map(function(response){
@@ -461,7 +518,7 @@ export default {
         bottom: 0;
         left: 0;
         right: 0;
-        background: #eee;
+        background: #fff;
         z-index: 999;
     }
     .isfinish{

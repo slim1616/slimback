@@ -4,7 +4,7 @@
             <div class="inline-flex">
                 <!-- data-replace='{ "translate-y-12": "translate-y-0", "scale-110": "scale-100", "opacity-0": "opacity-100" }' -->
                 <a href="{{route('accueil')}}" class="flex items-center justify-center space-x-3 transition-all duration-1000 ease-out transform text-wave-500">
-                    <img src="{{asset('cnx/images/satis.png')}}" class="logo-home">                    
+                    <img src="{{asset('cnx/images/logo.png')}}" class="logo-home">                    
                 </a>
             </div>
             <div class="flex justify-end flex-grow -my-2 -mr-2 md:hidden">
