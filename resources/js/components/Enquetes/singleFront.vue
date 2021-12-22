@@ -39,7 +39,7 @@
                                                 <h2 class="txt-question">{{question.textquestion}}</h2>
                                             </div>
                                             <template v-if="question.question_type=='icons'">
-                                                <ul class="align-items-center d-flex justify-content-around">
+                                                <ul class="align-items-center d-flex justify-content-around" style="padding: 20px 0;">
                                                     <li v-for="quest in question.questions">
                                                         <div class="align-items-center d-flex flex-column justify-content-center" :class="{'selected-option':selectedQuestion(question.id, quest.id)}" @click.prevent.stop="addResponse(question.id, quest)">
                                                             <template v-if="question.typeIcon=='face'">
@@ -193,7 +193,7 @@ export default {
             url : window.location.origin,
             isFinished : false,
             swiperOptions: {
-                allowTouchMove: false
+                allowTouchMove: true
             },
             back: false,
             currentIndex: 0,
@@ -233,9 +233,13 @@ export default {
                 console.log('onSlideChange')
                 console.log(event.activeIndex)
                 if (event.activeIndex==this.questions.length){
-                        this.isFinished = true
-                        this.sendResponses()
-                        event.allowTouchMove = false
+                        if (this.canSubmit){
+                            this.isFinished = true
+                            this.sendResponses()
+                            event.allowTouchMove = false
+                        }else{
+                            this.swiper.slidePrev()
+                        }
                 }
                 
             },
@@ -289,12 +293,13 @@ export default {
                 }else{
                     this.responses.push({enquete_id : this.enquete.id, reponse : reponse, uniqid : this.uniqid, section_id : section_id})
                 }
+                let that = this
                 if (this.swiper){
                     setTimeout(()=> {
                         if(type!='checkbox'){
-                            this.swiper.slideNext()
+                            that.swiper.slideNext()
                         }
-                    },900)
+                    },500)
                 }
             },
             async sendResponses(){

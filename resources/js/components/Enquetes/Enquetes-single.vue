@@ -340,7 +340,7 @@
                         console.log(bcc)
 
                         var formattedBody = `Bonjour, cher client,\n`;
-                                formattedBody += `Dans le but d'améliorer notre service et mieux connaitre les besoins et les soucis de nos client.\nJe vous invite à repondre à cette enquete de satisfaction client.\n`;
+                                formattedBody += `Dans le but d'améliorer notre service et mieux connaitre les besoins et les soucis de nos clients.\nJe vous invite à repondre à cette enquête de satisfaction client.\n`;
                                 var copyText = document.getElementById("cplink");
                                 copyText.value = window.location.origin + '/enquete/' + this.form.id
                                 formattedBody += copyText.value + `\n`

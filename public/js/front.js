@@ -470,7 +470,7 @@ var isBetween = function isBetween(num1, num2, value) {
       url: window.location.origin,
       isFinished: false,
       swiperOptions: {
-        allowTouchMove: false
+        allowTouchMove: true
       },
       back: false,
       currentIndex: 0,
@@ -533,9 +533,13 @@ var isBetween = function isBetween(num1, num2, value) {
       console.log(event.activeIndex);
 
       if (event.activeIndex == this.questions.length) {
-        this.isFinished = true;
-        this.sendResponses();
-        event.allowTouchMove = false;
+        if (this.canSubmit) {
+          this.isFinished = true;
+          this.sendResponses();
+          event.allowTouchMove = false;
+        } else {
+          this.swiper.slidePrev();
+        }
       }
     },
     //******************* */
@@ -559,8 +563,6 @@ var isBetween = function isBetween(num1, num2, value) {
       return exist;
     },
     addResponse: function addResponse(section_id, reponse, type) {
-      var _this2 = this;
-
       console.log(type);
       var index = this.responses.findIndex(function (response) {
         return response.section_id == section_id;
@@ -613,16 +615,18 @@ var isBetween = function isBetween(num1, num2, value) {
         });
       }
 
+      var that = this;
+
       if (this.swiper) {
         Object(timers__WEBPACK_IMPORTED_MODULE_5__["setTimeout"])(function () {
           if (type != 'checkbox') {
-            _this2.swiper.slideNext();
+            that.swiper.slideNext();
           }
-        }, 900);
+        }, 500);
       }
     },
     sendResponses: function sendResponses() {
-      var _this3 = this;
+      var _this2 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
         var res;
@@ -630,15 +634,15 @@ var isBetween = function isBetween(num1, num2, value) {
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
-                _this3.loader = true;
-                _this3.loading = true;
+                _this2.loader = true;
+                _this2.loading = true;
                 _context2.next = 4;
                 return fetch(window.location.origin + '/api/enquetes/addresponse', {
                   method: 'post',
                   body: JSON.stringify({
-                    responses: _this3.responses,
-                    enquete_id: _this3.enquete.id,
-                    uniqid: _this3.uniqid,
+                    responses: _this2.responses,
+                    enquete_id: _this2.enquete.id,
+                    uniqid: _this2.uniqid,
                     emplacement_id: 0,
                     source: 'web'
                   }),
@@ -653,9 +657,9 @@ var isBetween = function isBetween(num1, num2, value) {
                   } else if (response.status == 401) {//window.location.replace(window.location.href);   
                   }
 
-                  _this3.loader = false;
+                  _this2.loader = false;
                 }).then(function (data) {
-                  _this3.loader = false;
+                  _this2.loader = false;
 
                   if (data.status) {
                     swal.fire({
@@ -664,16 +668,16 @@ var isBetween = function isBetween(num1, num2, value) {
                       text: "Merci pour votre attention",
                       type: 'success'
                     }).then(function (result) {
-                      if (_this3.enquete.layout == 'form') {
+                      if (_this2.enquete.layout == 'form') {
                         window.location.replace(window.location.origin);
                       }
 
-                      _this3.isFinished = false;
+                      _this2.isFinished = false;
                     });
                   }
                 })["catch"](function (err) {
                   console.log(err);
-                  _this3.loader = false;
+                  _this2.loader = false;
                 });
 
               case 4:
@@ -688,7 +692,7 @@ var isBetween = function isBetween(num1, num2, value) {
       }))();
     },
     getEnqueteInit: function getEnqueteInit() {
-      var _this4 = this;
+      var _this3 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
         var res;
@@ -696,9 +700,9 @@ var isBetween = function isBetween(num1, num2, value) {
           while (1) {
             switch (_context4.prev = _context4.next) {
               case 0:
-                _this4.loading = true;
+                _this3.loading = true;
                 _context4.next = 3;
-                return fetch(window.location.origin + '/api/enquetes/frontstart/' + _this4.enquete_id, {
+                return fetch(window.location.origin + '/api/enquetes/frontstart/' + _this3.enquete_id, {
                   headers: {
                     'Content-type': 'Application/json',
                     'X-Requested-With': 'XMLHttpRequest',
@@ -710,18 +714,18 @@ var isBetween = function isBetween(num1, num2, value) {
                   } else if (response.status == 401) {//window.location.replace(window.location.href);
                   }
 
-                  _this4.loading = false;
-                  _this4.loader = false;
+                  _this3.loading = false;
+                  _this3.loader = false;
                 }).then(function (data) {
-                  _this4.loading = false;
-                  _this4.loader = false;
+                  _this3.loading = false;
+                  _this3.loader = false;
 
                   if (data.status) {
                     if (data.enquete.confidentiality == 'public') {
-                      _this4.questionParPage = data.enquete.questionParPage;
-                      _this4.enquete = data.enquete;
-                      _this4.questions = data.questions;
-                      _this4.uniqid = data.uniqid;
+                      _this3.questionParPage = data.enquete.questionParPage;
+                      _this3.enquete = data.enquete;
+                      _this3.questions = data.questions;
+                      _this3.uniqid = data.uniqid;
                     } else {
                       _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
                         var _yield$swal$fire, password;
@@ -748,7 +752,7 @@ var isBetween = function isBetween(num1, num2, value) {
                                 password = _yield$swal$fire.value;
 
                                 if (password) {
-                                  _this4.getEnquete(password, _this4.enquete_id);
+                                  _this3.getEnquete(password, _this3.enquete_id);
                                 }
 
                               case 5:
@@ -764,8 +768,8 @@ var isBetween = function isBetween(num1, num2, value) {
                   }
                 })["catch"](function (err) {
                   console.log(err);
-                  _this4.loading = false;
-                  _this4.loader = false;
+                  _this3.loading = false;
+                  _this3.loader = false;
                 });
 
               case 3:
@@ -780,7 +784,7 @@ var isBetween = function isBetween(num1, num2, value) {
       }))();
     },
     getEnquete: function getEnquete(password, enqueste_id) {
-      var _this5 = this;
+      var _this4 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5() {
         var res;
@@ -789,9 +793,9 @@ var isBetween = function isBetween(num1, num2, value) {
             switch (_context5.prev = _context5.next) {
               case 0:
                 console.log(password, enqueste_id);
-                _this5.loading = true;
+                _this4.loading = true;
                 _context5.next = 4;
-                return fetch(window.location.origin + '/api/enquetes/privatefront/' + _this5.enquete_id, {
+                return fetch(window.location.origin + '/api/enquetes/privatefront/' + _this4.enquete_id, {
                   method: 'post',
                   body: JSON.stringify({
                     'password': password
@@ -807,17 +811,17 @@ var isBetween = function isBetween(num1, num2, value) {
                   } else if (response.status == 401) {//window.location.replace(window.location.href);
                   }
 
-                  _this5.loading = false;
-                  _this5.loader = false;
+                  _this4.loading = false;
+                  _this4.loader = false;
                 }).then(function (data) {
-                  _this5.loading = false;
-                  _this5.loader = false;
+                  _this4.loading = false;
+                  _this4.loader = false;
 
                   if (data.status) {
-                    _this5.questionParPage = data.enquete.questionParPage;
-                    _this5.enquete = data.enquete;
-                    _this5.questions = data.questions;
-                    _this5.uniqid = data.uniqid;
+                    _this4.questionParPage = data.enquete.questionParPage;
+                    _this4.enquete = data.enquete;
+                    _this4.questions = data.questions;
+                    _this4.uniqid = data.uniqid;
                   } else {
                     Swal.fire({
                       title: 'Error',
@@ -830,14 +834,14 @@ var isBetween = function isBetween(num1, num2, value) {
                       confirmButtonText: 'ressayer'
                     }).then(function (result) {
                       if (result.isConfirmed) {
-                        _this5.getEnqueteInit();
+                        _this4.getEnqueteInit();
                       }
                     });
                   }
                 })["catch"](function (err) {
                   console.log(err);
-                  _this5.loading = false;
-                  _this5.loader = false;
+                  _this4.loading = false;
+                  _this4.loader = false;
                 });
 
               case 4:
@@ -869,10 +873,10 @@ var isBetween = function isBetween(num1, num2, value) {
       }
     },
     currentQuestions: function currentQuestions() {
-      var _this6 = this;
+      var _this5 = this;
 
       return this.questions.map(function (question, i) {
-        if (isBetween(_this6.current * _this6.questionParPage, (_this6.current + 1) * _this6.questionParPage - 1, i)) {
+        if (isBetween(_this5.current * _this5.questionParPage, (_this5.current + 1) * _this5.questionParPage - 1, i)) {
           return question.id;
         }
       });
@@ -16136,7 +16140,10 @@ var render = function() {
                                                   "ul",
                                                   {
                                                     staticClass:
-                                                      "align-items-center d-flex justify-content-around"
+                                                      "align-items-center d-flex justify-content-around",
+                                                    staticStyle: {
+                                                      padding: "20px 0"
+                                                    }
                                                   },
                                                   _vm._l(
                                                     question.questions,
