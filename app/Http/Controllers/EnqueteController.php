@@ -65,6 +65,8 @@ class EnqueteController extends Controller
                           $ems[] = array('emplacement_id' => $emp->id, 'enquete_id' => $enquete->id, 'password'=>null, 'title' => $emp->title);
                         }
                       }
+                      
+                      $response['allemplacements'] = $enquete->Emplacements();
                       $response['emplacements'] = $ems;
                       $response['users'] = \App\User::all();       
                       return response($response);
@@ -125,10 +127,11 @@ class EnqueteController extends Controller
     }
   public function getFrontMobile(Request $request, $id){
     // return response($id);
-
+    $enquete = Enquete::find($id);
     $Enqueteemplacement = Enqueteemplacement::where('emplacement_id', $request->emplacement_id)
                                               ->where('enquete_id', $id)
                                       ->first();
+    /*
     if (!is_null($Enqueteemplacement)){
       if (strcmp($Enqueteemplacement->password,$request->password)==0){
 
@@ -136,9 +139,11 @@ class EnqueteController extends Controller
         return response(['status' => false, 'msg' => 'Mot de passe incorrect']);
       }
     }else{
-      return response(['status' => false, 'msg' => "cette enquete n'est pas activé"]);
+      return response(['status' => false,
+                       'emplacements' => $enquete->Emplacements(),
+                       'msg' => "cette enquete n'est pas activé"]);
     }
-
+  */
     $response = [];
     $enquete = Enquete::find($id);
     if ($enquete){

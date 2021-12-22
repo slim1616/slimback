@@ -19,7 +19,7 @@
         <div class="card">
             <div class="card-header d-flex justify-content-between">
                 <div class="card-title">Modifier enquete</div>
-                <template v-if="user.currentFormule">
+                <template v-if="user.currentFormule||user.role=='superadmin'">
                 <div class="align-items-center d-flex flex-1 justify-content-around">
                     <div>
                         <a :href="'/enquete/' + form.id" target="_blank" title="Commencer l'enquête">

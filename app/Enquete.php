@@ -48,6 +48,14 @@ class Enquete extends Model
             {
                 return $this->hasMany(Enqueteemplacement::class, 'enquete_id');
             }
+            public function Emplacements()
+            {
+                $emplacements = [];
+                foreach ($this->Enqueteemplacements as $key => $value) {
+                    $emplacements[] = $value->Emplacement;
+                }
+                return $emplacements;
+            }
             /**
              * Get all of the Sections for the Enquete
              *

@@ -109,10 +109,10 @@ Route::post('addresponses', 'BornesreponseController@MassAdd');
 Route::post('bornesreponses', 'BornesreponseController@create');
 
 
+Route::post('enquetes/front/{id}', 'EnqueteController@getFrontMobile'); 
 Route::get('enquetes/frontstart/{id}', 'EnqueteController@getFrontInit');
 Route::post('enquetes/privatefront/{id}', 'EnqueteController@getFrontWithPassword');
 
-Route::post('enquetes/front/{id}', 'EnqueteController@getFrontMobile'); 
 Route::post('enquetes/addresponse', 'EnqueteController@addResponse'); 
 Route::get('enquetes/myresponses/{unique}', 'EnqueteController@getResponses'); 
 Route::get('enquetes/hresponses/{id}', 'EnqueteController@getHistorique'); 
