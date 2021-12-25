@@ -14,7 +14,7 @@ class CreateEnquetesTable extends Migration
     public function up()
     {
         Schema::create('enquetes', function (Blueprint $table) {
-            $table->id();
+            $table->uuid('id')->primary();
             $table->string('title');
             $table->text('description');
             $table->bigInteger('company_id')->unsigned()->default(1);

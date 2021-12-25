@@ -36,7 +36,7 @@
                 </div>
                 <div class="title">
                     <span class="login100-form-title">
-                        SATIS
+                        SATYS
                     </span>
                 </div>
                 <div class="title">

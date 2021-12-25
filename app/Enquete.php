@@ -2,6 +2,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Enquete extends Model
@@ -15,7 +16,14 @@ class Enquete extends Model
     protected $guarded = [
         'id'
     ];
+    protected $keyType = 'string';
+    public $incrementing = false;
 
+    protected static function booted(){
+        static::creating(function($enquete){
+            $enquete->id = (string) Str::uuid();
+        });
+    }
     /**
      * The attributes that should be cast to native types.
      *

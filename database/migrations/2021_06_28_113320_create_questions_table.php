@@ -20,7 +20,7 @@ class CreateQuestionsTable extends Migration
             $table->json('options');
             $table->bigInteger('company_id')->unsigned()->default(1);
             $table->bigInteger('user_id')->unsigned()->default(1);
-            $table->bigInteger('enquete_id')->unsigned()->default(1);
+            $table->uuid('enquete_id');
             $table->date('start_at')->nullable();
             $table->date('end_at')->nullable();
             $table->foreign('user_id')->references('id')->on('users');

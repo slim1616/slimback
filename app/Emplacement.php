@@ -25,7 +25,7 @@ class Emplacement extends Model
         });
     }
 
-    /**
+    /** 
      * The attributes that should be cast to native types.
      *
      * @var  array

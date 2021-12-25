@@ -461,7 +461,7 @@ var isBetween = function isBetween(num1, num2, value) {
     SwiperSlide: vue_awesome_swiper__WEBPACK_IMPORTED_MODULE_2__["SwiperSlide"]
   },
   props: {
-    enquete_id: Number
+    enquete_id: String
   },
   data: function data() {
     return {
@@ -665,7 +665,7 @@ var isBetween = function isBetween(num1, num2, value) {
                     swal.fire({
                       icon: 'success',
                       title: 'Votre reponse à été envoyé ',
-                      text: "Merci pour votre attention",
+                      text: "Merci d'avoir participé à notre enquête",
                       type: 'success'
                     }).then(function (result) {
                       if (_this2.enquete.layout == 'form') {
@@ -16051,29 +16051,43 @@ var render = function() {
                               [_vm._v("Commencer")]
                             ),
                             _vm._v(" "),
-                            _c("div", [
-                              _c("img", {
+                            _c(
+                              "div",
+                              {
                                 staticStyle: {
-                                  width: "50%",
+                                  "max-height": "50vh",
                                   margin: "10px auto"
-                                },
-                                attrs: {
-                                  src: _vm.url + "/img/startenquete.png"
                                 }
-                              })
-                            ]),
+                              },
+                              [
+                                _c("img", {
+                                  staticStyle: {
+                                    width: "50%",
+                                    margin: "10px auto"
+                                  },
+                                  attrs: {
+                                    src: _vm.url + "/img/startenquete.png"
+                                  }
+                                })
+                              ]
+                            ),
                             _vm._v(" "),
-                            _c("div", [
-                              _c("img", {
+                            _c(
+                              "div",
+                              {
                                 staticStyle: {
-                                  width: "100px",
-                                  position: "absolute",
-                                  bottom: "0",
-                                  left: "calc(50% - 50px)"
-                                },
-                                attrs: { src: _vm.url + "/img/logo.png" }
-                              })
-                            ])
+                                  display: "flex",
+                                  "justify-content": "center",
+                                  "margin-top": "15px"
+                                }
+                              },
+                              [
+                                _c("img", {
+                                  staticStyle: { width: "70%" },
+                                  attrs: { src: _vm.url + "/img/logo.png" }
+                                })
+                              ]
+                            )
                           ]
                         )
                       ]
@@ -16246,6 +16260,7 @@ var render = function() {
                                                           return _c(
                                                             "li",
                                                             {
+                                                              key: quest.id,
                                                               staticClass:
                                                                 "align-items-center d-flex"
                                                             },
@@ -16272,7 +16287,14 @@ var render = function() {
                                                                       type:
                                                                         question.typeinput,
                                                                       name:
-                                                                        "question"
+                                                                        "question-" +
+                                                                        question.id
+                                                                    },
+                                                                    domProps: {
+                                                                      checked: _vm.isChecked(
+                                                                        question,
+                                                                        quest
+                                                                      )
                                                                     },
                                                                     on: {
                                                                       change: function(
@@ -16372,7 +16394,11 @@ var render = function() {
                                           "text-align": "center"
                                         }
                                       },
-                                      [_vm._v("Merci pour votre attention")]
+                                      [
+                                        _vm._v(
+                                          "Merci d'avoir participé à notre enquête"
+                                        )
+                                      ]
                                     ),
                                     _vm._v(" "),
                                     _c("div", [
@@ -16427,7 +16453,7 @@ var render = function() {
                   _vm._v(" "),
                   _c("div", { staticClass: "d-flex justify-content-center" }, [
                     _c("img", {
-                      staticStyle: { width: "100px", position: "absolute" },
+                      staticStyle: { width: "20vh" },
                       attrs: { src: _vm.url + "/img/logo.png" }
                     })
                   ])
@@ -16599,7 +16625,7 @@ var render = function() {
                                             ],
                                             attrs: {
                                               type: question.typeinput,
-                                              name: "question"
+                                              name: "question-" + question.id
                                             },
                                             domProps: {
                                               checked: _vm.isChecked(

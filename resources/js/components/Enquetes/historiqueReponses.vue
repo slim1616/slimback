@@ -122,7 +122,7 @@ import generalStat from './generalStat'
 export default {
     components:{surveyStat, generalStat},
     props:{
-        enquete_id : Number
+        enquete_id : String
     },
     data(){
         return {

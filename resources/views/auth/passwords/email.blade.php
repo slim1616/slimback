@@ -20,7 +20,7 @@
 					</div>
 
 					<span class="login100-form-title p-t-20 p-b-45">
-						SATIS
+						SATYS
                     </span>
                     @if(Session::get('errors')||count( $errors ) > 0)
                         @foreach ($errors->all() as $error)

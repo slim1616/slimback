@@ -15,7 +15,7 @@ class CreateSinglereponsesTable extends Migration
     {
         Schema::create('singlereponses', function (Blueprint $table) {
             $table->id();
-            $table->BigInteger('enquete_id')->unsigned();
+            $table->uuid('enquete_id');
             $table->BigInteger('company_id')->unsigned();
             $table->BigInteger('section_id')->unsigned();
             $table->BigInteger('reponse_id')->unsigned();

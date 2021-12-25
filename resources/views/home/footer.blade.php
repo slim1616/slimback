@@ -209,7 +209,7 @@
                             {{ config('app.name', 'Laravel') }}
                         </div>
                         <div class="flex items-center justify-center text-white text-xs text-blue-100  cursor-pointer  px-3">
-                            www.satis.com.tn © 2021 - All rights reserved.
+                            www.satys.com.tn © 2021 - All rights reserved.
                         </div>
                     </div>
                 </div>

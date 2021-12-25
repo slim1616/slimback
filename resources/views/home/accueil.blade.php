@@ -9,7 +9,7 @@
                 <span class="ml-1 font-normal">
                     <i class="fa fa-envelope text-white"></i>
                 </span>
-                <span class="ml-2 text-white hidden font-medium text-blue-100 xl:block">contact@satis.com</span>
+                <span class="ml-2 text-white hidden font-medium text-blue-100 xl:block">contact@satys.com</span>
             </a>
         </div>
         
@@ -100,8 +100,7 @@
                     <p class="mt-2 text-sm leading-5 sm:text-center text-wave-200">Diffusez votre enquête par mail, lien web Collectez les réponses immédiatement.</p>
                 </div>
                 <div>
-                    <div>
-                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"  style="width: 71px;" class="mx-auto" version="1.1" id="Layer_1" x="0px" y="0px" viewBox="0 0 468.52 468.52" style="enable-background:0 0 69.52 69.52;" xml:space="preserve">
+                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"  style="width: 71px;" class="sm:mx-auto" version="1.1" id="Layer_1" x="0px" y="0px" viewBox="0 0 468.52 468.52" style="enable-background:0 0 69.52 69.52;" xml:space="preserve">
                             <g>
                                 <path style="fill:#E6E6E6;" d="M468.52,102.595v251.88c0,11.14-7.571,20.52-17.86,23.25c-1.98,0.531-4.06,0.81-6.2,0.81H38.58   c-13.29,0-24.061-10.77-24.061-24.06v-251.88c0-13.29,10.771-24.06,24.061-24.06h405.88c2.14,0,4.22,0.28,6.2,0.81   C460.949,82.075,468.52,91.455,468.52,102.595"/>
                                 <path style="fill:#B3B3B3;" d="M468.518,102.591v23.94h-454v-23.94c0-13.29,10.771-24.06,24.06-24.06h405.88   C457.747,78.532,468.518,89.302,468.518,102.591"/>
@@ -181,7 +180,6 @@
                             <g>
                             </g>
                             </svg>
-                        </div>
                     <h3 class="mt-3 text-sm font-semibold leading-6 sm:text-center text-wave-100">Analyse des Résultats</h3>
                     <p class="mt-2 text-sm leading-5 sm:text-center text-wave-200">Analysez vos données en temps réel et personnalisez vos rapports en utilisant les solutions d’analyses performantes.</p>
                 </div>

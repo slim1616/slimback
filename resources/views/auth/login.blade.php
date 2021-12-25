@@ -12,7 +12,7 @@
                 <div class="login100-form-avatar">
                     <div>
                         <a href="{{ route('accueil')}}">
-                            <img src="cnx/images/satis.png" alt="logo" class="logo">
+                            <img src="cnx/images/logo.png" alt="logo" class="logo">
                         </a>
                     </div>
                 </div>

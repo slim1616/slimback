@@ -15,7 +15,7 @@ class CreateReponsesTable extends Migration
     {
         Schema::create('reponses', function (Blueprint $table) {
             $table->id();
-            $table->BigInteger('enquete_id')->unsigned();
+            $table->uuid('enquete_id');
             $table->BigInteger('company_id')->unsigned();
             $table->uuid('emplacement_id')->nullable();
             $table->BigInteger('user_id')->unsigned()->nullable();

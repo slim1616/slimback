@@ -28,7 +28,7 @@ class HomeController extends Controller
         return view('home.accueil', compact('formules'));
     }
     public function passEnquete(Request $request, $enquete_id){
-        return view('home.passexam', compact('enquete_id'));
+        return view('enquete.passexam', compact('enquete_id'));
     }
     
 }

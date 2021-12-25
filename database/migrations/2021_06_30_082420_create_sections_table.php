@@ -16,7 +16,7 @@ class CreateSectionsTable extends Migration
         Schema::create('sections', function (Blueprint $table) {
             $table->id();
             $table->BigInteger('user_id')->unsigned();
-            $table->BigInteger('enquete_id')->unsigned();
+            $table->uuid('enquete_id');
             $table->BigInteger('company_id')->unsigned();
             $table->string('type');
             $table->boolean('obligatoire')->default(true);

@@ -33,7 +33,7 @@
                                         <div class="relative flex flex-col items-start justify-start hidden w-full h-full max-w-xs bg-center bg-cover lg:block" style="background-image:url(&#39;https://cdn.devdojo.com/images/october2020/wave-menu-bg.jpeg&#39;)">
                                             <div class="relative flex flex-col items-start justify-center w-full h-full px-16 py-8">
                                                 
-                                                <h1 class="z-30 mt-1 mt-3 text-4xl text-white font-medium text-wave-200">SATIS</h1>
+                                                <h1 class="z-30 mt-1 mt-3 text-4xl text-white font-medium text-wave-200">SATYS</h1>
                                                 <h3 class="z-30 mt-1 mt-3 text-lg font-thin text-wave-200">Votre Satisfaction Client en queques clics</h3>
                                                 
                                                 <span class="relative z-20 inline-flex mt-5 rounded-md shadow-sm">

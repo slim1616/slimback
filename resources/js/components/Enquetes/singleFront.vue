@@ -10,11 +10,11 @@
                                 <h2 class="title-enquete" style="    margin: 10px;">{{enquete.title}}</h2>
                             </div>
                             <button class="btn btn-outline-primary" type="button" @click="toggle" >Commencer</button>
-                            <div>
+                            <div style="    max-height: 50vh;margin: 10px auto;">
                                 <img :src="url + '/img/startenquete.png'" style="width:50%;margin: 10px auto;"/>
                             </div>
-                            <div>
-                                <img :src="url + '/img/logo.png'" style="width: 100px;position: absolute;bottom: 0;left: calc(50% - 50px);"/>
+                            <div style="display: flex;justify-content: center;margin-top: 15px;">
+                                <img :src="url + '/img/logo.png'" style="width: 70%;"/>
                             </div>
                         </div>
                     </template>
@@ -56,9 +56,9 @@
                                             <template v-if="question.question_type=='choix'">
                                                 <div style="display: flex;justify-content: center;">
                                                     <ul class="">
-                                                        <li v-for="quest in question.questions" class="align-items-center d-flex">
+                                                        <li v-for="(quest) in question.questions" class="align-items-center d-flex" :key="quest.id">
                                                                 <label :class="[question.typeinput=='checkbox' ? '': 'form-radio-input']" >
-                                                                    <input :type="question.typeinput" name="question" :class="[question.typeinput=='checkbox' ? 'form-check-label': 'form-radio-label']" @change="addResponse(question.id, quest, question.typeinput)"/>
+                                                                    <input :type="question.typeinput" :name="'question-'+ question.id" :checked="isChecked(question, quest)" :class="[question.typeinput=='checkbox' ? 'form-check-label': 'form-radio-label']" @change="addResponse(question.id, quest, question.typeinput)"/>
                                                                     <span :class="[question.typeinput=='checkbox' ? 'form-check-sign': 'form-radio-sign']">{{quest.text}}</span>
                                                                 </label>
                                                         </li>
@@ -73,7 +73,7 @@
                                 </template>
                                     <swiper-slide>
                                         <div class="finish">
-                                                <h3 style="margin-top: 30px;text-align:center">Merci pour votre attention</h3>
+                                                <h3 style="margin-top: 30px;text-align:center">Merci d'avoir participé à notre enquête</h3>
                                                 <div>
                                                     <img :src="url + '/img/finish.png'" style="width: 95%;margin: 5px auto;"/>
                                                 </div>
@@ -87,7 +87,7 @@
                         </div>
                     </template>
                         <div class="d-flex justify-content-center">
-                            <img :src="url + '/img/logo.png'" style="width:100px;position: absolute;"/>
+                            <img :src="url + '/img/logo.png'" style="width:20vh"/>
                         </div>
                 </div>
             </div>
@@ -131,7 +131,7 @@
                                 <ul class="">
                                     <li v-for="quest in question.questions" class="align-items-center d-flex" :key="quest.id">
                                             <label :class="[question.typeinput=='checkbox' ? '': 'form-radio-input']" >
-                                                <input :type="question.typeinput" name="question" :checked="isChecked(question, quest)" :class="[question.typeinput=='checkbox' ? 'form-check-label': 'form-radio-label']" @change="addResponse(question.id, quest, question.typeinput)"/>
+                                                <input :type="question.typeinput" :name="'question-'+ question.id" :checked="isChecked(question, quest)" :class="[question.typeinput=='checkbox' ? 'form-check-label': 'form-radio-label']" @change="addResponse(question.id, quest, question.typeinput)"/>
                                                 <span :class="[question.typeinput=='checkbox' ? 'form-check-sign': 'form-radio-sign']">{{quest.text}}</span>
                                             </label>
                                     </li>
@@ -184,7 +184,7 @@ export default {
       SwiperSlide,
     },
     props:{
-        enquete_id : Number,
+        enquete_id : String,
     },
     data(){
         return {
@@ -329,7 +329,7 @@ export default {
                         swal.fire({
                             icon: 'success',
                             title: 'Votre reponse à été envoyé ',
-                            text: "Merci pour votre attention",
+                            text: "Merci d'avoir participé à notre enquête",
                             type: 'success'
                         }).then((result) => {
                             if (this.enquete.layout=='form'){

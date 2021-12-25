@@ -49,6 +49,7 @@
         "vue-qrcode": "^0.4.0",
         "vue-router": "^3.4.9",
         "vue-select": "^3.11.2",
+        "vue-star-rating": "^1.7.0",
         "vue-toastify": "^1.8.0",
         "vue2-timepicker": "^1.1.5",
         "vuedraggable": "^2.24.3",

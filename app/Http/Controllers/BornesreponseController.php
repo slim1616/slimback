@@ -539,6 +539,12 @@ class BornesreponseController extends Controller
         // dd($request->data[0]['borne_id']);
         $data = [];
         $borne = Borne::find($request->data[0]['borne_id']);
+        if ($request->ip){
+          $borne = $request->ip;
+        }
+        if ($request->gps){
+          $borne = $request->ip;
+        }
         if ($borne){
           foreach ($request->data as $reponse) {
             $reponse['company_id'] = $borne->Company->id;

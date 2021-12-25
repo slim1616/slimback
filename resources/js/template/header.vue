@@ -3,7 +3,7 @@
 			<!-- Logo Header -->
 			<div class="logo-header align-items-center justify-content-center logo-header" data-background-color="blue">
 				<router-link :to="{name : 'home'}" class="logo">
-					<h3>SATIS</h3>
+					<h3>SATYS</h3>
 				</router-link>
 				<button class="navbar-toggler sidenav-toggler ml-auto" type="button" data-toggle="collapse" data-target="collapse" aria-expanded="false" aria-label="Toggle navigation">
 					<span class="navbar-toggler-icon">

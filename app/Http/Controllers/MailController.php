@@ -139,7 +139,7 @@ class MailController extends Controller
 
 
                 $donne["email"] = "slim.bz@hotmail.fr";
-                $donne["title"] = "From satis.com";
+                $donne["title"] = "From satys.com";
                 $donne["body"] = "Rapport quotidien";
 
                 Mail::send('emails.journee', $donne, function($message) use ($donne, $pdf, $emails) {

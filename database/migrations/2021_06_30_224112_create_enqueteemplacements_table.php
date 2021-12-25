@@ -16,7 +16,7 @@ class CreateEnqueteemplacementsTable extends Migration
         Schema::create('enqueteemplacements', function (Blueprint $table) {
             $table->id();
             $table->uuid('emplacement_id');
-            $table->BigInteger('enquete_id')->unsigned();
+            $table->uuid('enquete_id');
             $table->BigInteger('company_id')->unsigned();
             $table->string('password')->nullable();
             $table->foreign('emplacement_id')->references('id')->on('emplacements');
