@@ -17,6 +17,8 @@ class UserResourceSec extends JsonResource
     public function toArray($request)
     {
         // dd($this->Company->Abonnements);
+        $currentAbonnement = null;
+        $currentFormule = null;
         $user = $request->user();
         if ($user->Role->slug=='superadmin'){
             $currentAbonnement = null;

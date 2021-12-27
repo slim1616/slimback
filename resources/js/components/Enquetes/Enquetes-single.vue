@@ -184,7 +184,7 @@
                                                                     </a>
                                                                     
                                                                     <div class="dropdown-divider"></div>
-                                                                    <vue-qrcode :value="`[ '${location.emplacement_id}' ,  ${form.id}, '${location.password}' ]`" />
+                                                                    <vue-qrcode :value="`[ '${location.emplacement_id}' ,  '${form.id}', '${location.password}' ]`" />
                                                                     <p style="text-align: center;">{{location.title}}</p>
                                                                 </li>
                                                             </ul>
