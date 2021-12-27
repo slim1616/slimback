@@ -442,8 +442,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
-//
-//
 
 
 var isBetween = function isBetween(num1, num2, value) {
@@ -16002,7 +16000,10 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "div",
-    { staticStyle: { width: "100%" }, attrs: { id: "demo" } },
+    {
+      staticStyle: { width: "100%", "max-width": "990px" },
+      attrs: { id: "demo" }
+    },
     [
       _vm.enquete.layout == "slides"
         ? [
@@ -16068,23 +16069,6 @@ var render = function() {
                                   attrs: {
                                     src: _vm.url + "/img/startenquete.png"
                                   }
-                                })
-                              ]
-                            ),
-                            _vm._v(" "),
-                            _c(
-                              "div",
-                              {
-                                staticStyle: {
-                                  display: "flex",
-                                  "justify-content": "center",
-                                  "margin-top": "15px"
-                                }
-                              },
-                              [
-                                _c("img", {
-                                  staticStyle: { width: "70%" },
-                                  attrs: { src: _vm.url + "/img/logo.png" }
                                 })
                               ]
                             )

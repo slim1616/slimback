@@ -91,7 +91,7 @@ export default {
                     labels: question.questions.map(q => q.text),
                     datasets : [{
                         label : 'Répartition par réponse',
-                        backgroundColor: '#197dfb',
+                        backgroundColor: question.questions.map(q => q.statcolor),
                         data: this.questionStat(question.id),
                     }],
                 },

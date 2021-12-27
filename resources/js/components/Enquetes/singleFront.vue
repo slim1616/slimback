@@ -1,5 +1,5 @@
 <template>
-    <div style="width:100%" id="demo">   
+    <div style="width:100%;max-width: 990px;" id="demo">   
         
         <template v-if="enquete.layout=='slides'">
             <div class="fullscreen-wrapper">
@@ -13,9 +13,7 @@
                             <div style="    max-height: 50vh;margin: 10px auto;">
                                 <img :src="url + '/img/startenquete.png'" style="width:50%;margin: 10px auto;"/>
                             </div>
-                            <div style="display: flex;justify-content: center;margin-top: 15px;">
-                                <img :src="url + '/img/logo.png'" style="width: 70%;"/>
-                            </div>
+                            
                         </div>
                     </template>
                     <template v-if="fullscreen">
