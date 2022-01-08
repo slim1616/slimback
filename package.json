@@ -40,6 +40,7 @@
         "tableexport.jquery.plugin": "^1.10.21",
         "vform": "^1.0.1",
         "vue-awesome-swiper": "^4.1.1",
+        "vue-croppa": "^1.3.8",
         "vue-datetime": "^1.0.0-beta.14",
         "vue-fullscreen": "^2.6.1",
         "vue-ip-input": "^2.0.2",

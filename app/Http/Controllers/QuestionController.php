@@ -120,6 +120,10 @@ class QuestionController extends Controller
                     $questionType = new Iconquestion();
                     $questionType->label = $ques['label'];
                     $questionType->typeIcon = $ques['typeIcon'];
+                case 'stars':
+                    $questionType = new Iconquestion();
+                    $questionType->label = $ques['label'];
+                    $questionType->typeIcon = $ques['typeIcon'];
                     
                     break;
                 default:

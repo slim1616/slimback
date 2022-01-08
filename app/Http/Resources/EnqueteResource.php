@@ -24,7 +24,7 @@ class EnqueteResource extends JsonResource
                     'company_id' => $this->company_id,
                             
                     'company' => $this->Company->title,
-                                        
+                    'logo' => !is_null($this->Company->logo)? $this->Company->logo : '',
                     'user_id' => $this->user_id,
                             
                     'user' => $this->User->name,

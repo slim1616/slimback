@@ -234,7 +234,7 @@
                         </form>
                         <span v-else>Loading enquete...</span>
                             <template v-if="form.id!=''">
-                            <survey :survey="form" ref="qpp"/>
+                                <survey :survey="form" ref="qpp"/>
                             </template>
                     </div>
                     <div class="tab-pane fade" id="pills-profile-icon" role="tabpanel" aria-labelledby="pills-profile-tab-icon">

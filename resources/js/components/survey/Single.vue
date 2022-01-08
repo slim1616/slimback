@@ -15,6 +15,11 @@
                                                     <icon-edit :question="question"></icon-edit>
                                                 </template>
                                             </div>
+                                            <div v-if="question.question_type=='stars'" :id="'questioned-' + question.order">
+                                                <template v-if="question">
+                                                    <stars-edit :question="question"></stars-edit>
+                                                </template>
+                                            </div>
                                             <div v-if="question.question_type=='choix'" :id="'questioned-'+question.order">
                                                 <choix-edit :question="question"></choix-edit>
                                             </div>
@@ -24,6 +29,7 @@
                                 <select class="form-control" v-model="selectedTypeQuestion" @change="changeTypeQuestion">
                                     <option value="">Choisir un type</option>
                                     <option value="icons">Icons</option>
+                                    <option value="stars">Stars</option>
                                     <option value="choix">choix</option>
                                 </select>
                                 <button class="btn btn-primary btn-border btn-round btn-sm m-1" v-if="selectedTypeQuestion!=''" @click.prevent.stop="addQuestion()">Ajouter</button>
@@ -54,6 +60,11 @@
                                                                     </div>
                                                                 </li>
                                                             </ul>
+                                                        </template>
+                                                        <template v-if="question.question_type=='stars'">
+                                                            <div class="d-flex justify-content-center pt-5">
+                                                                <star-rating :border-width="4" border-color="#d8d8d8" :rounded-corners="true" :star-points="[23,2, 14,17, 0,19, 10,34, 7,50, 23,43, 38,50, 36,34, 46,19, 31,17]"></star-rating>
+                                                            </div>
                                                         </template>
                                                         <template v-if="question.question_type=='choix'">
                                                                 <ul class="">
@@ -92,10 +103,13 @@
 <script>
 import draggable from 'vuedraggable'
 import IconEdit from './IconEdit'
+import starsEdit from './starsEdit'
 import choixEdit from './choixEdit'
+import StarRating from 'vue-star-rating'
+
 
 export default {
-    components:{draggable, IconEdit, choixEdit},
+    components:{draggable, IconEdit, choixEdit, starsEdit, StarRating},
     props:{
         survey : Object,
     },
@@ -209,6 +223,10 @@ export default {
                 this.questions.push(q)
                 // this.savequestion()
             }
+            if (this.selectedTypeQuestion=='stars'){
+                this.questions.push(q)
+                // this.savequestion()
+            }
             if (this.selectedTypeQuestion=='choix'){
                 this.questions.push(q)
                 // this.savequestion()
@@ -218,15 +236,33 @@ export default {
         changeTypeQuestion(){
             if (this.selectedTypeQuestion=='icons'){
                 this.currentQuestion = {
+                    typeIcon : 'face',
+                    id: 0, 
+                    label : 'Icons',
+                    textquestion : '',
+                    obligatoire : true,
+                    questions:[ {id : 1, text : 'Very Bad', mobicon : 'frown-o', icon : 'far fa-frown', color : 'red', statcolor : 'red'}, 
+                                {id : 3, text : 'Normal', mobicon : 'meh-o', icon : 'far fa-meh', color : 'orange', statcolor : 'orange'},
+                                {id : 5, text : 'Very Good', mobicon : 'smile-o', icon : 'far fa-smile', color : 'green', statcolor : 'green'}],
+                    question_type : "icons", 
+                    order: 1, 
+                    'icon' : 'fa-check-square', 
+                    status: "offline"
+                }
+            }
+             if (this.selectedTypeQuestion=='stars'){
+                this.currentQuestion = {
                     typeIcon : 'star',
                     id: 0, 
                     label : 'Icons',
                     textquestion : '',
                     obligatoire : true,
-                    questions:[ {id : 1, text : 'Bad', mobicon : 'star', icon : 'fas fa-star', color : '#efef44', statcolor : 'red'}, 
-                                {id : 2, text : 'Normal', mobicon : 'star', icon : 'fas fa-star', color : '#efef44', statcolor : 'orange'},
-                                {id : 3, text : 'Good', mobicon : 'star', icon : 'fas fa-star', color : '#efef44', statcolor : 'green'}],
-                    question_type : "icons", 
+                    questions:[{id : 1, text : '1/5', mobicon : 'star', icon : 'fas fa-star', color : '#efef44', statcolor : 'red'}, 
+                            {id : 2, text : '2/5', mobicon : 'star', icon : 'fas fa-star', color : '#efef44', statcolor : '#d17474'},
+                            {id : 3, text : '3/5', mobicon : 'star', icon : 'fas fa-star', color : '#efef44', statcolor : 'orange'},
+                            {id : 4, text : '4/5', mobicon : 'star', icon : 'fas fa-star', color : '#efef44', statcolor : '#6ebb30'},
+                            {id : 5, text : '5/5', mobicon : 'star', icon : 'fas fa-star', color : '#efef44', statcolor : 'green'}],
+                    question_type : "stars", 
                     order: 1, 
                     'icon' : 'fa-check-square', 
                     status: "offline"

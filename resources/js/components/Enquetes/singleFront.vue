@@ -85,7 +85,7 @@
                         </div>
                     </template>
                         <div class="d-flex justify-content-center">
-                            <img :src="url + '/img/logo.png'" style="width:20vh"/>
+                            <img :src="url + '/storage/' + enquete.logo" style="width:20vh"/>
                         </div>
                 </div>
             </div>
@@ -95,6 +95,9 @@
         
         <!-- ------ -->
         <template v-if="enquete.layout=='form'">
+            <div class="d-flex justify-content-center">
+                <img :src="url + '/storage/' + enquete.logo" style="width:20vh"/>
+            </div>
             <div>
                 <h2 class="title-enquete">{{enquete.title}}</h2>
             </div>
@@ -108,6 +111,15 @@
                                 </template>
                             </h2>
                         </div>
+                         <template v-if="question.question_type=='stars'">
+                            <div class="d-flex justify-content-center pt-5">
+                                <star-rating :border-width="4" 
+                                                border-color="#d8d8d8" 
+                                                @rating-selected ="setRating(question.id ,$event)"
+                                                :rounded-corners="true" 
+                                                :star-points="[23,2, 14,17, 0,19, 10,34, 7,50, 23,43, 38,50, 36,34, 46,19, 31,17]"></star-rating>
+                            </div>
+                        </template>
                         <template v-if="question.question_type=='icons'">
                             <ul class="align-items-center d-flex justify-content-around">
                                 <li v-for="quest in question.questions" :key="quest.id">
@@ -172,14 +184,16 @@
     const isBetween = (num1,num2,value) => value >= num1 && value <= num2 
     import { Swiper, SwiperSlide, directive } from 'vue-awesome-swiper'
     import { api as fullscreen } from 'vue-fullscreen'
-
+    import StarRating from 'vue-star-rating'
     // Import Swiper styles
     import 'swiper/swiper-bundle.css'
-import { setTimeout } from 'timers';
+    import { setTimeout } from 'timers';
+
 export default {
     components: {
       Swiper,
       SwiperSlide,
+      StarRating
     },
     props:{
         enquete_id : String,
@@ -206,6 +220,18 @@ export default {
         }
     },
     methods: {
+            setRating: function(  section_id, rating ){
+                // console.log(rating);
+                // console.log(section_id);
+                let question = this.questions.find(q => q.id==section_id)
+                if (question){
+                    let rep = question.questions.find(quest => quest.id == rating)
+                    if (rep){
+                        this.addResponse(section_id, rep, 'stars')
+                    }
+
+                }
+            },
             isChecked(question, quest){
                 return this.responses.find(resp => resp.section_id==question.id&&resp.reponse.id==quest.id)
             },
@@ -262,6 +288,8 @@ export default {
                 return exist;
             },
              addResponse(section_id, reponse, type){
+                 console.log(section_id)
+                 console.log(reponse)
                  console.log(type)
                 let index = this.responses.findIndex(response => response.section_id==section_id)
                 if (index!=-1){

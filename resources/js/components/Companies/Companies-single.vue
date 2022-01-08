@@ -132,7 +132,19 @@
                                 
                             </div>
                         </div>
-                        
+                        <template v-if="form.logo">
+                        <div class="col-sm-4">
+                            <img :src="path" class="img-thumbnail" style="max-width:170px;border-radius: 10px;"/>
+                        </div>
+                        </template>
+                        <div class="col-sm-4">
+                            <croppa v-model="croppa" 
+                                    placeholder="Choisir une image"
+                                    :placeholder-font-size="14"        
+                                    :accept="'image/png'"
+                            ></croppa>
+                            <button @click="upload">Enregistrer</button>
+                        </div>
                         
                         
                         <input class="form-control" type="hidden" v-model="form.created_at"/>
@@ -158,25 +170,28 @@
 </template>
 
 <script>
+    import Vue from 'vue';
     import { Form, HasError, AlertError } from 'vform'
     import * as moment from 'moment';
     import { Datetime } from 'vue-datetime';
     import 'vue-datetime/dist/vue-datetime.css'
     import {mapGetters} from 'vuex';
-    
+    import Croppa from 'vue-croppa';
+    Vue.use(Croppa);
     export default {
         name: 'Company',
         components: {HasError, Datetime},
         data: function(){
             return {
                 loaded: false,
-
+                croppa: {},
                 users : [],
                 
                 
                 form: new Form({
                     id : "",
                     title : "",
+                    logo : "",
                     type : "",
                     adresse : "",
                     email : "",
@@ -192,7 +207,48 @@
             this.getCompany();
         },
         methods: {
-            
+            upload() {
+                if (!this.croppa.hasImage()) {
+                    alert('Pas d\'image')
+                    return
+                }
+                
+                this.croppa.generateBlob((blob) => {
+                    console.log(blob)
+                    var fd = new FormData()
+                    fd.append('logo', blob, this.form.title.toLowerCase() + '.png')
+                    fd.append('companie_id', this.form.id)
+                    let response = fetch(window.location.origin + '/api/companies/addlogo',{
+                    method : 'post',
+                    body : fd,
+                    headers : {
+                        'X-Requested-With' : 'XMLHttpRequest',
+                        'X-CSRF-TOKEN' : document.head.querySelector('meta[name="csrf-token"]').content
+                        }
+                    })
+                    .then((response) => {
+                    
+                        if (response.status==200) {
+                            return response.json();
+                        }else if (response.status==401) {
+                            window.location.replace(window.location.href);
+                        }
+                        this.loading = false
+                    })
+                    .then(data => {
+                        this.loading = false
+                        this.getCompany();
+                        this.$toasted.global.my_app_success();
+                    })
+                    .catch(err => {
+                        console.log(err)
+                        this.$toasted.global.my_app_error();
+                        this.loading = false
+                    })
+
+                
+                })
+            },
             getCompany: function(Company){
                 
                 var that = this;
@@ -292,8 +348,11 @@
         },
         computed:{
             ...mapGetters({
-                user : 'getUser'
-            })
+                user : 'getUser',
+            }),
+            path(){
+                return window.location.origin + '/' + this.form.logo
+            }
         }
     }
 </script>

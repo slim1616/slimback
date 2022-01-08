@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Company;
 use App\Http\Resources\CompanyResource;
+use Illuminate\Support\Facades\Storage;
 
 class CompanyController extends Controller
 {
@@ -108,5 +109,31 @@ class CompanyController extends Controller
         $companies->delete();
         return response(['status' => true]);
       }
+
+      public function addLogo(Request $request){
+        $user = $request->user();
+        $company = Company::find($request->companie_id);
+        // dd($request->all());
+
+        if ($company->logo){
+            Storage::disk('public')->delete($company->logo);
+            $company->logo = null;
+            $company->save();
+        }
+        $extension = $request->logo->extension();
+        $filename = $request->logo->getClientOriginalName();
+        // dd($request->file('logo'));
+        // Storage::disk('public')->put('embedfiles/'.$user->id.'/'.$filename, $request->file);
+        $path = $request->file('logo')->storeAs(
+                'logos', $filename, 'public'
+          );
+        $company->logo = $path;
+        $company->save();
+        
+        return response(['status' => true,
+                            'path' => asset('') . 'storage/' . $path
+        ]);
     }
+    }
+
     ?>

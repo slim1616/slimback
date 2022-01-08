@@ -26,6 +26,7 @@ class CompanyResource extends JsonResource
                     'email' => $this->email,
                                         
                     'tel' => $this->tel,
+                    'logo' => !is_null($this->logo)? 'storage/'.$this->logo : "",
                                         
                     'codetva' => $this->codetva,
                                         

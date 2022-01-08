@@ -66,6 +66,7 @@ Route::group(['middleware' => 'auth:api'], function(){
     Route::get('companies', 'CompanyController@list');
     Route::get('datacompanies', 'CompanyController@data');
     Route::get('companies/{id}', 'CompanyController@get');
+    Route::post('companies/addlogo', 'CompanyController@addLogo');
     Route::post('companies', 'CompanyController@create');
     Route::put('companies/{id}', 'CompanyController@update');
     Route::delete('companies/{id}', 'CompanyController@delete');

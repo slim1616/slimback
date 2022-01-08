@@ -20,8 +20,8 @@ class CreateIconquestionsTable extends Migration
             $table->BigInteger('company_id')->unsigned();
             $table->string('textquestion')->nullable();
             $table->string('label')->nullable();
-            $table->enum('typeIcon', ['star', 'face'])->nullable();
-            $table->enum('question_type', ['icons', 'choix'])->default('icons');
+            $table->enum('typeIcon', ['star', 'face', 'face4', 'face5'])->nullable();
+            $table->enum('question_type', ['icons', 'choix','stars'])->default('icons');
             $table->json('questions');
             $table->timestamps();
             $table->softDeletes();

@@ -56,6 +56,7 @@ class UserResourceSec extends JsonResource
             // 'name' => !is_null($this->name),
             'company_id' => $this->company_id,
             'company' => !is_null($this->Company)? $this->Company->title :'',
+            'logo' => !is_null($this->Company->logo)? $this->Company->logo : '',
             'email' => $this->email,
             'nom' => $this->nom,
             'prenom' => $this->prenom,

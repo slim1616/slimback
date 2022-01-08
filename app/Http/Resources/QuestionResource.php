@@ -13,11 +13,11 @@ class QuestionResource extends JsonResource
      */
     public function toArray($request)
     {
+        // dd($this);
         return [
                     
                     'id' => $this->id,
-                    'label' => $this->Sectionnable->label,
-                    'label' => $this->Sectionnable->label,
+                    'label' => !is_null($this->Sectionnable)?$this->Sectionnable->label:'',
                     'typeIcon' => $this->type=='icons' ? $this->Sectionnable->typeIcon : null,
                     'typeinput' => $this->type=='choix' ? $this->Sectionnable->typeinput : null,
                     'textquestion' => $this->Sectionnable->textquestion,

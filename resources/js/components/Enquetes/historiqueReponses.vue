@@ -77,6 +77,18 @@
                                         </li>
                                     </ul>
                                 </template>
+                                <template v-if="question.question_type=='stars'">
+                                    <ul class="align-items-center d-flex justify-content-around">
+
+                                        <star-rating :border-width="4" 
+                                                border-color="#d8d8d8" 
+                                                :read-only="true"
+                                                v-bind:increment="0.1"
+                                                v-model:rating="isMyResponse(question.id)[0]"
+                                                :rounded-corners="true" 
+                                                :star-points="[23,2, 14,17, 0,19, 10,34, 7,50, 23,43, 38,50, 36,34, 46,19, 31,17]"></star-rating>
+                                    </ul>
+                                </template>
                                 <template v-if="question.question_type=='choix'">
                                     <ul class="">
                                         <li v-for="quest in question.questions">
@@ -119,8 +131,10 @@
 <script>
 import surveyStat from './surveyStat'
 import generalStat from './generalStat'
+import StarRating from 'vue-star-rating'
+
 export default {
-    components:{surveyStat, generalStat},
+    components:{surveyStat, generalStat, StarRating},
     props:{
         enquete_id : String
     },

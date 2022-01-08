@@ -5,7 +5,7 @@
 				<div class="sidebar-content">
 					<div class="user">
 						<div class="avatar-sm float-left mr-2">
-							<i class="fas fa-user text-black-50 fa-2x"></i>
+							<img :src="logo" class="avatar-img"/>
 						</div>
 						<div class="info">
 							<a data-toggle="collapse" href="#collapseExample" aria-expanded="true">
@@ -244,7 +244,10 @@ export default {
     computed:{
         ...mapGetters({
             user : 'getUser'
-        })
+		}),
+		logo(){
+			return window.location.origin + '/storage/' + this.user.logo
+		}
     }
 }
 </script>
