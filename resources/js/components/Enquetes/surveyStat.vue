@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div id="printable">
         <template v-for="question in questions">
             <div class="question-front">
                 <div>

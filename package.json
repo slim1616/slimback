@@ -34,6 +34,7 @@
         "luxon": "^1.25.0",
         "moment": "^2.29.1",
         "qrcode": "^1.4.4",
+        "read-excel-file": "^5.2.25",
         "socket.io-client": "^2.3.0",
         "swiper": "^7.3.3",
         "tableexport": "^5.2.0",

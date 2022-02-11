@@ -456,6 +456,17 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 var isBetween = function isBetween(num1, num2, value) {
@@ -797,7 +808,7 @@ var isBetween = function isBetween(num1, num2, value) {
                       }))();
                     }
                   } else {
-                    alert('Enquete n\'existe pas');
+                    alert(data.msg);
                   }
                 })["catch"](function (err) {
                   console.log(err);
@@ -16167,13 +16178,69 @@ var render = function() {
                                             )
                                           ]),
                                           _vm._v(" "),
+                                          question.question_type == "stars"
+                                            ? [
+                                                _c(
+                                                  "div",
+                                                  {
+                                                    staticClass:
+                                                      "d-flex justify-content-center pt-5"
+                                                  },
+                                                  [
+                                                    _c("star-rating", {
+                                                      attrs: {
+                                                        "border-width": 4,
+                                                        "show-rating": false,
+                                                        "border-color":
+                                                          "#d8d8d8",
+                                                        "rounded-corners": true,
+                                                        "star-points": [
+                                                          23,
+                                                          2,
+                                                          14,
+                                                          17,
+                                                          0,
+                                                          19,
+                                                          10,
+                                                          34,
+                                                          7,
+                                                          50,
+                                                          23,
+                                                          43,
+                                                          38,
+                                                          50,
+                                                          36,
+                                                          34,
+                                                          46,
+                                                          19,
+                                                          31,
+                                                          17
+                                                        ]
+                                                      },
+                                                      on: {
+                                                        "rating-selected": function(
+                                                          $event
+                                                        ) {
+                                                          return _vm.setRating(
+                                                            question.id,
+                                                            $event
+                                                          )
+                                                        }
+                                                      }
+                                                    })
+                                                  ],
+                                                  1
+                                                )
+                                              ]
+                                            : _vm._e(),
+                                          _vm._v(" "),
                                           question.question_type == "icons"
                                             ? [
                                                 _c(
                                                   "ul",
                                                   {
                                                     staticClass:
-                                                      "align-items-center d-flex justify-content-around",
+                                                      "d-flex justify-content-around",
                                                     staticStyle: {
                                                       padding: "20px 0"
                                                     }
@@ -16181,76 +16248,93 @@ var render = function() {
                                                   _vm._l(
                                                     question.questions,
                                                     function(quest) {
-                                                      return _c("li", [
-                                                        _c(
-                                                          "div",
-                                                          {
-                                                            staticClass:
-                                                              "align-items-center d-flex flex-column justify-content-center",
-                                                            class: {
-                                                              "selected-option": _vm.selectedQuestion(
-                                                                question.id,
-                                                                quest.id
-                                                              )
-                                                            },
-                                                            on: {
-                                                              click: function(
-                                                                $event
-                                                              ) {
-                                                                $event.preventDefault()
-                                                                $event.stopPropagation()
-                                                                return _vm.addResponse(
+                                                      return _c(
+                                                        "li",
+                                                        {
+                                                          staticStyle: {
+                                                            flex: "1"
+                                                          }
+                                                        },
+                                                        [
+                                                          _c(
+                                                            "div",
+                                                            {
+                                                              staticClass:
+                                                                "align-items-center d-flex flex-column justify-content-center",
+                                                              class: {
+                                                                "selected-option": _vm.selectedQuestion(
                                                                   question.id,
-                                                                  quest
+                                                                  quest.id
                                                                 )
+                                                              },
+                                                              on: {
+                                                                click: function(
+                                                                  $event
+                                                                ) {
+                                                                  $event.preventDefault()
+                                                                  $event.stopPropagation()
+                                                                  return _vm.addResponse(
+                                                                    question.id,
+                                                                    quest
+                                                                  )
+                                                                }
                                                               }
-                                                            }
-                                                          },
-                                                          [
-                                                            question.typeIcon ==
-                                                            "face"
-                                                              ? [
-                                                                  _c("i", {
-                                                                    staticClass:
-                                                                      "fa-3x mb-2",
-                                                                    class:
-                                                                      quest.icon,
-                                                                    staticStyle: {
-                                                                      padding:
-                                                                        "10px",
-                                                                      "border-radius":
-                                                                        "50%"
-                                                                    },
-                                                                    style: {
-                                                                      backgroundColor:
-                                                                        quest.color
-                                                                    }
-                                                                  })
+                                                            },
+                                                            [
+                                                              question.typeIcon ==
+                                                              "face"
+                                                                ? [
+                                                                    _c("i", {
+                                                                      staticClass:
+                                                                        "fa-3x mb-2",
+                                                                      class:
+                                                                        quest.icon,
+                                                                      staticStyle: {
+                                                                        padding:
+                                                                          "10px",
+                                                                        "border-radius":
+                                                                          "50%"
+                                                                      },
+                                                                      style: {
+                                                                        backgroundColor:
+                                                                          quest.color
+                                                                      }
+                                                                    })
+                                                                  ]
+                                                                : [
+                                                                    _c("i", {
+                                                                      staticClass:
+                                                                        "fa-3x mb-2",
+                                                                      class:
+                                                                        quest.icon,
+                                                                      style: {
+                                                                        color:
+                                                                          quest.color
+                                                                      }
+                                                                    })
+                                                                  ],
+                                                              _vm._v(" "),
+                                                              _c(
+                                                                "p",
+                                                                {
+                                                                  staticStyle: {
+                                                                    "text-align":
+                                                                      "center"
+                                                                  }
+                                                                },
+                                                                [
+                                                                  _vm._v(
+                                                                    _vm._s(
+                                                                      quest.text
+                                                                    )
+                                                                  )
                                                                 ]
-                                                              : [
-                                                                  _c("i", {
-                                                                    staticClass:
-                                                                      "fa-3x mb-2",
-                                                                    class:
-                                                                      quest.icon,
-                                                                    style: {
-                                                                      color:
-                                                                        quest.color
-                                                                    }
-                                                                  })
-                                                                ],
-                                                            _vm._v(" "),
-                                                            _c("p", [
-                                                              _vm._v(
-                                                                _vm._s(
-                                                                  quest.text
-                                                                )
                                                               )
-                                                            ])
-                                                          ],
-                                                          2
-                                                        )
-                                                      ])
+                                                            ],
+                                                            2
+                                                          )
+                                                        ]
+                                                      )
                                                     }
                                                   ),
                                                   0
@@ -16512,7 +16596,8 @@ var render = function() {
                       }
                     ],
                     key: i,
-                    staticClass: "question-front"
+                    staticClass: "question-front",
+                    staticStyle: { "box-shadow": "0px 0px 2px 1px #0000000a" }
                   },
                   [
                     _c(
@@ -16556,6 +16641,7 @@ var render = function() {
                               _c("star-rating", {
                                 attrs: {
                                   "border-width": 4,
+                                  "show-rating": false,
                                   "border-color": "#d8d8d8",
                                   "rounded-corners": true,
                                   "star-points": [

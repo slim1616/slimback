@@ -15,26 +15,18 @@ class BorneResource extends JsonResource
     {
         return [
                     
-                    'id' => $this->id,
-                                        
-                    'title' => $this->title,
-                                        
-                    'code_borne' => $this->code_borne,
-                                        
-                    'ip' => $this->ip,
-                                        
-                    'lat' => $this->lat,
-                                        
+                    'id' => $this->id,            
+                    'title' => $this->title,            
+                    'code_borne' => $this->code_borne,            
+                    'ip' => $this->ip,            
+                    'lat' => $this->lat,            
                     'lng' => $this->lng,
-                                        
+                    'battery' => $this->battery,            
                     'company_id' => $this->company_id,
-                            
-                    'company' => $this->Company->title,
-                                        
-                    'created_at' => $this->created_at,
-                                        
-                    'updated_at' => $this->updated_at,
-                                        ];
+                    'company' => $this->Company->title,            
+                    'created_at' => $this->created_at,            
+                    'updated_at' => $this->updated_at,            
+                ];
     }
 }
  ?>

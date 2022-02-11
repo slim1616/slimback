@@ -36,6 +36,12 @@ class Company extends Model
             public function Abonnements(){
                 return $this->hasMany('App\Abonnement');
             }
+            public function Actif(){
+                $act = $this->Abonnements()->where('start_at','<=', now())
+                                    ->where('end_at','>=', now())
+                                    ->first();
+                return is_null($act) ? false : true;
+            }
             /**
              * Get all of the Compagnes for the Company
              *

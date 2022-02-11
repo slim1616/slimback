@@ -536,7 +536,8 @@ class BornesreponseController extends Controller
   }
     
     public function MassAdd(Request $request){
-        // dd($request->data[0]['borne_id']);
+      
+
         $data = [];
         $borne = Borne::find($request->data[0]['borne_id']);
         if ($request->ip){
@@ -547,14 +548,39 @@ class BornesreponseController extends Controller
         }
         if ($borne){
           foreach ($request->data as $reponse) {
+            $date = explode("/", $reponse['date']);
+            $d = $date[0];
+            $m = $date[1];
+            $y = $date[2];
+            $time = explode(":", $reponse['time']);
+            $h = $time[0];
+            $mm = $time[1];
+            $ss = $time[2];
+            $date = $y .'-'.$m.'-'.$d.' '.$h.':'.$mm.':'.$ss;
+
+            $reponse['datetime'] = $date;
+            unset($reponse['date']);
+            unset($reponse['time']);
+            // dd($reponse['datetime']);
             $reponse['company_id'] = $borne->Company->id;
+            // if ($reponse['Latitude']){
+            //   unset($reponse['Latitude']);
+            // }
+            // if ($reponse['Longitude']){
+            //   unset($reponse['Longitude']);
+            // }
+            $borne->battery = $reponse['Battery'];
+            $borne->save();
+            if ($reponse['Battery']){
+              unset($reponse['Battery']);
+            }
             $data[] = $reponse;
           }
-          
         }
         $bornesreponses = Bornesreponse::insert($data);    
         if ($bornesreponses){
-          return response(['status' => true, 'data' => $data]);
+          // return response(['status' => true, 'data' => $data]);
+          return true;
         }else{
           return response(['status' => false]);
         }
@@ -923,25 +949,27 @@ class BornesreponseController extends Controller
                 }
                 $ms[] = $bs;
             }
-            // dd($ms[1]);
+            // dd($ms);
             $declins = [];
             $progressions = [];
-            foreach ($ms[1] as $borne_id => $m) {
-              $borne = Borne::find($borne_id);
-              if (isset($ms[0][$borne_id])){
-                  if ($ms[0][$borne_id][5]>$ms[1][$borne_id][5]){
-                    $declins[] = array('borne' => $borne->title, 
-                                                      'perc' => 100-round($ms[1][$borne_id][5]/$ms[0][$borne_id][5]*100),
-                                                      'indice' => $ms[1][$borne_id][5]);
-                  }else{
-                    $progressions[] = array('borne' => $borne->title, 
-                                              'perc' => round($ms[1][$borne_id][5]/$ms[0][$borne_id][5]*100)-100, 
-                                              'indice' => $ms[1][$borne_id][5]);
-                  }
-              }
-              // foreach ($m as $borne_id => $values) {
-                //   dd($values);
-                // }
+            if (count($ms)>1){
+              foreach ($ms[1] as $borne_id => $m) {
+                $borne = Borne::find($borne_id);
+                if (isset($ms[0][$borne_id])){
+                    if ($ms[0][$borne_id][5]>$ms[1][$borne_id][5]){
+                      $declins[] = array('borne' => $borne->title, 
+                                                        'perc' => 100-round($ms[1][$borne_id][5]/$ms[0][$borne_id][5]*100),
+                                                        'indice' => $ms[1][$borne_id][5]);
+                    }else{
+                      $progressions[] = array('borne' => $borne->title, 
+                                                'perc' => round($ms[1][$borne_id][5]/$ms[0][$borne_id][5]*100)-100, 
+                                                'indice' => $ms[1][$borne_id][5]);
+                    }
+                }
+                // foreach ($m as $borne_id => $values) {
+                  //   dd($values);
+                  // }
+                }
               }
             }
             

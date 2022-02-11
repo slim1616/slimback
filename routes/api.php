@@ -9,9 +9,9 @@ Route::post('refresh', 'Api\Auth\LoginController@refresh');
 Route::post('social_auth', 'Api\Auth\SocialAuthController@socialAuth');
 Route::post('password/email', 'Api\Auth\LoginController@forgot');
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
+// Route::middleware('auth:api')->get('/user', function (Request $request) {
+//     return $request->user();
+// });
 
 
 Route::group(['middleware' => 'auth:api'], function(){

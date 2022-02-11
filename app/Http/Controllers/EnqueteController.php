@@ -107,20 +107,28 @@ class EnqueteController extends Controller
     public function getFrontInit(Request $request, $id){
       $response = [];
       $enquete = Enquete::find($id);
+      
       if ($enquete){
           if ($enquete->where('online')){
-            if ($enquete->confidentiality=='public'){
-              $response['questions'] = QuestionResource::collection(Section::where('enquete_id', $id)
-              ->orderBy('order')
-              ->get());
+              if ($enquete->Company->Actif()){
+                if ($enquete->confidentiality=='public'){
+                  $response['questions'] = QuestionResource::collection(Section::where('enquete_id', $id)
+                  ->orderBy('order')
+                  ->get());
+                }
+                $response['enquete'] = new EnqueteResourceFront($enquete);
+                $response['uniqid'] = uniqid($id);
+                $response['status'] = true;
+              }else{
+                $response['msg'] = "Enqêute hors ligne";
+                $response['status'] = false;
+              }
+            }else{
+              $response['msg'] = "n'est pas actif";
+              $response['status'] = false;
             }
-            $response['enquete'] = new EnqueteResourceFront($enquete);
-            $response['uniqid'] = uniqid($id);
-            $response['status'] = true;
-          }else{
-            $response['status'] = false;
-          }
       }else{
+        $response['msg'] = "Enqêute n'existe pas";
         $response['status'] = false;
       }
       return response($response);

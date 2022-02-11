@@ -78,27 +78,25 @@
                                     
                       </div>
                   </div>
-                                                          <div class="col-sm-4">
-                      <div class="form-group">
+                    <div class="col-sm-4">
+                        <div class="form-group">
                                                                                                        
-                                                <datetime v-model="form.start_at"
-                                                value-zone="Africa/Tunis"
-                                                type="date"
-                                                format="yyyy-MM-dd"
-                                                input-class="form-control"/>
-                                                                                
-                      </div>
-                  </div>
-                                                          <div class="col-sm-4">
-                      <div class="form-group">
+                                <datetime v-model="form.start_at"
+                                value-zone="Africa/Tunis"
+                                type="date"
+                                format="yyyy-MM-dd"
+                                input-class="form-control"/> 
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div class="form-group">
                                                                                                        
-                                                <datetime v-model="form.end_at"
-                                                value-zone="Africa/Tunis"
-                                                type="date"
-                                                format="yyyy-MM-dd"
-                                                input-class="form-control"/>
-                                                                                
-                      </div>
+                            <datetime v-model="form.end_at"
+                            value-zone="Africa/Tunis"
+                            type="date"
+                            format="yyyy-MM-dd"
+                            input-class="form-control"/>                                                        
+                        </div>
                   </div>
                                            
                   

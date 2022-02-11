@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Demo Mail</title>
+	<title>Rapport quotidien</title>
 </head>
 <body>
-	<h3>Demo Mail</h3>
+	<h3>Rapport quotidien</h3>
 </body>
 </html>

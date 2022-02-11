@@ -238,9 +238,23 @@
                             </template>
                     </div>
                     <div class="tab-pane fade" id="pills-profile-icon" role="tabpanel" aria-labelledby="pills-profile-tab-icon">
-                        <p>Even the all-powerful Pointing has no control about the blind texts it is an almost unorthographic life One day however a small line of blind text by the name of Lorem Ipsum decided to leave for the far World of Grammar.</p>
-                        <p>The Big Oxmox advised her not to do so, because there were thousands of bad Commas, wild Question Marks and devious Semikoli, but the Little Blind Text didnâ€™t listen. She packed her seven versalia, put her initial into the belt and made herself on the way.
-                        </p>
+                        
+                        <input type="file" id="input"  @change="onFileChange"/>
+                        <table class="table table-bordered table-responsive-sm">
+                            <tr>
+                                <td>Nom</td>
+                                <td>Prénom</td>
+                                <td>email</td>
+                                <td>Tel</td>
+                            </tr>
+                            <tr v-for="(client,i) in clients" :key="i">
+                                <td>{{client[0]}}</td>
+                                <td>{{client[1]}}</td>
+                                <td>{{client[2]}}</td>
+                                <td>{{client[3]}}</td>
+                            </tr>
+                        </table>
+
                     </div>
                     <div class="tab-pane fade" id="pills-contact-icon" role="tabpanel" aria-labelledby="pills-contact-tab-icon">
                         <template v-if="selectedtab == 'historique'">
@@ -264,7 +278,9 @@
     import Survey from '../survey/Single'
     import historiqueReponses from './historiqueReponses'
     import VueQrcode from 'vue-qrcode'
-    
+    import readXlsxFile from 'read-excel-file'
+
+
     export default {
         name: 'Enquete',
         components: {HasError, Datetime, Survey, historiqueReponses, VueQrcode},
@@ -276,6 +292,7 @@
                 users : [],
                 emplacements : [],
                 // selectedEmplacements : [],
+                clients : [],
                 form: new Form({
                     selectedEmplacements : [],
                     confidentiality : "",
@@ -302,6 +319,14 @@
             
         },
         methods: {
+            onFileChange(event) {
+                let xlsxfile = event.target.files ? event.target.files[0] : null;
+                let clients = [];
+                readXlsxFile(xlsxfile).then((rows) => {
+                    console.log("rows:", rows)
+                    this.clients = rows;
+                })
+            },
             ValidateEmail(mail) 
                 {
                 if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(mail))

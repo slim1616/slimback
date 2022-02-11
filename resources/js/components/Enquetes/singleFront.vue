@@ -36,9 +36,19 @@
                                             <div>
                                                 <h2 class="txt-question">{{question.textquestion}}</h2>
                                             </div>
+                                            <template v-if="question.question_type=='stars'">
+                                                <div class="d-flex justify-content-center pt-5">
+                                                    <star-rating :border-width="4"
+                                                                    :show-rating="false" 
+                                                                    border-color="#d8d8d8" 
+                                                                    @rating-selected ="setRating(question.id ,$event)"
+                                                                    :rounded-corners="true" 
+                                                                    :star-points="[23,2, 14,17, 0,19, 10,34, 7,50, 23,43, 38,50, 36,34, 46,19, 31,17]"></star-rating>
+                                                </div>
+                                            </template>
                                             <template v-if="question.question_type=='icons'">
-                                                <ul class="align-items-center d-flex justify-content-around" style="padding: 20px 0;">
-                                                    <li v-for="quest in question.questions">
+                                                <ul class="d-flex justify-content-around" style="padding: 20px 0;">
+                                                    <li v-for="quest in question.questions" style="flex:1">
                                                         <div class="align-items-center d-flex flex-column justify-content-center" :class="{'selected-option':selectedQuestion(question.id, quest.id)}" @click.prevent.stop="addResponse(question.id, quest)">
                                                             <template v-if="question.typeIcon=='face'">
                                                                 <i class="fa-3x mb-2" :class="quest.icon" style="padding:10px;border-radius:50%" :style="{backgroundColor: quest.color}"></i>
@@ -46,7 +56,7 @@
                                                             <template v-else>
                                                                 <i class="fa-3x mb-2" :class="quest.icon" :style="{color: quest.color}"></i>
                                                             </template>
-                                                            <p>{{quest.text}}</p>
+                                                            <p style="text-align: center;">{{quest.text}}</p>
                                                         </div>
                                                     </li>
                                                 </ul>
@@ -102,7 +112,7 @@
                 <h2 class="title-enquete">{{enquete.title}}</h2>
             </div>
             <template v-for="(question,i) in questions">
-                    <div class="question-front" v-show="currentQuestions.includes(question.id)" :key="i">
+                    <div class="question-front" style="box-shadow: 0px 0px 2px 1px #0000000a" v-show="currentQuestions.includes(question.id)" :key="i">
                         <span class="align-items-center d-flex justify-content-center num-question">{{ i+1  }}</span>
                         <div>
                             <h2 class="txt-question">{{question.textquestion}}
@@ -114,6 +124,7 @@
                          <template v-if="question.question_type=='stars'">
                             <div class="d-flex justify-content-center pt-5">
                                 <star-rating :border-width="4" 
+                                                :show-rating="false"
                                                 border-color="#d8d8d8" 
                                                 @rating-selected ="setRating(question.id ,$event)"
                                                 :rounded-corners="true" 
@@ -421,7 +432,7 @@ export default {
 
                         }
                     }else{
-                        alert('Enquete n\'existe pas');
+                        alert(data.msg);
                     }
                 })
                 .catch(err => {
