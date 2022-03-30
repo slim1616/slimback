@@ -205,7 +205,7 @@ export default {
                       }
                 })
                 .catch(error => {
-                    console.log(error)
+                    ////console.log(error)
                     swal.fire({
                             title: 'Erreur',
                             text: 'Une erreur c\'est produite',

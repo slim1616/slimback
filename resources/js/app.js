@@ -72,17 +72,17 @@ const app = new Vue({
        /*
         Echo.channel('rtl-channel')
         .listen('RtlEvent', function (e) {
-            console.log('RtlEvent', e)
+            ////console.log('RtlEvent', e)
         })
         let el = 'porte-notifs-' + document.querySelector('#app').getAttribute('data-user')
         window.Echo.private(el)
                 .listen('SendMessage', (e) => {
                     this.reciveMessage(e.message)
                 })
-        console.log(el);
+        ////console.log(el);
         Echo.private( el)
             .listen('ErrorPorteEvent', e => {
-                console.log(e)
+                ////console.log(e)
                 this.$vToastify.error({body:e.error.msg + ' ' + e.error.porte.titre + ' ' + e.error.porte.model + ' Ip : ' + e.error.porte.ip, title:"",defaultTitle:false, canTimeout:false} );
                 // this.$toasted.error(e.error.msg + e.error.porte.titre + ' ' + e.error.porte.model + ' Ip : ' + e.error.porte.ip )
             })
@@ -91,15 +91,15 @@ const app = new Vue({
 
                 this.$vToastify.info({body:e.info.msg + e.info.porte.titre + ' ' + e.info.porte.model + ' Ip : ' + e.info.porte.ip , title:"",defaultTitle:false});
                 // this.$toasted.info(e.info.msg + e.info.porte.titre + ' ' + e.info.porte.model + ' Ip : ' + e.info.porte.ip )
-                console.log(e)
+                ////console.log(e)
             })
             .listen('SuccessPorteEvent', e => {
-                console.log(e)
+                ////console.log(e)
                 this.$vToastify.success({body:e.success.msg + ' ' + e.success.porte.titre + ' ' + e.success.porte.model + ' Ip : ' + e.success.porte.ip, title:"",defaultTitle:false} );
                 // this.$toasted.error(e.error.msg + e.error.porte.titre + ' ' + e.error.porte.model + ' Ip : ' + e.error.porte.ip )
             })
             */
-           console.log('mounted App')
+           ////console.log('mounted App')
         
 
     },

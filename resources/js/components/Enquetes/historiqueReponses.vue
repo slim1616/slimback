@@ -179,7 +179,7 @@ export default {
                     this.dates = data.dates
                 })
                 .catch(err => {
-                    console.log(err)
+                    ////console.log(err)
                     this.loading = false
                     this.$store.dispatch('setLoader',false)
                 })
@@ -223,14 +223,14 @@ export default {
                     this.dates = data.dates
                 })
                 .catch(err => {
-                    console.log(err)
+                    ////console.log(err)
                     this.$store.dispatch('setLoader',false)
                 })
         }
     },
     computed:{
         filtredResponses(){
-            console.log(this.selectedEmplacement)
+            ////console.log(this.selectedEmplacement)
             if (this.selectedEmplacement!='*'){
                 return this.responses.filter(reponse => reponse.emplacement_id==this.selectedEmplacement)
             }else{

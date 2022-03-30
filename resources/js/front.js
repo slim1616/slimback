@@ -8,6 +8,6 @@ const app = new Vue({
         afterresponse
     },
     mounted(){
-        console.log('mounted')
+        ////console.log('mounted')
     }
 }); 

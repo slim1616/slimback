@@ -82,7 +82,7 @@ export default {
             })
             .then(data => {
                 this.loader = false
-                console.log(data)
+                ////console.log(data)
                 if (data.status){
                     this.data = data
                     this.loaded = true
@@ -190,7 +190,7 @@ export default {
 
             })
             .catch(err => {
-                console.log(err)
+                ////console.log(err)
                 this.loader = false
             })
         },

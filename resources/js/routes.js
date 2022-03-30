@@ -66,7 +66,7 @@ const routes = [
     {path : '/users', component : usersList, name : 'usersList', meta: { route: 'user' }},
     {path : '/passwordchange', component : myPasswordChange, name : 'myPasswordChange'},
     {path : '/users/:id', component : editUser, name : 'editUser', meta: { route: 'user' },beforeEnter(to, from, next){
-        console.log(store.getters.getUser.role=='superadmin')
+        ////console.log(store.getters.getUser.role=='superadmin')
         if (store.getters.getUser.role=='superadmin'){
             next()
         }else{
@@ -75,7 +75,7 @@ const routes = [
         }
     }  },
     {path : '/settings', component : Settingssingle, name : 'settings', meta: { route: 'settings' },beforeEnter(to, from, next){
-        console.log(store.getters.getUser.role=='superadmin')
+        ////console.log(store.getters.getUser.role=='superadmin')
         if (store.getters.getUser.role=='superadmin'){
             next()
         }else{

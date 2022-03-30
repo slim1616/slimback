@@ -189,7 +189,7 @@ export default {
             })
             .catch(error => {
                 alert('Erreur')
-                console.log(error)
+                ////console.log(error)
             })
     },
     listdata: function(){

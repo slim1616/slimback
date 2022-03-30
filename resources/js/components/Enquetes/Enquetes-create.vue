@@ -199,7 +199,7 @@
                 this.form.post('/api/enquetes')
                 .then(function(response){
                     that.$store.dispatch('setLoader', false)
-                    console.log(response.data)
+                    ////console.log(response.data)
                     if (response.status==200||response.status==201){
                         that.$notification.success("Ajouté avec succes", {position: 'bottomRight', timer : 5, showCloseIcn : true, infiniteTimer: false });
                         that.$router.push('/enquetes/'+response.data.id);

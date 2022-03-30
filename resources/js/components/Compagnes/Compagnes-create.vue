@@ -196,7 +196,7 @@ export default {
       .then(function(response){
               that.$store.dispatch('setLoader', false)
               if (response.status==200||response.status==201){
-                  console.log(response.data)
+                  ////console.log(response.data)
                   that.$notification.success("Ajouté avec succes", {position: 'bottomRight', timer : 5, showCloseIcn : true, infiniteTimer: false });
                   that.$router.push('/compagnes/' + response.data.id);
               }else{

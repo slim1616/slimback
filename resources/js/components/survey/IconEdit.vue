@@ -50,7 +50,7 @@ export default {
     },
     methods:{
         typechanged(type){
-            console.log(type)
+            ////console.log(type)
             if (type=='face4'){
                 if(this.question.questions.length==3){
                     let questions = [this.question.questions[0], 
@@ -119,7 +119,7 @@ export default {
                 //     }
                 // }
                 // if (type=='face4'){
-                //     console.log(this.question.questions)
+                //     ////console.log(this.question.questions)
                 //     if (i==0){
                 //         question.color = 'red'
                 //         question.icon = 'far fa-frown'
@@ -140,7 +140,7 @@ export default {
         },
     },
     mounted(){
-        console.log(this.question.typeIcon)
+        ////console.log(this.question.typeIcon)
     }
 }
 </script>

@@ -151,7 +151,7 @@ export default {
   },
   methods: {
     onIpChange(ip) {
-            console.log('ip input change:', ip);
+            ////console.log('ip input change:', ip);
             this.form.ip = ip
     },
     listSettings: function(){

@@ -163,11 +163,11 @@ export default {
                     this.loading = false
                     this.$store.dispatch('setLoader',false)
                     this.questions = []
-                    // console.log(data.sections)
+                    // ////console.log(data.sections)
                     this.questions = data.questions
                 })
                 .catch(err => {
-                    console.log(err)
+                    ////console.log(err)
                     this.$toasted.global.my_app_error();
                     this.loading = false
                     this.$store.dispatch('setLoader',false)
@@ -202,23 +202,23 @@ export default {
                     this.loading = false
                     this.$store.dispatch('setLoader',false)
                     this.questions = []
-                    // console.log(data.sections)
+                    // ////console.log(data.sections)
                     this.questions = data.questions
                 })
                 .catch(err => {
-                    console.log(err)
+                    ////console.log(err)
                     this.$toasted.global.my_app_error();
                     this.loading = false
                     this.$store.dispatch('setLoader',false)
                 })
         },
         log(e){
-            console.log(e)
+            ////console.log(e)
             this.savequestion()
         },
         addQuestion(){
             let q = JSON.parse(JSON.stringify(this.currentQuestion));
-            console.log(q)
+            ////console.log(q)
             if (this.selectedTypeQuestion=='icons'){
                 this.questions.push(q)
                 // this.savequestion()
@@ -314,11 +314,11 @@ export default {
                 .then(data => {
                     this.loading = false
                     this.questions = []
-                    // console.log(data.sections)
+                    // ////console.log(data.sections)
                     this.questions = data.questions
                 })
                 .catch(err => {
-                    console.log(err)
+                    ////console.log(err)
                     this.$toasted.global.my_app_error();
                     this.loading = false
                 })

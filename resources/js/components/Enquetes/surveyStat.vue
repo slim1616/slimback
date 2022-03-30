@@ -111,16 +111,16 @@ export default {
             if (resp.length==0){
                 resp.push(0)
             }
-            console.log(resp)
+            ////console.log(resp)
             return resp;
         },
         init(){
-            console.log('init')
+            ////console.log('init')
             this.questions.forEach(question => {
-            // console.log(question.questions)
+            // ////console.log(question.questions)
             let resp = this.questionStat(question.id)
-            console.log('resp');
-            console.log(resp);
+            ////console.log('resp');
+            ////console.log(resp);
                 let t = []
             if (question.questions.length==3){
                 t[0] = resp[1]=='undefined' ? 0 : resp[1]
@@ -156,9 +156,9 @@ export default {
             //             el[i] = 0
             //         }
             //     })
-            // console.log('t')
-            // console.log(t)
-            // console.log(t.values())
+            // ////console.log('t')
+            // ////console.log(t)
+            // ////console.log(t.values())
             
             var ctx = document.getElementById('question-bar-'+question.id).getContext('2d');
             var myBarChart = new Chart(ctx, {

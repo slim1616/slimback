@@ -53,7 +53,7 @@ export default {
             })
             .then(data => {
                 this.loader = false
-                console.log(data)
+                ////console.log(data)
                 if (data.status){
                     this.loaded = true
                     var ctx = document.getElementById('statsemaine').getContext('2d');
@@ -103,7 +103,7 @@ export default {
 
             })
             .catch(err => {
-                console.log(err)
+                ////console.log(err)
                 this.loader = false
             })
         },

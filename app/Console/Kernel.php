@@ -30,7 +30,7 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         // $schedule->command('inspire')->hourly();
-        $schedule->command('daily:cron')->everyMinute();
+        $schedule->command('daily:cron')->dailyAt('20:00');
         // $schedule->command($this->getQueueCommand())
         // ->everyMinute()
         // ->withoutOverlapping();

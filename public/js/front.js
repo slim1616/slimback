@@ -172,7 +172,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     isMyResponse: function isMyResponse(section_id) {
       var resp = [];
       this.responses.forEach(function (response) {
-        console.log(response);
+        ////console.log(response);
 
         if (response.section_id == section_id) {
           resp.push(response.reponse.id);
@@ -213,11 +213,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 }).then(function (data) {
                   _this.$store.dispatch('setLoader', false);
 
-                  console.log(data.responses);
+                  ////console.log(data.responses);
                   _this.questions = data.questions;
                   _this.responses = data.responses;
                 })["catch"](function (err) {
-                  console.log(err);
+                  ////console.log(err);
 
                   _this.$store.dispatch('setLoader', false);
                 });
@@ -511,8 +511,8 @@ var isBetween = function isBetween(num1, num2, value) {
   },
   methods: {
     setRating: function setRating(section_id, rating) {
-      // console.log(rating);
-      // console.log(section_id);
+      // ////console.log(rating);
+      // ////console.log(section_id);
       var question = this.questions.find(function (q) {
         return q.id == section_id;
       });
@@ -568,11 +568,11 @@ var isBetween = function isBetween(num1, num2, value) {
       }))();
     },
     onSwiper: function onSwiper(event) {
-      console.log('onSwiper');
+      ////console.log('onSwiper');
     },
     onSlideChange: function onSlideChange(event) {
-      console.log('onSlideChange');
-      console.log(event.activeIndex);
+      ////console.log('onSlideChange');
+      ////console.log(event.activeIndex);
 
       if (event.activeIndex == this.questions.length) {
         if (this.canSubmit) {
@@ -605,9 +605,9 @@ var isBetween = function isBetween(num1, num2, value) {
       return exist;
     },
     addResponse: function addResponse(section_id, reponse, type) {
-      console.log(section_id);
-      console.log(reponse);
-      console.log(type);
+      ////console.log(section_id);
+      ////console.log(reponse);
+      ////console.log(type);
       var index = this.responses.findIndex(function (response) {
         return response.section_id == section_id;
       });
@@ -720,7 +720,7 @@ var isBetween = function isBetween(num1, num2, value) {
                     });
                   }
                 })["catch"](function (err) {
-                  console.log(err);
+                  ////console.log(err);
                   _this2.loader = false;
                 });
 
@@ -811,7 +811,7 @@ var isBetween = function isBetween(num1, num2, value) {
                     alert(data.msg);
                   }
                 })["catch"](function (err) {
-                  console.log(err);
+                  ////console.log(err);
                   _this3.loading = false;
                   _this3.loader = false;
                 });
@@ -836,7 +836,7 @@ var isBetween = function isBetween(num1, num2, value) {
           while (1) {
             switch (_context5.prev = _context5.next) {
               case 0:
-                console.log(password, enqueste_id);
+                ////console.log(password, enqueste_id);
                 _this4.loading = true;
                 _context5.next = 4;
                 return fetch(window.location.origin + '/api/enquetes/privatefront/' + _this4.enquete_id, {
@@ -883,7 +883,7 @@ var isBetween = function isBetween(num1, num2, value) {
                     });
                   }
                 })["catch"](function (err) {
-                  console.log(err);
+                  ////console.log(err);
                   _this4.loading = false;
                   _this4.loader = false;
                 });
@@ -951,8 +951,8 @@ var isBetween = function isBetween(num1, num2, value) {
           }
         }
       });
-      console.log(t);
-      console.log(completed);
+      ////console.log(t);
+      ////console.log(completed);
       return t.length == completed.length;
     }
   }),
@@ -31954,7 +31954,7 @@ var app = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
     afterresponse: _components_Enquetes_afterresponse__WEBPACK_IMPORTED_MODULE_2__["default"]
   },
   mounted: function mounted() {
-    console.log('mounted');
+    ////console.log('mounted');
   }
 });
 

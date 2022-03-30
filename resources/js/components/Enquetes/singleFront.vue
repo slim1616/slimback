@@ -232,8 +232,8 @@ export default {
     },
     methods: {
             setRating: function(  section_id, rating ){
-                // console.log(rating);
-                // console.log(section_id);
+                // ////console.log(rating);
+                // ////console.log(section_id);
                 let question = this.questions.find(q => q.id==section_id)
                 if (question){
                     let rep = question.questions.find(quest => quest.id == rating)
@@ -261,12 +261,12 @@ export default {
                 }
             },
             onSwiper(event){
-                console.log('onSwiper')
+                ////console.log('onSwiper')
                 
             },
             onSlideChange(event){
-                console.log('onSlideChange')
-                console.log(event.activeIndex)
+                ////console.log('onSlideChange')
+                ////console.log(event.activeIndex)
                 if (event.activeIndex==this.questions.length){
                         if (this.canSubmit){
                             this.isFinished = true
@@ -299,9 +299,9 @@ export default {
                 return exist;
             },
              addResponse(section_id, reponse, type){
-                 console.log(section_id)
-                 console.log(reponse)
-                 console.log(type)
+                 ////console.log(section_id)
+                 ////console.log(reponse)
+                 ////console.log(type)
                 let index = this.responses.findIndex(response => response.section_id==section_id)
                 if (index!=-1){
                     if(type=='checkbox'){
@@ -379,7 +379,7 @@ export default {
 
                 })
                 .catch(err => {
-                    console.log(err)
+                    ////console.log(err)
                     this.loader = false
                 })
             },
@@ -436,14 +436,14 @@ export default {
                     }
                 })
                 .catch(err => {
-                    console.log(err)
+                    ////console.log(err)
                     this.loading = false
                     this.loader = false
                 })
                 
             },
             async getEnquete(password, enqueste_id){
-                console.log(password, enqueste_id)
+                ////console.log(password, enqueste_id)
                  this.loading = true;
                 let res = await fetch(window.location.origin + '/api/enquetes/privatefront/' + this.enquete_id, {
                     method : 'post',
@@ -491,7 +491,7 @@ export default {
                     }
                 })
                 .catch(err => {
-                    console.log(err)
+                    ////console.log(err)
                     this.loading = false
                     this.loader = false
                 })
@@ -541,8 +541,8 @@ export default {
                      }
                  }
              } )
-             console.log(t)
-             console.log(completed)
+             ////console.log(t)
+             ////console.log(completed)
              return t.length==completed.length
         }
     },

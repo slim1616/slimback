@@ -175,7 +175,7 @@ export default {
   },
   methods: {
     onIpChange(ip) {
-            // console.log('ip input change:', ip);
+            // ////console.log('ip input change:', ip);
             this.form.adresse_serveur_zk = ip
     },
     getSetting: function(Setting){

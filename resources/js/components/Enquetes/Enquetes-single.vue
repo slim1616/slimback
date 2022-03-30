@@ -323,7 +323,7 @@
                 let xlsxfile = event.target.files ? event.target.files[0] : null;
                 let clients = [];
                 readXlsxFile(xlsxfile).then((rows) => {
-                    console.log("rows:", rows)
+                    ////console.log("rows:", rows)
                     this.clients = rows;
                 })
             },
@@ -350,7 +350,7 @@
                     reverseButtons : true
                     })
                     if (text) {
-                        console.log(text.split('\n'))
+                        ////console.log(text.split('\n'))
                         let emails = text.split('\n')
                         let bcc = '&bcc=';
                         if (emails.length>0){
@@ -362,7 +362,7 @@
                                 }
                             })
                         }
-                        console.log(bcc)
+                        ////console.log(bcc)
 
                         var formattedBody = `Bonjour, cher client,\n`;
                                 formattedBody += `Dans le but d'améliorer notre service et mieux connaitre les besoins et les soucis de nos clients.\nJe vous invite à repondre à cette enquête de satisfaction client.\n`;
@@ -379,7 +379,7 @@
                 })()
             },
             async regenerateQrCode(emplacement_id){
-                console.log(emplacement_id)
+                ////console.log(emplacement_id)
                 let res = await fetch(window.location.origin + '/api/generateqrcode', {
                     method : 'post',
                     body : JSON.stringify({enquete_id : this.form.id, emplacement_id : emplacement_id}),
@@ -400,7 +400,7 @@
                 })
                 .then(data => {
                     this.loader = false
-                    console.log(data)
+                    ////console.log(data)
                     if (data.status){
 
                         swal.fire({
@@ -414,12 +414,12 @@
 
                 })
                 .catch(err => {
-                    console.log(err)
+                    ////console.log(err)
                     this.loader = false
                 })
             },
             async regeneratePass(emplacement_id){
-                console.log(emplacement_id)
+                ////console.log(emplacement_id)
                 let res = await fetch(window.location.origin + '/api/emplacements/newpass', {
                     method : 'post',
                     body : JSON.stringify({enquete_id : this.form.id, emplacement_id : emplacement_id}),
@@ -446,7 +446,7 @@
                                                     }
                                                     return emp;
                         }) 
-                        console.log(this.emplacements)
+                        ////console.log(this.emplacements)
                         swal.fire({
                             icon: 'success',
                             title: 'Success',
@@ -458,7 +458,7 @@
 
                 })
                 .catch(err => {
-                    console.log(err)
+                    ////console.log(err)
                     this.loader = false
                 })
             },
@@ -475,7 +475,7 @@
             copiedUrl(){
                 var copyText = document.getElementById("cplink");
                 copyText.value = window.location.origin + copyText.value
-                console.log(copyText.value)
+                ////console.log(copyText.value)
                 copyText.focus()
                 /* Select the text field */
                 copyText.select();

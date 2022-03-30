@@ -151,11 +151,11 @@ export default {
                     this.loading = false
                     this.$store.dispatch('setLoader',false)
                     this.questions = []
-                    // console.log(data.sections)
+                    // ////console.log(data.sections)
                     this.questions = data.questions
                 })
                 .catch(err => {
-                    console.log(err)
+                    ////console.log(err)
                     this.$toasted.global.my_app_error();
                     this.loading = false
                     this.$store.dispatch('setLoader',false)
@@ -190,23 +190,23 @@ export default {
                     this.loading = false
                     this.$store.dispatch('setLoader',false)
                     this.questions = []
-                    // console.log(data.sections)
+                    // ////console.log(data.sections)
                     this.questions = data.questions
                 })
                 .catch(err => {
-                    console.log(err)
+                    ////console.log(err)
                     this.$toasted.global.my_app_error();
                     this.loading = false
                     this.$store.dispatch('setLoader',false)
                 })
         },
         log(e){
-            console.log(e)
+            ////console.log(e)
             this.savequestion()
         },
         addQuestion(){
             let q = JSON.parse(JSON.stringify(this.currentQuestion));
-            console.log(q)
+            ////console.log(q)
             if (this.selectedTypeQuestion=='icons'){
                 this.questions.push(q)
                 // this.savequestion()
@@ -282,11 +282,11 @@ export default {
                 .then(data => {
                     this.loading = false
                     this.questions = []
-                    // console.log(data.sections)
+                    // ////console.log(data.sections)
                     this.questions = data.questions
                 })
                 .catch(err => {
-                    console.log(err)
+                    ////console.log(err)
                     this.$toasted.global.my_app_error();
                     this.loading = false
                 })
@@ -324,7 +324,7 @@ export default {
             let vm = this
             if (this.questions){
                 this.questions.forEach(function(question, index) {
-                    console.log(document.getElementById('question-'+question.order))
+                    ////console.log(document.getElementById('question-'+question.order))
                     document.getElementById('question-'+question.order).style.height =  document.getElementById('questioned-'+question.order).offsetHeight + 'px'
                     question.order = index;
                 })
@@ -567,10 +567,10 @@ export default {
     },
     methods: {
             setRating(rating,question){
-                console.log(question.id);
+                ////console.log(question.id);
                 let find = question.questions.find(quest =>quest.id==rating)
-                console.log(rating);
-                console.log(find);
+                ////console.log(rating);
+                ////console.log(find);
                 if (find){
                     this.addResponse(question.id,find, 'star')
                 }
@@ -593,12 +593,12 @@ export default {
                 }
             },
             onSwiper(event){
-                console.log('onSwiper')
+                ////console.log('onSwiper')
                 
             },
             onSlideChange(event){
-                console.log('onSlideChange')
-                console.log(event.activeIndex)
+                ////console.log('onSlideChange')
+                ////console.log(event.activeIndex)
                 if (event.activeIndex==this.questions.length){
                         if (this.canSubmit){
                             this.isFinished = true
@@ -631,7 +631,7 @@ export default {
                 return exist;
             },
              addResponse(section_id, reponse, type){
-                 console.log(type)
+                 ////console.log(type)
                 let index = this.responses.findIndex(response => response.section_id==section_id)
                 if (index!=-1){
                     if(type=='checkbox'){
@@ -709,7 +709,7 @@ export default {
 
                 })
                 .catch(err => {
-                    console.log(err)
+                    ////console.log(err)
                     this.loader = false
                 })
             },
@@ -766,14 +766,14 @@ export default {
                     }
                 })
                 .catch(err => {
-                    console.log(err)
+                    ////console.log(err)
                     this.loading = false
                     this.loader = false
                 })
                 
             },
             async getEnquete(password, enqueste_id){
-                console.log(password, enqueste_id)
+                ////console.log(password, enqueste_id)
                  this.loading = true;
                 let res = await fetch(window.location.origin + '/api/enquetes/privatefront/' + this.enquete_id, {
                     method : 'post',
@@ -821,7 +821,7 @@ export default {
                     }
                 })
                 .catch(err => {
-                    console.log(err)
+                    ////console.log(err)
                     this.loading = false
                     this.loader = false
                 })
@@ -871,8 +871,8 @@ export default {
                      }
                  }
              } )
-             console.log(t)
-             console.log(completed)
+             ////console.log(t)
+             ////console.log(completed)
              return t.length==completed.length
         }
     },

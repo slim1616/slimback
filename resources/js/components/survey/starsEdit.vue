@@ -41,7 +41,7 @@ export default {
     },
     methods:{
         typechanged(type){
-            console.log(type)
+            ////console.log(type)
             this.question.questions.map((question,i) => {
                 if (type=='star'){
                     question.icon = 'fas fa-star'
@@ -69,7 +69,7 @@ export default {
         },
     },
     mounted(){
-        console.log(this.question.typeIcon)
+        ////console.log(this.question.typeIcon)
     }
 }
 </script>

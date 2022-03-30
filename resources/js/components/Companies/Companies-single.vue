@@ -214,7 +214,7 @@
                 }
                 
                 this.croppa.generateBlob((blob) => {
-                    console.log(blob)
+                    ////console.log(blob)
                     var fd = new FormData()
                     fd.append('logo', blob, this.form.title.toLowerCase() + '.png')
                     fd.append('companie_id', this.form.id)
@@ -241,7 +241,7 @@
                         this.$toasted.global.my_app_success();
                     })
                     .catch(err => {
-                        console.log(err)
+                        ////console.log(err)
                         this.$toasted.global.my_app_error();
                         this.loading = false
                     })
@@ -253,7 +253,7 @@
                 
                 var that = this;
                 this.form.get('/api/companies/'+this.$route.params.id).then(function(response){
-                    console.log(response.data.status==true)
+                    ////console.log(response.data.status==true)
                     if (response.data.status==true){
                         that.form.fill(response.data.company);
                         that.users =  response.data.users;

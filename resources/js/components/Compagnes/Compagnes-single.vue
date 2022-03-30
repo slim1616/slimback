@@ -267,7 +267,7 @@ export default {
                 .then((response) => {
                     
                     if (response.status==200) {
-                        console.log(response.body)
+                        ////console.log(response.body)
                         return response.json();
                     }else if (response.status==401) {
                         //window.location.replace(window.location.href);  
@@ -276,7 +276,7 @@ export default {
                 })
                 .then(data => {
                     this.$store.dispatch('setLoader', false)
-                    console.log(data)
+                    ////console.log(data)
                     if (data.status){
 
                         
@@ -284,7 +284,7 @@ export default {
 
                 })
                 .catch(err => {
-                    console.log(err)
+                    ////console.log(err)
                     this.$store.dispatch('setLoader', false)
                 })
         },
@@ -309,7 +309,7 @@ export default {
 
                                 },1000)
                             }catch(error){
-                                console.log(error)
+                                ////console.log(error)
                             }
                         
                     }
@@ -319,7 +319,7 @@ export default {
                 }
                 that.loaded = true;
             }).catch(function(e){
-                console.log(e)
+                ////console.log(e)
                 if (e.response && e.response.status == 404) {
                     that.$router.push('/404');
                 }
@@ -344,7 +344,7 @@ export default {
                             
                             
             this.form.emploie = $("#weekly-schedule").data('artsy.dayScheduleSelector').serialize({ });
-            console.log(this.form.emploie)         
+            ////console.log(this.form.emploie)         
                     
             this.form.put('/api/compagnes/'+this.$route.params.id)
             .then(function(response){
@@ -404,7 +404,7 @@ export default {
                                 }
                         })
                         .catch(error => {
-                            console.log(error)
+                            ////console.log(error)
                             swal.fire({
                                 title: 'Erreur',
                                 text: 'Une erreur c\'est produite',
@@ -425,7 +425,7 @@ export default {
                 
         },
         drawTab(){
-                console.log('drawTab')
+                ////console.log('drawTab')
                 $("#weekly-schedule").dayScheduleSelector({
                     days        : [1, 2, 3, 4, 5, 6, 0],  
                     startTime   : '00:00',         

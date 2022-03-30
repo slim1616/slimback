@@ -56,7 +56,7 @@ export default {
         isMyResponse(section_id){
             let resp = []
             this.responses.forEach(response => {
-                console.log( response )
+                ////console.log( response )
                 if (response.section_id==section_id){
                     resp.push(response.reponse.id)
                 }
@@ -86,14 +86,14 @@ export default {
                 })
                 .then(data => {
                     this.$store.dispatch('setLoader',false)
-                    console.log(data.responses)
+                    ////console.log(data.responses)
                         this.questions = data.questions
                         this.responses = data.responses
 
 
                 })
                 .catch(err => {
-                    console.log(err)
+                    ////console.log(err)
                     this.$store.dispatch('setLoader',false)
                 })
         }

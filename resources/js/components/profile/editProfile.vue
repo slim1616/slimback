@@ -177,7 +177,7 @@ export default {
                         }
                     })
                     .catch(error => {
-                        console.log(error)
+                        ////console.log(error)
                         this.$store.dispatch('setLoader', false)
                         // swal("Erreur", "Une erreur c'est produite", {
                         //         icon : "error",
@@ -207,7 +207,7 @@ export default {
                     video.play();
                 })
                 .catch(function(err) {
-                    console.log("An error occurred: " + err);
+                    ////console.log("An error occurred: " + err);
                 });
 
             video.addEventListener('canplay', function(ev) {

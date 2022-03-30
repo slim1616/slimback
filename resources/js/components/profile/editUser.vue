@@ -265,7 +265,7 @@ export default {
                     video.play();
                 })
                 .catch(function(err) {
-                    console.log("An error occurred: " + err);
+                    ////console.log("An error occurred: " + err);
                 });
 
             video.addEventListener('canplay', function(ev) {
@@ -501,7 +501,7 @@ export default {
     },
     mounted(){
         this.getRoles()
-        console.log(this.$route.params.id)
+        ////console.log(this.$route.params.id)
         this.getUser(this.$route.params.id)
         
     },
